@@ -182,7 +182,7 @@ def manual_movement_mode():
             if A_BUTTON_LOC.xstart == DEFAULT_OUT_OF_SCREEN_VALUE:
                 helper_message = "No saved value for a!"
             else:
-                reply = A_AXIS.move_abs(A_BUTTON_LOC.microscope_x)
+                reply = X_AXIS.move_abs(A_BUTTON_LOC.microscope_x)
                 if not helper_minion_functions.check_command_succeeded(reply):
                     return
                 reply = Y_AXIS.move_abs(A_BUTTON_LOC.microscope_y)
