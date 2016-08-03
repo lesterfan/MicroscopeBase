@@ -53,7 +53,7 @@ MICROSCOPE_MAN = gameobjects.Enemy(0,0,10,10, colors.white)
 
 # Saved locations shown on screen
 DEFAULT_OUT_OF_SCREEN_VALUE = 100000
-A_BUTTON_LOC = gameobjects.Enemy(0, 0, 10, 10, colors.green)                      # The green A button will always be set to home
+A_BUTTON_LOC = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.green)                      # The green A button will always be set to home
 X_BUTTON_LOC = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.blue)                         # The blue X button will be reconfigurable
 Y_BUTTON_LOC = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.yellow)                       # The yellow Y button will be reconfigurable
 B_BUTTON_LOC = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.red)                          # The red B button will be reconfigurable
@@ -147,6 +147,7 @@ def manual_movement_mode():
         y_button =  0
         b_button =  0
         rb_button = 0
+        start_button = 0
        
         if using_joystick:
             # -------------------------------------- Assign the buttons for the joystick OR on the keyboard -------------------------------------------------
@@ -155,6 +156,8 @@ def manual_movement_mode():
             y_button = JOYSTICK.get_button(4)
             b_button = JOYSTICK.get_button(1)
             rb_button = JOYSTICK.get_button(7)   
+            start_button = JOYSTICK.get_button(11)
+
         else:
             if keys[pygame.K_h]:
                 a_button = 1
@@ -167,13 +170,27 @@ def manual_movement_mode():
             if keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]:
                 rb_button = 1 
 
-        if a_button == 1:                                                       # Press a to home the device
+        if start_button == 1:                                                       # Press a to return to a position. Press rb + a to save a position for a
             reply = MICROSCOPE_BASE.home()
             if helper_minion_functions.check_command_succeeded(reply):
                 helper_message = "Device homed!"
             else:
                 print("device home failed")
                 return
+
+        if rb_button == 0 and a_button == 1:                                                       # Press a to return to a position. Press rb + a to save a position for a
+            if A_BUTTON_LOC.xstart == DEFAULT_OUT_OF_SCREEN_VALUE:
+                helper_message = "No saved value for a!"
+            else:
+                reply = A_AXIS.move_abs(A_BUTTON_LOC.microscope_x)
+                if not helper_minion_functions.check_command_succeeded(reply):
+                    return
+                reply = Y_AXIS.move_abs(A_BUTTON_LOC.microscope_y)
+                if not helper_minion_functions.check_command_succeeded(reply):
+                    return
+                MICROSCOPE_MAN.xstart = A_BUTTON_LOC.xstart
+                MICROSCOPE_MAN.ystart = A_BUTTON_LOC.ystart
+                helper_message = "Returned to saved x position!"
         
         if rb_button == 0 and x_button == 1:                                    # Press x to return to x position. Press rb + x to save a position for x
             if X_BUTTON_LOC.xstart == DEFAULT_OUT_OF_SCREEN_VALUE:
@@ -216,7 +233,16 @@ def manual_movement_mode():
                 MICROSCOPE_MAN.xstart = B_BUTTON_LOC.xstart
                 MICROSCOPE_MAN.ystart = B_BUTTON_LOC.ystart
                 helper_message = "Returned to saved b position!"
-                            
+
+        if rb_button == 1 and a_button == 1:                                    # Save a location for x by pressing rb + x
+            A_BUTTON_LOC.xstart = DISPLAY_WIDTH - int(x_loc/1000) - 10
+            if A_BUTTON_LOC.xstart <= 0:
+                A_BUTTON_LOC.xstart = 0 
+            A_BUTTON_LOC.ystart = int(y_loc/1000)
+            A_BUTTON_LOC.microscope_x = x_loc
+            A_BUTTON_LOC.microscope_y = y_loc
+            helper_message = "x location saved!"                    
+
         if rb_button == 1 and x_button == 1:                                    # Save a location for x by pressing rb + x
             X_BUTTON_LOC.xstart = DISPLAY_WIDTH - int(x_loc/1000) - 10
             if X_BUTTON_LOC.xstart <= 0:
