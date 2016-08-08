@@ -86,7 +86,7 @@ def main():
         buttons = JOYSTICK.get_numbuttons()
         i = 6
         button = JOYSTICK.get_button(i)
-        print("Button {} value {}".format(i,button))
+        #print("Button {} value {}".format(i,button))
 
         MICROSCOPE_DISPLAY.fill(colors.black)
         #TEST_MAN.drawToScreen()

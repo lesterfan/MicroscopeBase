@@ -385,6 +385,7 @@ def main():
 
      print x_curr, y_curr
      '''
+    print "What's good in the hood"
 
     manual_movement_mode()
 
