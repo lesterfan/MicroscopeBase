@@ -58,6 +58,7 @@ X_BUTTON_LOC = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCR
 Y_BUTTON_LOC = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.yellow)                       # The yellow Y button will be reconfigurable
 B_BUTTON_LOC = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.red)                          # The red B button will be reconfigurable
 
+dank_meme_on = False
 
 # ---------------------------------------------- End ------------------------------------------------------------------------------------------------------------
 
@@ -148,6 +149,7 @@ def manual_movement_mode():
         b_button =  0
         rb_button = 0
         start_button = 0
+        rt_button = 0
        
         if using_joystick:
             # -------------------------------------- Assign the buttons for the joystick OR on the keyboard -------------------------------------------------
@@ -157,6 +159,7 @@ def manual_movement_mode():
             b_button = JOYSTICK.get_button(1)
             rb_button = JOYSTICK.get_button(7)   
             start_button = JOYSTICK.get_button(11)
+            rt_button = JOYSTICK.get_button(9)
 
         else:
             if keys[pygame.K_h]:
@@ -169,6 +172,11 @@ def manual_movement_mode():
                 b_button = 1
             if keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]:
                 rb_button = 1 
+
+        # Dank meme
+        if rt_button == 1:
+            dank_meme_on = True
+        # End dank meme
 
         if start_button == 1:                                                       # Press a to return to a position. Press rb + a to save a position for a
             reply = MICROSCOPE_BASE.home()
