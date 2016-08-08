@@ -434,7 +434,7 @@ dotnet.build_assembly(FilmmetricsAnalysisString, 'FilmmetricsAnalysis.dll', ['FI
 import FilmetricsAnalysis
 
 def main():
-    mAnalyzer = FilmetricsAnalysis.MicroscopeAnalyzer(True)
+    # mAnalyzer = FilmetricsAnalysis.MicroscopeAnalyzer(True)
 
     
 
