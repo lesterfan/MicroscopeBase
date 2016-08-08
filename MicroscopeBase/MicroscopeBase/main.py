@@ -389,8 +389,9 @@ def main():
 
     manual_movement_mode()
 
-
-
+    # Cleaning things up
+    SERIAL.close()
+    
     print ("Microns!")
 
 main()
