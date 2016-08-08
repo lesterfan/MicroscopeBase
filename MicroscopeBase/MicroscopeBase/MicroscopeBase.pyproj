@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>ddfa242f-c91b-408c-a5a2-a8067b0490a7</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>main.py</StartupFile>
+    <StartupFile>DotNetTest.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -25,6 +25,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="colors.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DotNetTest.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="example_from_documentation.py">
