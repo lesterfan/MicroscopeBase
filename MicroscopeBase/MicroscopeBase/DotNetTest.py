@@ -429,12 +429,13 @@ namespace FilmetricsAnalysis
 
 '''
 
-dotnet.build_assembly(FilmmetricsAnalysisString, 'FilmmetricsAnalysis.dll', ['FILMeasure.exe', 'System.Xml.dll', 'System.Drawing.dll'], '')
+dotnet.build_assembly(FilmmetricsAnalysisString, 'FilmmetricsAnalysis.dll', ['C:\\Users\\HMNL\\Desktop\\VsGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\FILMeasure.exe', 'System.Xml.dll', 'System.Drawing.dll'], '')
+dotnet.add_assemblies('C:\\Users\\HMNL\\Desktop\\VsGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\FILMeasure.exe')
 
 import FilmetricsAnalysis
 
 def main():
-    mAnalyzer = FilmetricsAnalysis.MicroscopeAnalyzer(True)
+    # mAnalyzer = FilmetricsAnalysis.MicroscopeAnalyzer(True)
 
     
 
