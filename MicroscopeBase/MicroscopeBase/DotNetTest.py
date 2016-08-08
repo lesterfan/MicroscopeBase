@@ -434,14 +434,8 @@ dotnet.build_assembly(FilmmetricsAnalysisString, 'FilmmetricsAnalysis.dll', ['FI
 import FilmetricsAnalysis
 
 def main():
-    # example = Foo.Example(1, 's')
-    # 
-    # example.Set(5, 'B')
-    # 
-    # 
-    # print('{0.X} {0.S}'.format(example))
-    testObj = FilmetricsAnalysis.Result()
-    testObj.test()
+    mAnalyzer = FilmetricsAnalysis.MicroscopeAnalyzer(True)
+
     
 
 
