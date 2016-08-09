@@ -435,7 +435,7 @@ dotnet.add_assemblies('C:\\Users\\HMNL\\Desktop\\VsGithub\\MicroscopeBase\\Micro
 import FilmetricsAnalysis
 
 def main():
-    # mAnalyzer = FilmetricsAnalysis.MicroscopeAnalyzer(True)
+    mAnalyzer = FilmetricsAnalysis.MicroscopeAnalyzer(True)
 
     
 

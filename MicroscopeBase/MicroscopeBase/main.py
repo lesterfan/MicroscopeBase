@@ -11,7 +11,7 @@ import gameobjects
 pygame.init()
 pygame.joystick.init()
 
-using_joystick = True
+using_joystick = False
 
 
 # ---------------------------------------------- Here, I am connecting the microscope with the computer --------------------------------------------------------
