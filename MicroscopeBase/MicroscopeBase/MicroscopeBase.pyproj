@@ -43,6 +43,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="main.py" />
+    <Compile Include="MicroscopeBase.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="printfunctions.py">
       <SubType>Code</SubType>
     </Compile>
@@ -53,6 +56,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="testing_moving.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UserInterface.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="utility.py">
