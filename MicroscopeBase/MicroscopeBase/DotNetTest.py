@@ -1,7 +1,7 @@
 import dotnet.seamless
 
 # Load the compiled C# library... see the C# library to see how everything works
-dotnet.add_assemblies('C:\\Users\\Huafeng\\Desktop\\VGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\')
+dotnet.add_assemblies('C:\\Users\\HMNL\\Desktop\\VsGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\')
 dotnet.load_assembly('MicroscopeAnalyzerLibrary')
 import MicroscopeAnalyzerLibrary
 
@@ -21,8 +21,8 @@ def main():
             mAnalyzer.Measure()
             if mAnalyzer.mLastRet == 1:
                 print "Something wrong in the last step!"
-
-            print "Measurement successful!"
+            else:
+                print "Measurement successful!"
 
         elif input == 's':
             mAnalyzer.mMeasuredResults.ret = "Saved!"
