@@ -46,6 +46,9 @@
     <Compile Include="printfunctions.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="PyDotNetTest.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="testing_joystick.py">
       <SubType>Code</SubType>
     </Compile>
@@ -58,6 +61,14 @@
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="{2af0f10d-7135-4994-9156-5d01c9c11b7e}\2.7" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+      <Name>System</Name>
+      <AssemblyName>System.dll</AssemblyName>
+      <HintPath>..\..\..\..\..\..\..\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

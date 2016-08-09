@@ -1,445 +1,66 @@
 import dotnet.seamless
 
-FilmmetricsAnalysisString = '''
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
-using System.IO;
-using Filmetrics;
-using System.Drawing;
+# Load the compiled C# library... see the C# library to see how everything works
+dotnet.add_assemblies('C:\\Users\\Huafeng\\Desktop\\VGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\')
+dotnet.load_assembly('MicroscopeAnalyzerLibrary')
+import MicroscopeAnalyzerLibrary
 
-namespace FilmetricsAnalysis
-{
-
-    /** A modified version of the Result class provided by the FIRemote so it can be serialized and saved. **/
-
-    public class Result
-    {
-        public string ret = "";
-
-
-        public bool AlarmTriggered;
-        public float GOF;
-        public bool GofIsOK;
-        public float[] LayerRoughnesses;
-        public float[] LayerThicknesses;
-        public float[] MeasFFTIntensity;
-        public float[] MeasFFTThickness;
-        public float[] PrimaryCalcSpectrum;
-        public float[] PrimaryCalcWavelengths;
-        public float[] PrimarySpectrum;
-        public float[] PrimaryWavelengths;
-        public string ResultsSummary;
-        public float[] SpectrumAnalysisExtremaValues;
-        public float[] SpectrumAnalysisExtremaWavelengthes;
-        public float[] SpectrumAnalysisMeanValues;
-
-        public Result() {
-        }
-
-        public Result(Filmetrics.FIRemote.FIMeasResults e)
-        {
-            this.AlarmTriggered = e.AlarmTriggered;
-            this.GOF = e.GOF;
-            this.GofIsOK = e.GofIsOK;
-            this.LayerRoughnesses =                     e.LayerRoughnesses                      == null?     null : (float[]) e.LayerRoughnesses.Clone();
-            this.LayerThicknesses =                     e.LayerThicknesses                      == null?     null : (float[]) e.LayerThicknesses.Clone();
-            this.MeasFFTIntensity =                     e.MeasFFTIntensity                      == null?     null : (float[]) e.MeasFFTIntensity.Clone();
-            this.MeasFFTThickness =                     e.MeasFFTThickness                      == null?     null : (float[]) e.MeasFFTThickness.Clone();
-            this.PrimaryCalcSpectrum =                  e.PrimaryCalcSpectrum                   == null?     null : (float[]) e.PrimaryCalcSpectrum.Clone();
-            this.PrimaryCalcWavelengths =               e.PrimaryCalcWavelengths                == null?     null : (float[]) e.PrimaryCalcWavelengths.Clone();
-            this.PrimarySpectrum =                      e.PrimarySpectrum                       == null?     null : (float[]) e.PrimarySpectrum.Clone();
-            this.PrimaryWavelengths =                   e.PrimaryWavelengths                    == null?     null : (float[]) e.PrimaryWavelengths.Clone();
-            this.ResultsSummary =                       e.ResultsSummary                        == null?     null : String.Copy(e.ResultsSummary);
-            this.SpectrumAnalysisExtremaValues =        e.SpectrumAnalysisExtremaValues         == null?     null : (float[]) e.SpectrumAnalysisExtremaValues.Clone();
-            this.SpectrumAnalysisExtremaWavelengthes =  e.SpectrumAnalysisExtremaWavelengthes   == null?     null : (float[]) e.SpectrumAnalysisExtremaWavelengthes.Clone();
-            this.SpectrumAnalysisMeanValues =           e.SpectrumAnalysisMeanValues            == null?     null : (float[]) e.SpectrumAnalysisMeanValues.Clone();
-        }
-
-        public void test()
-        {
-            Console.WriteLine("This is a test!");
-        }
-    }
-
-    public class MicroscopeAnalyzer
-    {
-        public FIRemote mFIRemote;
-        public string mReferenceMaterial;
-        public Filmetrics.FIRemote.FIMeasResults mFIRemoteResults;
-
-        // This is the structure that we're interested in
-        public Result mMeasuredResults;
-
-        // If mLastRet = 1, it means that something has gone wrong in the previous step
-        public int mLastRet = 0;
-
-        // Constructor
-        public MicroscopeAnalyzer()
-        {
-            Console.WriteLine("Welcome to Filmetrics Analyzer - HMNL (c) 2016");
-            try
-            {
-                mFIRemote = new FIRemote(true);
-                Console.WriteLine("Software was successfully connected to the microscope!");
-                mLastRet = 0;
-            }
-            catch (FIRemote.InitializationFailureException e)
-            {
-                Console.WriteLine("Error : Unable to access the microscope hardware!");
-                mLastRet = 1;
-                return;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception! : " + e.ToString());
-                mLastRet = 1;
-                return;
-            }
-        }
-
-        // ----------------------------------- Methods ---------------------------------------------
-
-        /*  Baseline Step 0 : Obtains the reference material from the user    */
-        public void obtainRefMat()
-        {
-            Console.WriteLine("Please type in which material you are referencing.");
-            mReferenceMaterial = Console.ReadLine();
-            mFIRemote.BaselineSetRefMat(mReferenceMaterial);
-        }
-
-        /*  Baseline Step 1 : Acquire sample reflectance     */
-        public void BaselineStep1()
-        {
-            try
-            {
-                mFIRemote.BaselineAcquireSpectrumFromSample();
-                Console.WriteLine("Sample reflectance successful!");
-                mLastRet = 0;
-            }
-            catch (Filmetrics.FIRemote.AcquisitionException e)
-            {
-                if (e.Message == "") Console.WriteLine("Spectrum acquisition errror.");
-                else Console.WriteLine("Error attempting to acquire spectrum. Exception message is: " + e.Message);
-                mLastRet = 1;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Unknown Exception caught!" + e.ToString());
-                mLastRet = 1;
-            }
-        }
-
-        /*  Baseline Step 2 : Acquire reference standard   */
-        public void BaselineStep2()
-        {
-            Console.WriteLine("I am now acquiring reference standard");
-            try
-            {
-                mFIRemote.BaselineAcquireReference();
-                Console.WriteLine("Reference standard successful!");
-                mLastRet = 0;
-            }
-            catch (Filmetrics.FIRemote.AcquisitionException e)
-            {
-                if (e.Message == "")
-                {
-                    Console.WriteLine("Spectrum acquisition error!");
-                }
-                else
-                {
-                    Console.WriteLine("Error attempting to acquire spectrum.Exception message is: " + e.Message);
-                }
-                mLastRet = 1;
-            }
-            catch (Filmetrics.FIRemote.ArgumentException e)
-            {
-                Console.WriteLine("Bad argument. Exception caught. Message is: " + e.Message + "\\nOffending argument is : " + e.ParamName + "\\nNote: if acquisition mode is transmittance only, then the reference material should usually be set to 1 in order to avoid this error.");
-                mLastRet = 1;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception caught! " + e.ToString());
-                mLastRet = 1;
-            }
-        }
-
-        //while (munchkinsInBox){
-            //Lester.eatMunchkin()}
-
-        /*  Baseline Step 3 : Take background   */
-        public void BaselineStep3()
-        {
-            Console.WriteLine("Now taking a background.");
-            try
-            {
-                mFIRemote.BaselineAcquireBackgroundAfterRef();
-                Console.WriteLine("Acquire background successful!");
-                mLastRet = 0;
-            }
-            catch (Filmetrics.FIRemote.AcquisitionException e)
-            {
-                if (e.Message == "")
-                {
-                    Console.WriteLine("Spectrum acquisition error.");
-                }
-                else
-                {
-                    Console.WriteLine("Error attempting to acquire spectrum.Exception message is: " + e.Message);
-                }
-                mLastRet = 1;
-            }
-            catch (Filmetrics.FIRemote.InvalidBackgroundException e)
-            {
-                Console.WriteLine("ERROR! : Background spectrum and reference spectrum are almost exactly the same. Please make sure that the reference sample has "
-                    + "\\nbeen removed from the stage and repeat acquisition of the Background spectrum. If this error happens again, you must cancel "
-                    + "\\nand start the baseline procedure over from the beginning.");
-
-                mLastRet = 1;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception caught! " + e.ToString());
-                mLastRet = 1;
-            }
-        }
-
-        /*  Baseline Step 4 : Commit the baseline   */
-        public void BaselineStep4()
-        {
-            try
-            {
-                mFIRemote.BaselineCommit();
-                Console.WriteLine("Baseline successfully committed!");
-                mLastRet = 0;
-            }
-            catch (Filmetrics.FIRemote.TimeOutException e)
-            {
-                Console.WriteLine("Error!" + e.Message);
-                mLastRet = 1;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception caught! " + e.ToString());
-                mLastRet = 1;
-            }
-        }
-
-        /* 
-        **  Acquires a baseline, does all 0-4 steps sequentially.
-        **  Returns 1 if an error occured, 0 if baseline is successfully taken.
-        **  */
-        public void AcquireBaseline()
-        {
-            Console.WriteLine("Enter in anything to begin the baseline procedure.");
-            Console.ReadLine();
-
-            // Step 0
-            obtainRefMat();
-
-            // Step 1
-            Console.WriteLine("Please focus the microscope and prepare to takeoff to step 1 (or to take a sample reflectance)!");
-            Console.ReadLine();
-            BaselineStep1();
-            if (mLastRet == 1)
-            {
-                Console.WriteLine("Error! Something went wrong in the last step!");
-                return;
-            }
-
-            // Step 2
-            Console.WriteLine("Enter in anything to continue the journey to step 2 (aka to take a reflectance standard)!");
-            Console.ReadLine();
-            BaselineStep2();
-            if (mLastRet == 1)
-            {
-                Console.WriteLine("Error! Something went wrong in the last step!");
-                return;
-            }
-
-            // Step 3
-            Console.WriteLine("Enter in anything to continue the journey to step 3 (aka to acquire background)!");
-            Console.ReadLine();
-            BaselineStep3();
-            if (mLastRet == 1)
-            {
-                Console.WriteLine("Error! Something went wrong in the last step!");
-                return;
-            }
-
-            // Step 4
-            Console.WriteLine("Enter in anything to continue the journey to step 4 (aka to commit baseline)!");
-            Console.ReadLine();
-            BaselineStep4();
-            if (mLastRet == 1)
-            {
-                Console.WriteLine("Error! Something went wrong in the last step!");
-                return;
-            }
-        }
-
-
-        /* 
-        **  Emulates the function of clicking the measure button
-        **  */
-        public void Measure()
-        {
-            try
-            {
-                // Cast the FIRemote result object to the class that I made so we can save it.
-                mFIRemoteResults = mFIRemote.Measure(true);
-
-                // Logging to check.
-                Console.WriteLine("The wavelengths are");
-                for (int i = 0; i < mFIRemoteResults.PrimaryWavelengths.Length; ++i) Console.WriteLine(mFIRemoteResults.PrimaryWavelengths[i]);
-                Console.WriteLine("The summary is " + mFIRemoteResults.ResultsSummary);
-
-                mMeasuredResults = new Result(mFIRemoteResults);
-                mLastRet = 0;
-            }
-            catch (Filmetrics.FIRemote.AcquisitionException e)
-            {
-                if (e.Type == FIRemote.AcquisitionException.ExceptionType.Saturation)
-                {
-                    Console.WriteLine("Spectrometer saturation. Repeat baseline or reduce integration time if acquisition settings measurement timing is set to manual.");
-                }
-                else if (e.Type == FIRemote.AcquisitionException.ExceptionType.InvalidAcquisitionSettings)
-                {
-                    Console.WriteLine("Invalid acquisition settings. Verify that a valid baseline has been established.");
-                }
-                else if (e.Type == FIRemote.AcquisitionException.ExceptionType.Unknown)
-                {
-                    if (e.Message == "")
-                    {
-                        Console.WriteLine("Unknown acquisition error. ");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Error attempting to measure. Exception message is: " + e.Message);
-                    }
-                }
-                mLastRet = 1;
-            }
-            catch (Filmetrics.FIRemote.SpectrumAnalysisException e)
-            {
-                Console.WriteLine("Error attempting to analyze spectrum. Error message is: " + e.Message);
-                mLastRet = 1;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception caught! " + e.ToString());
-                mLastRet = 1;
-            }
-        }
-
-        /* 
-        **  Emulates the function of clicking the save button
-        **  @param fileDir : directory that it should be saved in
-        **  @param userInput : the name that the file should be stored as.
-        **  */
-        public void SaveSpectrum(string fileDir, string userInput)
-        {
-            try
-            {
-                Console.WriteLine("Currently saving spectrum to "+fileDir+userInput+".fmspe");
-
-                // Save the spectrum file
-                mFIRemote.SaveSpectrum(fileDir+userInput+".fmspe");
-
-                Console.WriteLine("File saved!");
-                mLastRet = 0;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception caught! " + e.ToString());
-                mLastRet = 1;
-            }
-        }
-
-        /* 
-        **  Saves the current mMeasurementResults object to an .xml file in directory specified by the user
-        **  @param fileDir : directory that it should be saved in
-        **  @param userInput : the name that the file should be stored as
-        **  */
-        public void SaveResultsTo(string fileDir, string userInput)
-        {
-            Console.WriteLine("Now saving myself to " + fileDir + userInput + ".xml");
-
-            try {
-                XmlSerializer ser = new XmlSerializer(typeof(Result));
-
-                // Serialize the variable to the specific directory indicated by user using XML
-                using (var stream = File.Create(fileDir + userInput + ".xml"))
-                {
-                    ser.Serialize(stream, mMeasuredResults);
-                }
-
-                // Save the sample image to the directory as .bmp
-                // First make a new Bitmap around it, then save that
-                var temp_image = new Bitmap(mFIRemoteResults.SampleImage);
-                temp_image.Save(fileDir + userInput + ".bmp", System.Drawing.Imaging.ImageFormat.Bmp);
-
-                Console.WriteLine("I saved myself!");
-                mLastRet = 0;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception caught! " + e.ToString());
-                mLastRet = 1;
-            }
-        }
-
-        /* 
-        **  Reverts the state of the variable 'this' to the state of MicroscopeAnalyzer saved in the .xml file specified by the user
-        **  @param fileDir : directory that it should be saved in
-        **  @param userInput : the name that the file should be stored as
-        **  */
-        public static Result LoadMicroscopeAnalyzerFrom(string fileDir, string userInput)
-        {
-            Console.WriteLine("Now loading myself to " + fileDir + userInput + ".xml");
-
-            try
-            {
-                XmlSerializer ser = new XmlSerializer(typeof(Result));
-
-                Result result;
-
-                using (var stream = File.OpenRead(fileDir + userInput + ".xml"))
-                {
-                    result = (Result)ser.Deserialize(stream);
-                }
-                Console.WriteLine("Successfully loaded!");
-
-                return result;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception caught! "+e.ToString());
-                return null;
-            }
-        }
-
-
-
-    }
-}
-
-
-'''
-
-dotnet.build_assembly(FilmmetricsAnalysisString, 'FilmmetricsAnalysis.dll', ['C:\\Users\\HMNL\\Desktop\\VsGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\FILMeasure.exe', 'System.Xml.dll', 'System.Drawing.dll'], '')
-dotnet.add_assemblies('C:\\Users\\HMNL\\Desktop\\VsGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\FILMeasure.exe')
-
-import FilmetricsAnalysis
 
 def main():
-    mAnalyzer = FilmetricsAnalysis.MicroscopeAnalyzer(True)
+    mAnalyzer = MicroscopeAnalyzerLibrary.MicroscopeAnalyzer(True)
+    if mAnalyzer.mLastRet == 1:
+        print "Something wrong in the last step!"
 
+    while True:
+        input = raw_input( "Enter in 'a' to take measurement, enter in 's' to save, 'l' to load\n" )
+
+        if input == 'a':
+            print "Now measuring!"
+
+            # Emulates click on the 'measure' button
+            mAnalyzer.Measure()
+            if mAnalyzer.mLastRet == 1:
+                print "Something wrong in the last step!"
+
+            print "Measurement successful!"
+
+        elif input == 's':
+            mAnalyzer.mMeasuredResults.ret = "Saved!"
     
+            print "Please enter in the name of the file you want it to be saved in."
+            print "The program will automatically save it as a '.fmspe' file. "
+            print "For now, all files will be saved in directory 'C:/Users/HMNL/Documents/Test/' "
 
+            currFileDir = "C:/Users/HMNL/Documents/Test/"
+            user_input = raw_input("\n")
 
-    print "Hello, world!"
+            # Save the .fmspe file
+            mAnalyzer.SaveSpectrum(currFileDir, user_input)
+            if mAnalyzer.mLastRet == 1:
+                print "Something wrong in the last step!"
+
+            # Save the .xml data structure and the image.
+            mAnalyzer.SaveResultsTo(currFileDir, user_input)
+            if mAnalyzer.mLastRet == 1:
+                print "Something wrong in the last step!"
+
+        elif input == 'l':
+            print "Please enter in the name of the file you want the settings loaded from."
+            print "For now, all files will be saved from directory 'C:/Users/HMNL/Documents/Test/' "
+            
+            currFileDir = "C:/Users/HMNL/Documents/Test/"
+            user_input = raw_input("\n")
+
+            # Load the result
+            loaded_result = MicroscopeAnalyzerLibrary.MicroscopeAnalyzer.LoadResultsFrom(currFileDir, user_input)
+            if loaded_result == None:
+                print "Something wrong in the last step"
+                continue
+
+            print "Load successful!"
+            for item in loaded_result.PrimaryWavelengths:
+                print item
+
+            print "The summary is ", loaded_result.ResultsSummary
 
 main()
