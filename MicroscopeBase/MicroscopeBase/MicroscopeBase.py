@@ -47,7 +47,7 @@ class MicroscopeBase:
     Returns a tuple representing the absolute location of the device right now
     Returns (int, int) representing (location_x, location_y)
     '''
-    def get_absolute_position():
+    def get_absolute_position(self):
     
         reply = self.mAsciiDevice.send("get pos")
         position_array = reply.data.split()
@@ -64,7 +64,7 @@ class MicroscopeBase:
     @param reply: AsciiReply
     Returns Boolean
     '''
-    def check_command_succeeded(reply):
+    def check_command_succeeded(self, reply):
         if reply.reply_flag != "OK": # If command not accepted (received "RJ")
             print ("Danger! Command rejected because: {}".format(reply.data))
             return False
@@ -79,7 +79,7 @@ class MicroscopeBase:
     '''
     def x_move_abs(self, x_coord):
         reply = self.x_axis.move_abs(x_coord)
-        if not check_command_succeeded(reply):
+        if not self.check_command_succeeded(reply):
             self.mLastRet = 1
             print "Command failed in x_move_abs!"
             return
@@ -93,7 +93,7 @@ class MicroscopeBase:
     '''
     def y_move_abs(self,y_coord):
         reply = self.y_axis.move_abs(y_coord)
-        if not check_command_succeeded(reply):
+        if not self.check_command_succeeded(reply):
             self.mLastRet = 1
             print "Command failed in y_move_abs!"
             return
@@ -107,7 +107,7 @@ class MicroscopeBase:
     '''
     def x_move_vel(self,input_speed):
         reply = self.x_axis.move_vel(input_speed)
-        if not check_command_succeeded(reply):
+        if not self.check_command_succeeded(reply):
             self.mLastRet = 1
             print "Command failed in x_move_vel!"
             return
@@ -121,7 +121,7 @@ class MicroscopeBase:
     '''
     def y_move_vel(self,input_speed):
         reply = self.y_axis.move_vel(input_speed)
-        if not check_command_succeeded(reply):
+        if not self.check_command_succeeded(reply):
             self.mLastRet = 1
             print "Command failed in y_move_vel!"
             return
@@ -133,7 +133,7 @@ class MicroscopeBase:
     '''
     def home_device(self):
         reply = mAsciiDevice.home()
-        if not check_command_succeeded(reply):
+        if not self.check_command_succeeded(reply):
             print "Device home failed!"
             self.mLastRet = 1
             return

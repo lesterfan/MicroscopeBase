@@ -156,12 +156,12 @@ class UserInterface:
     '''
     def load_position_from_button(self, string_input, Microscope_Base_Input):
         if string_input not in self.saved_positions:
-            self.message1 = "Error! No position saved for ",string_input,"yet!"
+            self.message1 = "Error! No position saved for "+string_input+"yet!"
         else:
             load_x, load_y = self.saved_positions[string_input]
             Microscope_Base_Input.x_move_abs(load_x)
             Microscope_Base_Input.y_move_abs(load_y)
-            self.message1 = "Successfully loaded position to ",string_input
+            self.message1 = "Successfully loaded position to "+string_input
 
 
     '''
@@ -174,8 +174,8 @@ class UserInterface:
         pygame.draw.rect(self.pygame_display, colors.white, [0, 389, 320, 100])
         pygame.draw.rect(self.pygame_display, colors.red, [0, 389, 320, 10])
 
-        # Get absolute location to print
-        absolute_location = Microscope_Base_Input.get_absolute_location()
+        # Get absolute position to print
+        absolute_location = Microscope_Base_Input.get_absolute_position()
 
         # Print messages to screen
         printfunctions.message_to_screen("Location : "+str(absolute_location), colors.black, y_displace = 180, size = 'medium')
