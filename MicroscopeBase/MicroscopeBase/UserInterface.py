@@ -93,8 +93,7 @@ class UserInterface:
     def initialize_joystick(self, a_button_num = 0, x_button_num = 3, y_button_num = 4,
                             b_button_num = 1, rb_button_num = 7, start_button_num = 11, rt_button_num = 9):
 
-        if self.joystick != None:
-            pygame.joystick.quit()
+        pygame.joystick.quit()
 
         pygame.joystick.init()
 
@@ -116,6 +115,7 @@ class UserInterface:
             self.joystick.init()
 
         else:
+            self.using_joystick = False
             self.message1 = "No joystick found! Joystick mode deactivated!"
 
 
