@@ -138,3 +138,5 @@ class MicroscopeBase:
             self.mLastRet = 1
             return
         self.mLastRet = 0
+
+
