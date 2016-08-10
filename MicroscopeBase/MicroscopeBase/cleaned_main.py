@@ -57,28 +57,28 @@ def main():
         if start_button == 1:                                              # Start button to home device
             Microscope_Base.home_device()
 
-        if rb_button == 0 and a_button == 1:                               # Save functions
+        if rb_button == 1 and a_button == 1:                               # Save functions
             Interface.save_position_to_button('a',Microscope_Base)
 
-        if rb_button == 0 and x_button == 1:
+        if rb_button == 1 and x_button == 1:
             Interface.save_position_to_button('x', Microscope_Base)
 
-        if rb_button == 0 and y_button == 1:
+        if rb_button == 1 and y_button == 1:
             Interface.save_position_to_button('y', Microscope_Base)
 
-        if rb_button == 0 and b_button == 1:
+        if rb_button == 1 and b_button == 1:
             Interface.save_position_to_button('b', Microscope_Base)
 
-        if rb_button == 1 and a_button == 1:                               # Load functions
+        if rb_button == 0 and a_button == 1:                               # Load functions
             Interface.load_position_from_button('a', Microscope_Base)
 
-        if rb_button == 1 and x_button == 1:
+        if rb_button == 0 and x_button == 1:
             Interface.load_position_from_button('x', Microscope_Base)
 
-        if rb_button == 1 and y_button == 1:
+        if rb_button == 0 and y_button == 1:
             Interface.load_position_from_button('y', Microscope_Base)
 
-        if rb_button == 1 and b_button == 1:
+        if rb_button == 0 and b_button == 1:
             Interface.load_position_from_button('b', Microscope_Base)
 
 
