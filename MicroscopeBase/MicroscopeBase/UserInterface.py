@@ -2,6 +2,9 @@ import pygame
 import time
 import colors
 import printfunctions
+import gameobjects
+
+DEFAULT_OUT_OF_SCREEN_VALUE = 100000
 
 class UserInterface:
 
@@ -40,9 +43,10 @@ class UserInterface:
 
     saved_positions = {}                      # Saved position is a hash : key = string, value = tuple (x,y)
 
-
     message1 = ""                             # Message to show the user
     
+    microscope_position_GUIobject = None
+
 
     ''' 
     Constructor that sets up connection to user interface. Instantiates all the 
@@ -60,6 +64,11 @@ class UserInterface:
         self.Clock = pygame.time.Clock()
         self.pygame_display = pygame.display.set_mode((self.display_width, self.display_height))
         pygame.display.set_caption(pygame_title)
+
+        # Initialize pygame GUI objects to show where things are
+        self.microscope_position_GUIobject = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE,
+                                                          10, 10, colors.white)
+                                                          
 
 
     '''
@@ -176,6 +185,12 @@ class UserInterface:
 
         # Get absolute position to print
         absolute_location = Microscope_Base_Input.get_absolute_position()
+        x, y = absolute_location
+
+        # Draw the microscope object according to current absolute location
+        self.microscope_position_GUIobject.xstart = int( x / 200 ) 
+        self.microscope_position_GUIobject.ystart = int( y / 200 )
+        self.microscope_position_GUIobject.drawToScreen()
 
         # Print messages to screen
         printfunctions.message_to_screen("Location : "+str(absolute_location), colors.black, y_displace = 180, size = 'medium')

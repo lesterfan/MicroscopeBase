@@ -143,6 +143,7 @@ def main():
 
 
 
+
         # ----------------------- UPDATE DISPLAY ACCORDINGLY --------------------------------
         Interface.refresh_pygame_display(Microscope_Base)
 
