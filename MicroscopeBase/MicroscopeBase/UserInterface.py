@@ -79,11 +79,11 @@ class UserInterface:
 
         # Initialize pygame GUI objects to show where things are
         self.microscope_position_GUIobject = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.white)
-        self.a_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.green) 
-        self.x_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.blue)  
-        self.y_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.yellow)
-        self.b_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.red)   
-        self.home_position_GUIobject       = gameobjects.Enemy(0, 0, 10, 10, colors.hot_pink)   
+        self.a_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.blue) 
+        self.x_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.hot_pink)  
+        self.y_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.green)
+        self.b_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.orange)   
+        self.home_position_GUIobject       = gameobjects.Enemy(0, 0, 10, 10, colors.red)   
 
         # Place the GUIObjects for buttons into a dictionary to retrieve
         self.GUIButton_dict['a'] = self.a_position_GUIobject
@@ -156,16 +156,16 @@ class UserInterface:
     '''
 
     def get_joystick_xfine(self):
-        return self.joystick.get_axis(0)
+        return self.joystick.get_axis(2)
     
     def get_joystick_yfine(self):
-        return self.joystick.get_axis(1)
+        return self.joystick.get_axis(3)
 
     def get_joystick_x(self):
-        return self.joystick.get_axis(2)
+        return self.joystick.get_axis(0)
 
     def get_joystick_y(self):
-        return self.joystick.get_axis(3)
+        return self.joystick.get_axis(1)
 
 
 
