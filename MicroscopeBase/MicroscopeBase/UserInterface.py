@@ -33,8 +33,8 @@ class UserInterface:
     rt_button_num = 0                         # Which joystick numbers should be checked internally
 
 
-    display_width = 320                       # Internal Pygame variable
-    display_height = 484                      # Internal Pygame variable
+    display_width = 330                       # Internal Pygame variable
+    display_height = 425                      # Internal Pygame variable
    
     pygame_display = None                     # Reference to pygame display
 
@@ -180,23 +180,23 @@ class UserInterface:
     def refresh_pygame_display(self, Microscope_Base_Input):
         # Fill with pretty colors
         self.pygame_display.fill(colors.black)
-        pygame.draw.rect(self.pygame_display, colors.white, [0, 389, 320, 100])
-        pygame.draw.rect(self.pygame_display, colors.red, [0, 389, 320, 10])
+        pygame.draw.rect(self.pygame_display, colors.white, [0, 333, 330, 100])
+        pygame.draw.rect(self.pygame_display, colors.red, [0, 333, 330, 10])
 
         # Get absolute position to print
         absolute_location = Microscope_Base_Input.get_absolute_position()
         x, y = absolute_location
 
         # Draw the microscope object according to current absolute location
-        self.microscope_position_GUIobject.xstart = int( x / 200 ) 
-        self.microscope_position_GUIobject.ystart = int( y / 200 )
+        self.microscope_position_GUIobject.xstart = int( x / 2000 ) 
+        self.microscope_position_GUIobject.ystart = int( y / 2000 )
         self.microscope_position_GUIobject.drawToScreen()
 
         # Print messages to screen
-        printfunctions.message_to_screen("Location : "+str(absolute_location), colors.black, y_displace = 180, size = 'medium')
-        printfunctions.message_to_screen(self.message1,colors.black, y_displace = 200)
-        printfunctions.message_to_screen("RB + X,Y,B to save a position. Press X,Y,B to return to that", colors.black, y_displace = 215)
-        printfunctions.message_to_screen("position. A to home.", colors.black, y_displace = 225)
+        printfunctions.message_to_screen("Location : "+str(absolute_location), colors.black, y_displace = 150, size = 'medium')
+        printfunctions.message_to_screen(self.message1,colors.black, y_displace = 170)
+        printfunctions.message_to_screen("RB + X,Y,B to save a position. Press X,Y,B to return to that", colors.black, y_displace = 185)
+        printfunctions.message_to_screen("position. A to home.", colors.black, y_displace = 195)
 
         
         pygame.display.update()
