@@ -16,7 +16,8 @@ def main():
 
     # Forever while loop
     while True:
-        Interface.check_keyboard_keys()          # Fill Interface.keys with keyboard inputs
+        Interface.check_joystick_still_connected()      # In case the joystick becomes disconnected, or if the user connects the joystick again
+        Interface.check_keyboard_keys()                 # Fill Interface.keys with keyboard inputs
 
         # ------------------------- CONFIGURING SAVE/LOAD BUTTONS -------------------------
 

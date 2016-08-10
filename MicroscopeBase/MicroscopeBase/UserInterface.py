@@ -115,6 +115,19 @@ class UserInterface:
         else:
             self.message1 = "No joystick found! Joystick mode deactivated"
 
+    '''
+    Checks if the joystick is still connected at the time of the function call, and changes self.using_joystick accordingly
+    '''
+    def check_joystick_still_connected(self):
+        if pygame.joystick.get_count() != 0:
+            if self.using_joystick == False:                                           # If we changed states, message to user
+                self.message1 = "Joystick found! Joystick mode activated!"
+            self.using_joystick = True
+        else:
+            if self.using_joystick == True:                                            # If we changed states, message to user
+                self.message1 = "Joystick lost! Joystick mode deactivated!"
+            self.using_joystick = False
+
 
     ''' 
     Reads whatever keyboard key is being inputted. Allows for the interface to check if keys[pygame.K_x] is pressed
