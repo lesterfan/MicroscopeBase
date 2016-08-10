@@ -199,8 +199,41 @@ class UserInterface:
 
 
     '''
-    Refreshes the pygame display according to the information in the rest of this class
+    Moves Microscope_Base_Input num amount of microns on the x axis, given that 6.4 microsteps = 1 um. Will round to the nearest microstep.
+    @ param num : number of microns
+    Returns : None
+    '''
+    def x_move_microns(self, num, Microscope_Base_Input):
+        Microscope_Base_Input.x_move_rel(int( round( num * 6.4 ) ))
 
+    '''
+    Moves Microscope_Base_Input num amount of microns on the y axis, given that 6.4 microsteps = 1 um. Will round to the nearest microstep.
+    @ param num : number of microns
+    Returns : None
+    '''
+    def y_move_microns(self, num, Microscope_Base_Input):
+        Microscope_Base_Input.y_move_rel(int( round( num *6.4 ) ))
+
+    '''
+    Moves Microscope_Base_Input num amount of mm on the x axis, given that 6400 microsteps = 1 mm.
+    @ param num : number of mm
+    Returns : None
+    '''
+    def x_move_mm(self, num, Microscope_Base_Input):
+        Microscope_Base_Input.x_move_rel( num * 6400 )
+
+    '''
+    Moves Microscope_Base_Input num amount of mm on the y axis, given that 6400 microsteps = 1 mm.
+    @ param num : number of mm
+    Returns : None
+    '''
+    def y_move_mm(self, num, Microscope_Base_Input):
+        Microscope_Base_Input.y_move_rel( num * 6400 )
+
+
+
+    '''
+    Refreshes the pygame display according to the information in the rest of this class
     '''
     def refresh_pygame_display(self, Microscope_Base_Input):
         # Fill with pretty colors

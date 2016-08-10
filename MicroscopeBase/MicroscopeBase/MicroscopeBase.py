@@ -1,3 +1,4 @@
+
 from zaber.serial import AsciiSerial, AsciiDevice, AsciiCommand, AsciiReply, AsciiAxis
 
 class MicroscopeBase:
@@ -70,6 +71,32 @@ class MicroscopeBase:
             return False
         else: # Command was accepted
             return True
+
+    '''
+    Moves the x axis of the microscope base num amount of microsteps
+    @param num : number of microsteps to be moved
+    Returns : None
+    '''
+    def x_move_rel(self, num):
+        reply = self.x_axis.move_rel(num)
+        if not self.check_command_succeeded(reply):
+            self.mLastRet = 1
+            print "Command failed in x_move_rel!"
+            return
+        self.mLastRet = 0    
+
+    '''
+    Moves the y axis of the microscope base num amount of microsteps
+    @param num : number of microsteps to be moved
+    Returns : None
+    '''
+    def y_move_rel(self, num):
+        reply = self.y_axis.move_rel(num)
+        if not self.check_command_succeeded(reply):
+            self.mLastRet = 1
+            print "Command failed in y_move_rel!"
+            return
+        self.mLastRet = 0
 
 
     ''' 

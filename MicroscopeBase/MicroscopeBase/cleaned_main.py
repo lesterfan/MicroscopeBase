@@ -82,10 +82,25 @@ def main():
             Interface.load_position_from_button('b', Microscope_Base)
 
 
-        # ---------------------- SETTING UTILITY BUTTONS ----------------------------------
 
-        if Interface.keys[pygame.K_r]:                                      # Press 'r' to update whether user is using joystick or not
+
+        # ------------------------ CHECKING FURTHER UTILITY BUTTONS ----------------------------------
+
+        if Interface.keys[pygame.K_r]:                                                              # Press 'r' to update whether user is using joystick or not
             Interface.initialize_joystick()
+        if Interface.keys[pygame.K_u]:                                                              # Press 'u' to move x axis a given amount of um
+            i = raw_input('Please enter the amount of microns you want to move on the x axis')
+            Interface.x_move_microns(int(i))
+        if Interface.keys[pygame.K_i]:                                                              # Press 'i' to move y axis a given amount of um
+            i = raw_input('Please enter the amount of microns you want to move on the y axis')
+            Interface.y_move_microns(int(i))
+        if Interface.keys[pygame.K_o]:                                                              # Press 'o' to move x axis a given amount of mm
+            i = raw_input('Please enter the amount of mm you want to move on the x axis')
+            Interface.x_move_mm(int(i))
+        if Interface.keys[pygame.K_p]:                                                              # Press 'p' to move y axis a given amount of mm
+            i = raw_input('Please enter the amount of mm you want to move on the y axis')
+            Interface.y_move_mm(int(i))
+
 
 
 
@@ -148,7 +163,8 @@ def main():
 
 
 
-        # ----------------------- UPDATE DISPLAY ACCORDINGLY --------------------------------
+        # ----------------------- UPDATE DISPLAY ACCORDINGLY ------------------------------------
+
         Interface.refresh_pygame_display(Microscope_Base)
 
 main()
