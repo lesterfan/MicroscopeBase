@@ -156,7 +156,7 @@ class UserInterface:
     '''
     def load_position_from_button(self, string_input, Microscope_Base_Input):
         if string_input not in self.saved_positions:
-            self.message1 = "Error! No position saved for "+string_input+"yet!"
+            self.message1 = "Error! No position saved for "+string_input+" yet!"
         else:
             load_x, load_y = self.saved_positions[string_input]
             Microscope_Base_Input.x_move_abs(load_x)

@@ -132,7 +132,7 @@ class MicroscopeBase:
     Homes the device. Ensures that the internal x and y coordinates are accurate
     '''
     def home_device(self):
-        reply = mAsciiDevice.home()
+        reply = self.mAsciiDevice.home()
         if not self.check_command_succeeded(reply):
             print "Device home failed!"
             self.mLastRet = 1

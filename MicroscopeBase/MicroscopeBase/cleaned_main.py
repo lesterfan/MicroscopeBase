@@ -102,9 +102,9 @@ def main():
         if Interface.keys[pygame.K_d]:
             x_change = unit_change*100
         if Interface.keys[pygame.K_w]:
-            y_change = unit_change*100
-        if Interface.keys[pygame.K_s]:
             y_change = -unit_change*100
+        if Interface.keys[pygame.K_s]:
+            y_change = unit_change*100
 
         # Check if the user is no longer pressing a key
         if Interface.check_keyboard_key_up():
