@@ -42,10 +42,16 @@ class UserInterface:
     joystick = None                           # Reference to joystick object
 
     saved_positions = {}                      # Saved position is a hash : key = string, value = tuple (x,y)
+    GUIButton_dict = {}
 
     message1 = ""                             # Message to show the user
     
-    microscope_position_GUIobject = None
+    microscope_position_GUIobject = None      # GUI object for the microscope
+    a_position_GUIobject          = None      # GUI object for the a button
+    x_position_GUIobject          = None      # GUI object for the x button
+    y_position_GUIobject          = None      # GUI object for the y button
+    b_position_GUIobject          = None      # GUI object for the b button
+    home_position_GUIobject       = None      # GUI object for the home button
 
 
     ''' 
@@ -66,9 +72,19 @@ class UserInterface:
         pygame.display.set_caption(pygame_title)
 
         # Initialize pygame GUI objects to show where things are
-        self.microscope_position_GUIobject = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE,
-                                                          10, 10, colors.white)
-                                                          
+        self.microscope_position_GUIobject = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.white)
+        self.a_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.green) 
+        self.x_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.blue)  
+        self.y_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.yellow)
+        self.b_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.red)   
+        self.home_position_GUIobject       = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.brown)   
+
+        # Place the GUIObjects for buttons into a dictionary to retrieve
+        self.GUIButton_dict['a'] = self.a_position_GUIobject
+        self.GUIButton_dict['x'] = self.x_position_GUIobject
+        self.GUIButton_dict['y'] = self.y_position_GUIobject
+        self.GUIButton_dict['b'] = self.b_position_GUIobject
+
 
 
     '''
@@ -155,8 +171,14 @@ class UserInterface:
     @ param Microscope_Base_Input : Microscope Base object that we're dealing with
     '''
     def save_position_to_button(self, string_input, Microscope_Base_Input):
-        self.saved_positions[string_input] = Microscope_Base_Input.get_absolute_position()
+        # Put the tuple in the dictionary
+        absolute_position = Microscope_Base_Input.get_absolute_position()
+        self.saved_positions[string_input] = absolute_position
 
+        # Place the GUI marker down.
+        x, y = absolute_position
+        self.GUIButton_dict[string_input].xstart = int( x / 2000 ) 
+        self.GUIButton_dict[string_input].ystart = int( y / 2000 )
 
     '''
     Loads the position of button string_input using Microscope_Base_Input
@@ -191,6 +213,10 @@ class UserInterface:
         self.microscope_position_GUIobject.xstart = int( x / 2000 ) 
         self.microscope_position_GUIobject.ystart = int( y / 2000 )
         self.microscope_position_GUIobject.drawToScreen()
+
+        # Draw the saved GUI marker objects
+        for GUIObject in GUIButton_dict:
+            GUIObject.drawToScreen()
 
         # Print messages to screen
         printfunctions.message_to_screen("Location : "+str(absolute_location), colors.black, y_displace = 150, size = 'medium')
