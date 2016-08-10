@@ -209,14 +209,14 @@ class UserInterface:
         absolute_location = Microscope_Base_Input.get_absolute_position()
         x, y = absolute_location
 
+        # Draw the saved GUI marker objects
+        for key in self.GUIButton_dict:
+            self.GUIButton_dict[key].drawToScreen()
+
         # Draw the microscope object according to current absolute location
         self.microscope_position_GUIobject.xstart = int( x / 2000 ) 
         self.microscope_position_GUIobject.ystart = int( y / 2000 )
         self.microscope_position_GUIobject.drawToScreen()
-
-        # Draw the saved GUI marker objects
-        for GUIObject in GUIButton_dict:
-            GUIObject.drawToScreen()
 
         # Print messages to screen
         printfunctions.message_to_screen("Location : "+str(absolute_location), colors.black, y_displace = 150, size = 'medium')
