@@ -57,6 +57,8 @@ def main():
                 y_button = 1
             if Interface.keys[pygame.K_c]:
                 b_button = 1
+            if Interface.keys[pygame.K_m]:
+                rt_button = 1
             if Interface.keys[pygame.K_LSHIFT] or Interface.keys[pygame.K_RSHIFT]:
                 rb_button = 1 
 
@@ -92,7 +94,7 @@ def main():
 
 
         # ------------------------ FURTHER UTILITY BUTTONS ---------------------------------------------------------------------------------------------------------
-        if rt_button == 1:
+        if rt_button == 1:                                                                          # Press rt to take measurement
             Interface.take_measurement()
 
 
