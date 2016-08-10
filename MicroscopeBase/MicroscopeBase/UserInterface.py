@@ -3,6 +3,8 @@ import time
 import colors
 import printfunctions
 import gameobjects
+import dotnet.seamless
+
 
 DEFAULT_OUT_OF_SCREEN_VALUE = 100000
 
@@ -53,6 +55,8 @@ class UserInterface:
     b_position_GUIobject          = None      # GUI object for the b button
     home_position_GUIobject       = None      # GUI object for the home button
 
+    mAnalyzer = None
+
 
     ''' 
     Constructor that sets up connection to user interface. Instantiates all the 
@@ -71,6 +75,8 @@ class UserInterface:
         self.pygame_display = pygame.display.set_mode((self.display_width, self.display_height))
         pygame.display.set_caption(pygame_title)
 
+
+
         # Initialize pygame GUI objects to show where things are
         self.microscope_position_GUIobject = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.white)
         self.a_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.green) 
@@ -85,6 +91,15 @@ class UserInterface:
         self.GUIButton_dict['y'] = self.y_position_GUIobject
         self.GUIButton_dict['b'] = self.b_position_GUIobject
 
+
+        
+        # Load the compiled C# library to analyze the microscope with.
+        dotnet.add_assemblies('C:\\Users\\HMNL\\Desktop\\VsGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\')
+        dotnet.load_assembly('MicroscopeAnalyzerLibrary')
+        import MicroscopeAnalyzerLibrary
+
+        # Creates the MicroscopeAnalyzer object from the loaded C# library
+        self.mAnalyzer = MicroscopeAnalyzerLibrary.MicroscopeAnalyzer(True)
 
 
     '''
@@ -231,6 +246,12 @@ class UserInterface:
         Microscope_Base_Input.y_move_rel( num * 6400 )
 
 
+    '''
+    Takes a measurement. Recipe must be set and baseline must be taken
+    '''
+    def take_measurement(self):
+        self.message1 = "Now measuring!"
+        self.mAnalyzer.Measure()
 
     '''
     Refreshes the pygame display according to the information in the rest of this class

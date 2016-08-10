@@ -2,6 +2,13 @@ import MicroscopeBase
 import UserInterface
 import pygame
 
+def RepresentsInt(s):
+    try: 
+        int(s)
+        return True
+    except ValueError:
+        return False
+
 def main():
     Microscope_Base = MicroscopeBase.MicroscopeBase("COM5")
     Interface = UserInterface.UserInterface()
@@ -18,7 +25,7 @@ def main():
     while True:
         Interface.check_keyboard_keys()                 # Fill Interface.keys with keyboard inputs
 
-        # ------------------------- CONFIGURING SAVE/LOAD BUTTONS -------------------------
+        # ------------------------- CONFIGURING SAVE/LOAD BUTTONS ----------------------------------------------------------------------------------------------
 
         # If button == 1, then it is clicked
         a_button       =   0
@@ -84,27 +91,44 @@ def main():
 
 
 
-        # ------------------------ CHECKING FURTHER UTILITY BUTTONS ----------------------------------
+        # ------------------------ FURTHER UTILITY BUTTONS ---------------------------------------------------------------------------------------------------------
+        if rt_button == 1:
+            Interface.take_measurement()
+
 
         if Interface.keys[pygame.K_r]:                                                              # Press 'r' to update whether user is using joystick or not
             Interface.initialize_joystick()
+
+
         if Interface.keys[pygame.K_u]:                                                              # Press 'u' to move x axis a given amount of um
             i = raw_input('Please enter the amount of microns you want to move on the x axis')
-            Interface.x_move_microns(int(i))
+            if RepresentsInt(i):
+                Interface.x_move_microns(int(i))
+            else:
+                print "Error! Please enter in an integral amount of microns!"
         if Interface.keys[pygame.K_i]:                                                              # Press 'i' to move y axis a given amount of um
             i = raw_input('Please enter the amount of microns you want to move on the y axis')
-            Interface.y_move_microns(int(i))
+            if RepresentsInt(i):
+                Interface.y_move_microns(int(i))
+            else:
+                print "Error! Please enter in an integral amount of microns!"
         if Interface.keys[pygame.K_o]:                                                              # Press 'o' to move x axis a given amount of mm
             i = raw_input('Please enter the amount of mm you want to move on the x axis')
-            Interface.x_move_mm(int(i))
+            if RepresentsInt(i):
+                Interface.x_move_mm(int(i))
+            else:
+                print "Error! Please enter in an integral amount of mm!"
         if Interface.keys[pygame.K_p]:                                                              # Press 'p' to move y axis a given amount of mm
             i = raw_input('Please enter the amount of mm you want to move on the y axis')
-            Interface.y_move_mm(int(i))
+            if RepresentsInt(i):
+                Interface.y_move_mm(int(i))
+            else:
+                print "Error! Please enter in an integral amount of mm!"
 
 
 
 
-        # ---------------------- MOVING THE MICROSCOPE BASE -----------------------------
+        # ------------------------------ MOVING THE MICROSCOPE BASE ---------------------------------------------------------------------------------------------------
         
         # Movement using keyboard / arrow keys
         if Interface.keys[pygame.K_LEFT]:
@@ -163,7 +187,7 @@ def main():
 
 
 
-        # ----------------------- UPDATE DISPLAY ACCORDINGLY ------------------------------------
+        # --------------------------------- UPDATE DISPLAY ACCORDINGLY ---------------------------------------------------------------------------------------------------------
 
         Interface.refresh_pygame_display(Microscope_Base)
 
