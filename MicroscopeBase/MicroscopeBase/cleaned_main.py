@@ -16,7 +16,6 @@ def main():
 
     # Forever while loop
     while True:
-        Interface.check_joystick_still_connected()      # In case the joystick becomes disconnected, or if the user connects the joystick again
         Interface.check_keyboard_keys()                 # Fill Interface.keys with keyboard inputs
 
         # ------------------------- CONFIGURING SAVE/LOAD BUTTONS -------------------------
@@ -83,6 +82,10 @@ def main():
             Interface.load_position_from_button('b', Microscope_Base)
 
 
+        # ---------------------- SETTING UTILITY BUTTONS ----------------------------------
+
+        if Interface.keys[pygame.K_r]:                                      # Press 'r' to update whether user is using joystick or not
+            Interface.initialize_joystick()
 
 
 

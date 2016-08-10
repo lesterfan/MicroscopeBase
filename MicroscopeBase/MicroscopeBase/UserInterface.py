@@ -92,11 +92,14 @@ class UserInterface:
     '''
     def initialize_joystick(self, a_button_num = 0, x_button_num = 3, y_button_num = 4,
                             b_button_num = 1, rb_button_num = 7, start_button_num = 11, rt_button_num = 9):
-                                
+
+        if self.joystick != None:
+            pygame.joystick.quit()
+
         pygame.joystick.init()
 
         if pygame.joystick.get_count() != 0:
-            self.message1 = "Joystick mode activated!"
+            self.message1 = "Joystick found! Joystick mode activated!"
             self.using_joystick = True
 
             # Setting up the internal joystick nums
@@ -113,20 +116,7 @@ class UserInterface:
             self.joystick.init()
 
         else:
-            self.message1 = "No joystick found! Joystick mode deactivated"
-
-    '''
-    Checks if the joystick is still connected at the time of the function call, and changes self.using_joystick accordingly
-    '''
-    def check_joystick_still_connected(self):
-        if pygame.joystick.get_count() != 0:
-            if self.using_joystick == False:                                           # If we changed states, message to user
-                self.message1 = "Joystick found! Joystick mode activated!"
-            self.using_joystick = True
-        else:
-            if self.using_joystick == True:                                            # If we changed states, message to user
-                self.message1 = "Joystick lost! Joystick mode deactivated!"
-            self.using_joystick = False
+            self.message1 = "No joystick found! Joystick mode deactivated!"
 
 
     ''' 
