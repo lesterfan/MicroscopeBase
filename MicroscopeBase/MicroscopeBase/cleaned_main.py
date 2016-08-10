@@ -90,16 +90,16 @@ def main():
             Interface.initialize_joystick()
         if Interface.keys[pygame.K_u]:                                                              # Press 'u' to move x axis a given amount of um
             i = raw_input('Please enter the amount of microns you want to move on the x axis')
-            Interface.x_move_microns(int(i))
+            Interface.x_move_microns(int(i), Microscope_Base)
         if Interface.keys[pygame.K_i]:                                                              # Press 'i' to move y axis a given amount of um
             i = raw_input('Please enter the amount of microns you want to move on the y axis')
-            Interface.y_move_microns(int(i))
+            Interface.y_move_microns(int(i), Microscope_Base)
         if Interface.keys[pygame.K_o]:                                                              # Press 'o' to move x axis a given amount of mm
             i = raw_input('Please enter the amount of mm you want to move on the x axis')
-            Interface.x_move_mm(int(i))
+            Interface.x_move_mm(int(i), Microscope_Base)
         if Interface.keys[pygame.K_p]:                                                              # Press 'p' to move y axis a given amount of mm
             i = raw_input('Please enter the amount of mm you want to move on the y axis')
-            Interface.y_move_mm(int(i))
+            Interface.y_move_mm(int(i), Microscope_Base)
 
 
 
