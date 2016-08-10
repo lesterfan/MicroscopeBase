@@ -77,7 +77,7 @@ class UserInterface:
         self.x_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.blue)  
         self.y_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.yellow)
         self.b_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.red)   
-        self.home_position_GUIobject       = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.brown)   
+        self.home_position_GUIobject       = gameobjects.Enemy(0, 0, 10, 10, colors.hot_pink)   
 
         # Place the GUIObjects for buttons into a dictionary to retrieve
         self.GUIButton_dict['a'] = self.a_position_GUIobject
@@ -209,7 +209,8 @@ class UserInterface:
         absolute_location = Microscope_Base_Input.get_absolute_position()
         x, y = absolute_location
 
-        # Draw the saved GUI marker objects
+        # Draw the home location as well as the saved GUI marker objects
+        self.home_position_GUIobject.drawToScreen()
         for key in self.GUIButton_dict:
             self.GUIButton_dict[key].drawToScreen()
 
