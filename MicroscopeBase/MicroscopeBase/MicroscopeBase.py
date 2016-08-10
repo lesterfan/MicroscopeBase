@@ -22,10 +22,10 @@ class MicroscopeBase:
     @ param serial_port : String describing the port that the base is connected to, eg "COM5"
     Returns None
     '''
-    def __init__(self, serial_port):
+    def __init__(self, serial_port_string):
         try:
             # Connect to serial
-            self.mAsciiSerial = serial_port
+            self.mAsciiSerial = AsciiSerial(serial_port_string)
 
             # Connect to device
             self.mAsciiDevice = AsciiDevice(self.mAsciiSerial, 1)
@@ -53,6 +53,7 @@ class MicroscopeBase:
         position_array = reply.data.split()
         x_curr = int(position_array[0])
         y_curr = int(position_array[1])
+        mLastRet = 0
     
         return (x_curr, y_curr)
 
@@ -111,7 +112,7 @@ class MicroscopeBase:
             print "Command failed in x_move_vel!"
             return
         self.mLastRet = 0        
-
+        
 
     ''' 
     Moves the y axis of the microscope according to the speed set by input_speed
@@ -123,5 +124,17 @@ class MicroscopeBase:
         if not check_command_succeeded(reply):
             self.mLastRet = 1
             print "Command failed in y_move_vel!"
+            return
+        self.mLastRet = 0
+
+
+    ''' 
+    Homes the device. Ensures that the internal x and y coordinates are accurate
+    '''
+    def home_device(self):
+        reply = mAsciiDevice.home()
+        if not check_command_succeeded(reply):
+            print "Device home failed!"
+            self.mLastRet = 1
             return
         self.mLastRet = 0

@@ -1,7 +1,7 @@
 import pygame
 import time
 import colors
-
+import printfunctions
 
 class UserInterface:
 
@@ -11,7 +11,6 @@ class UserInterface:
     # Defining self variables
     FPS = 0                                   # Internal Pygame variable
     Clock = None                              # Internal Pygame variable
-    unit_change = 1000                        # Internal Pygame variable
     keys = None                               # Internal Pygame variable
 
     a_button =  0                             # Internal Pygame variable
@@ -39,11 +38,8 @@ class UserInterface:
     using_joystick = False                    # Will automatically be set based on if a joystick is connected when the program starts
     joystick = None                           # Reference to joystick object
 
+    saved_positions = {}                      # Saved position is a hash : key = string, value = tuple (x,y)
 
-    x_change = 0                              # Change in x location on a given frame
-    y_change = 0                              # Change in y location on a given frame
-    x = 0                                     # Current x position in a given frame
-    y = 0                                     # Current y position in a given frame
 
     message1 = ""                             # Message to show the user
     
@@ -67,16 +63,15 @@ class UserInterface:
 
 
     '''
-    Initializes the self.joystick variable and maps the respective button nums to their rightful
-    positions 
+    Initializes the self.joystick variable and maps the button nums to their respective positions
     '''
-    def initialize_joystick(self, a_button_num, x_button_num, y_button_num,
-                            b_button_num, rb_button_num, start_button_num, rt_button_num):
+    def initialize_joystick(self, a_button_num = 0, x_button_num = 3, y_button_num = 4,
+                            b_button_num = 1, rb_button_num = 7, start_button_num = 11, rt_button_num = 9):
                                 
         pygame.joystick.init()
 
         if pygame.joystick.get_count() != 0:
-            print "Using joystick!"
+            self.message1 = "Joystick mode activated!"
             self.using_joystick = True
 
             # Setting up the internal joystick nums
@@ -93,54 +88,101 @@ class UserInterface:
             self.joystick.init()
 
         else:
-            print "Not using joystick!"
-            
+            self.message1 = "No joystick found! Joystick mode deactivated"
 
-    '''
-    Refreshes the display after each frame.
-    Call on each loop.
-    '''
-    def refresh_display(self):
-        pygame.display.update()
-        self.Clock.tick(self.FPS)
 
     ''' 
-    Reads whatever key is being inputted. Call before running any of the checker functions
+    Reads whatever keyboard key is being inputted. Allows for the interface to check if keys[pygame.K_x] is pressed
     '''
-    def get_keys(self):
+    def check_keyboard_keys(self):
         self.keys = pygame.key.get_pressed()
+
+
+    '''
+    Checks if the user leaves a key in the keyboard. Returns True if key_up, False otherwise
+    '''
+    def check_keyboard_key_up(self):
+       for event in pygame.event.get():
+            if event.type == pygame.KEYUP:
+                return True
+       return False
+
+
+    '''
+    The next few functions get the positions of the joysticks
+    '''
+
+    def get_joystick_xfine(self):
+        return self.joystick.get_axis(0)
+    
+    def get_joystick_yfine(self):
+        return self.joystick.get_axis(1)
+
+    def get_joystick_x(self):
+        return self.joystick.get_axis(2)
+
+    def get_joystick_y(self):
+        return self.joystick.get_axis(3)
+
+
+
+
+    '''
+    Sets the value of self.a_button, self.x_button, etc. for this specific frame.
+    '''
+    def check_joystick_button(self):
+        self.a_button     =     self.joystick.get_button      (  self.a_button_num      )
+        self.x_button     =     self.joystick.get_button      (  self.x_button_num      )
+        self.y_button     =     self.joystick.get_button      (  self.y_button_num      )
+        self.b_button     =     self.joystick.get_button      (  self.b_button_num      )
+        self.rb_button    =     self.joystick.get_button      (  self.rb_button_num     )
+        self.start_button =     self.joystick.get_button      (  self.start_button_num  )
+        self.rt_button    =     self.joystick.get_button      (  self.rt_button_num     )
 
     
     '''
-    The next few functions detect specific keyboard inputs described by their name
+    Saves the position of button string_input using Microscope_Base_Input
+    @ param string_input : String that describes which button we're saving, eg. 'a', 'x', ...
+    @ param Microscope_Base_Input : Microscope Base object that we're dealing with
     '''
+    def save_position_to_button(self, string_input, Microscope_Base_Input):
+        self.saved_positions[string_input] = Microscope_Base_Input.get_absolute_position()
 
-    def left_key_pressed(self):
-        if self.keys[pygame.K_LEFT]:
-            return True
-        else:
-            return False
 
-    def right_key_pressed(self):
-        if self.keys[pygame.K_RIGHT]:
-            return True
+    '''
+    Loads the position of button string_input using Microscope_Base_Input
+    @ param string_input : String that describes which button we're saving, eg. 'a', 'x', ...
+    @ param Microscope_Base_Input : Microscope Base object that we're dealing with
+    '''
+    def load_position_from_button(self, string_input, Microscope_Base_Input):
+        if string_input not in self.saved_positions:
+            self.message1 = "Error! No position saved for ",string_input,"yet!"
         else:
-            return False
+            load_x, load_y = self.saved_positions[string_input]
+            Microscope_Base_Input.x_move_abs(load_x)
+            Microscope_Base_Input.y_move_abs(load_y)
+            self.message1 = "Successfully loaded position to ",string_input
 
-    def down_key_pressed(self):
-        if self.keys[pygame.K_DOWN]:
-            return True
-        else:
-            return False
+
+    '''
+    Refreshes the pygame display according to the information in the rest of this class
+
+    '''
+    def refresh_pygame_display(self, Microscope_Base_Input):
+        # Fill with pretty colors
+        self.pygame_display.fill(colors.black)
+        pygame.draw.rect(self.pygame_display, colors.white, [0, 389, 320, 100])
+        pygame.draw.rect(self.pygame_display, colors.red, [0, 389, 320, 10])
+
+        # Get absolute location to print
+        absolute_location = Microscope_Base_Input.get_absolute_location()
+
+        # Print messages to screen
+        printfunctions.message_to_screen("Location : "+str(absolute_location), colors.black, y_displace = 180, size = 'medium')
+        printfunctions.message_to_screen(self.message1,colors.black, y_displace = 200)
+        printfunctions.message_to_screen("RB + X,Y,B to save a position. Press X,Y,B to return to that", colors.black, y_displace = 215)
+        printfunctions.message_to_screen("position. A to home.", colors.black, y_displace = 225)
+
         
-    # def right_key_pressed(self):
-    #     if self.keys[pygame.K_UP]:
-    #         return True
-    #     else:
-    #         return False
-    #     
-    # def right_key_pressed(self):
-    #     if self.keys[pygame.K_RIGHT]:
-    #         return True
-    #     else:
-    #         return False
+        pygame.display.update()
+        self.Clock.tick(self.FPS)

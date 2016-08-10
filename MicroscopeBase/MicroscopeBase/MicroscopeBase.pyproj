@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>ddfa242f-c91b-408c-a5a2-a8067b0490a7</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>DotNetTest.py</StartupFile>
+    <StartupFile>main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -24,6 +24,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="cleaned_main.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="colors.py">
       <SubType>Code</SubType>
     </Compile>
