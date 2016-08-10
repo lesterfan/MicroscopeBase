@@ -52,9 +52,6 @@
     <Compile Include="printfunctions.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="PyDotNetTest.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="testing_joystick.py">
       <SubType>Code</SubType>
     </Compile>

@@ -70,7 +70,3 @@ def message_to_screen(msg, color, y_displace = 0, size = "small", x_displace = 0
     textSurf, textRect = text_objects(msg, color,size)
     textRect.center = (display_width/2) + x_displace, (display_height/2) + y_displace
     gameDisplay.blit(textSurf,textRect)
-
-
-
-
