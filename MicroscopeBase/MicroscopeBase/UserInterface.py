@@ -361,7 +361,7 @@ class UserInterface:
                 # The next few lines save this measuremnet
 
                 print "Now saving!"
-                desired_file_name = "MyFirstMap"+"i"+str(i)++"j"+str(j)
+                desired_file_name = "MyFirstMap_{0}_{1}".format(i,j)
                 currFileDir = "C:/Users/HMNL/Documents/Test/"
 
                 # Save the .fmspe file into its own folder.

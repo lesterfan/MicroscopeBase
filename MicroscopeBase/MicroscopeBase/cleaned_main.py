@@ -64,6 +64,8 @@ def main():
                 rt_button = 1
             if Interface.keys[pygame.K_LSHIFT] or Interface.keys[pygame.K_RSHIFT]:
                 rb_button = 1 
+            if Interface.keys[pygame.K_s]:
+                lt_button = 1
 
         # Checking if each button is pressed. If so, do appropriate actions.
         if start_button == 1:                                              # Start button to home device
