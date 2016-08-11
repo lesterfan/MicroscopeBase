@@ -25,6 +25,7 @@ class UserInterface:
     rb_button = 0                             # Internal Pygame variable
     start_button = 0                          # Internal Pygame variable
     rt_button = 0                             # Internal Pygame variable
+    lt_button = 0                             # Internal Pygame variable
 
     a_button_num = 0                          # Which joystick numbers should be checked internally
     x_button_num = 0                          # Which joystick numbers should be checked internally
@@ -33,6 +34,7 @@ class UserInterface:
     rb_button_num = 0                         # Which joystick numbers should be checked internally
     start_button_num = 0                      # Which joystick numbers should be checked internally
     rt_button_num = 0                         # Which joystick numbers should be checked internally
+    lt_button_num = 0                         # Which joystick numbers should be checked internally
 
 
     display_width = 330                       # Internal Pygame variable
@@ -106,7 +108,7 @@ class UserInterface:
     Initializes the self.joystick variable and maps the button nums to their respective positions
     '''
     def initialize_joystick(self, a_button_num = 0, x_button_num = 3, y_button_num = 4,
-                            b_button_num = 1, rb_button_num = 7, start_button_num = 11, rt_button_num = 9):
+                            b_button_num = 1, rb_button_num = 7, start_button_num = 11, rt_button_num = 9, lt_button_num = 8):
 
         pygame.joystick.quit()
 
@@ -124,6 +126,7 @@ class UserInterface:
             self.rb_button_num        =  rb_button_num   
             self.start_button_num     =  start_button_num 
             self.rt_button_num        =  rt_button_num   
+            self.lt_button_num        =  lt_button_num   
 
             # Initialize the joystick
             self.joystick = pygame.joystick.Joystick(0)
@@ -178,6 +181,7 @@ class UserInterface:
         self.rb_button    =     self.joystick.get_button      (  self.rb_button_num     )
         self.start_button =     self.joystick.get_button      (  self.start_button_num  )
         self.rt_button    =     self.joystick.get_button      (  self.rt_button_num     )
+        self.lt_button    =     self.joystick.get_button      (  self.lt_button_num     )
 
     
     '''
@@ -283,6 +287,7 @@ class UserInterface:
         pygame.display.update()
         self.Clock.tick(self.FPS)
 
+
     '''
     Takes a map. For now, only accepts odd number of points
     @ param numPointsX : number of points desired on the x-axis
@@ -322,9 +327,13 @@ class UserInterface:
             return
 
 
+        # Save the center position to return to at the end
+        self.saved_positions['CENTER'] = Microscope_Base_Input.get_absolute_position()
+
+
         # Move to the extreme top left of the user defined grid
-        move_x(int(xPointsRadius * DistancebwPointsX), Microscope_Base_Input)
-        move_y(int(yPointsRadius * DistancebwPointsY), Microscope_Base_Input)
+        move_x(-1*int(xPointsRadius * DistancebwPointsX), Microscope_Base_Input)
+        move_y(-1*int(yPointsRadius * DistancebwPointsY), Microscope_Base_Input)
 
 
         # Update display to provide a real time view of the map
@@ -333,16 +342,41 @@ class UserInterface:
 
         # Performs map going up to down, left to right in that order.
         for i in range(numPointsX):
+
+            # If not the first column, then move right
+            if i != 0:
+                move_x(DistancebwPointsX, Microscope_Base_Input)
+
             for j in range(numPointsY):
+                
+                # If not the first row, then move down
+                if j != 0:
+                    move_y(DistancebwPointsY, Microscope_Base_Input)
+
 
                 # Take a measurement.
+                print "Now measuring"
                 self.take_measurement()
 
                 # The next few lines save this measuremnet
+
                 print "Now saving!"
-                desired_file_name = "MyFirstMap"+str(i)+str(j)
+                desired_file_name = "MyFirstMap"+"i"+str(i)++"j"+str(j)
                 currFileDir = "C:/Users/HMNL/Documents/Test/"
 
                 # Save the .fmspe file into its own folder.
-                self.mAnalyzer.SaveSpectrum(currFileDir+"FMSPE/", desired_file_name)
+                self.mAnalyzer.SaveSpectrum(currFileDir + "FMSPE/", desired_file_name)
 
+                # Save the .xml file into its own folder
+                self.mAnalyzer.SaveResultsTo(currFileDir + "XML/", desired_file_name)
+
+                # Save the image file into its own folder
+                self.mAnalyzer.SaveImageTo(currFileDir + "Images/", desired_file_name)
+
+                
+                # Update display to provide a real time view of the map
+                self.refresh_pygame_display(Microscope_Base_Input)
+
+
+        # After the map is over, return the base to its center location
+        self.load_position_from_button('CENTER', Microscope_Base_Input)
