@@ -167,9 +167,6 @@ class UserInterface:
     def get_joystick_y(self):
         return self.joystick.get_axis(1)
 
-
-
-
     '''
     Sets the value of self.a_button, self.x_button, etc. for this specific frame.
     '''
@@ -285,3 +282,67 @@ class UserInterface:
         
         pygame.display.update()
         self.Clock.tick(self.FPS)
+
+    '''
+    Takes a map. For now, only accepts odd number of points
+    @ param numPointsX : number of points desired on the x-axis
+    @ param DistancebwPointsX : desired distance b/w points on the x-axis
+    @ param numPointsY : number of points desired on the y-axis
+    @ param DistancebwPointsY : desired distance b/w points on the y-axis
+    @ param units : desired units, 'um' or 'mm'
+    @ param Microscope_Base_Input : reference to the microscope base object on which to move
+    '''
+    def take_map(self, numPointsX, DistancebwPointsX, numPointsY, DistancebwPointsY, units, Microscope_Base_Input):
+        
+        # Check that all the inputs are integral
+        if not (numPointsX % 1 == 0 or DistancebwPointsX % 1 == 0 or numPointsY % 1 == 0 or DistancebwPointsY % 1 == 0):
+            self.message1 = "Error! Please make sure everything is integral!"
+
+
+        # Check that numPointsX, numPointsY only accepts odd inputs
+        if numPointsX % 2 == 0 or numPointsY % 2 == 0:
+            self.message1 = "Please enter in an ODD number of points on the x/y axes!"
+            return
+
+        xPointsRadius = int((numPointsX - 1)/2)                                           # Will always be integral, so cast it straight away
+        yPointsRadius = int((numPointsY - 1)/2)                                           # Will always be integral, so cast it straight away
+
+
+        # Set the moving function according to the units entered
+        move_x = None
+        move_y = None
+        if units == 'um':
+            move_x = self.x_move_microns
+            move_y = self.y_move_microns
+        elif units == 'mm':
+            move_x = self.x_move_mm
+            move_y = self.y_move_mm
+        else:
+            self.message1 = "Invalid units!"
+            return
+
+
+        # Move to the extreme top left of the user defined grid
+        move_x(int(xPointsRadius * DistancebwPointsX), Microscope_Base_Input)
+        move_y(int(yPointsRadius * DistancebwPointsY), Microscope_Base_Input)
+
+
+        # Update display to provide a real time view of the map
+        self.refresh_pygame_display(Microscope_Base_Input)
+
+
+        # Performs map going up to down, left to right in that order.
+        for i in range(numPointsX):
+            for j in range(numPointsY):
+
+                # Take a measurement.
+                self.take_measurement()
+
+                # The next few lines save this measuremnet
+                print "Now saving!"
+                desired_file_name = "MyFirstMap"+str(i)+str(j)
+                currFileDir = "C:/Users/HMNL/Documents/Test/"
+
+                # Save the .fmspe file into its own folder.
+                self.mAnalyzer.SaveSpectrum(currFileDir+"FMSPE/", desired_file_name)
+

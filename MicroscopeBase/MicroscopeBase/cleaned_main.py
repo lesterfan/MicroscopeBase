@@ -127,7 +127,7 @@ def main():
             else:
                 print "Error! Please enter in an integral amount of mm!"
 
-
+        
 
 
         # ------------------------------ MOVING THE MICROSCOPE BASE ---------------------------------------------------------------------------------------------------
