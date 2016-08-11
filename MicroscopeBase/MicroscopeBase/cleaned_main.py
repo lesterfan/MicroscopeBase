@@ -108,6 +108,7 @@ def main():
             print "Mapping function initialized!"
 
             # Query the inputs as strings
+            mapping_name = raw_input('Please enter what name you want this map to be called when you save it\n')
             points_x_raw = raw_input('Please enter how many points you would like to take on the x axis (odd numbers only pls)\n')
             distance_bw_x_raw = raw_input('Please enter the distance between points on the x axis that you would like (units will be queried later)\n')
 
@@ -143,7 +144,7 @@ def main():
                 print "Please enter all ints!"
                 
             # Take map with the queried inputs
-            Interface.take_map(points_x, distance_bw_x, points_y, distance_bw_y, units, Microscope_Base)
+            Interface.take_map(mapping_name, points_x, distance_bw_x, points_y, distance_bw_y, units, Microscope_Base)
 
 
         if Interface.keys[pygame.K_r]:                                                              # Press 'r' to update whether user is using joystick or not

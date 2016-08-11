@@ -290,6 +290,7 @@ class UserInterface:
 
     '''
     Takes a map. For now, only accepts odd number of points
+    @ param mapping name : The prefix that all the files of this map will be saved as.
     @ param numPointsX : number of points desired on the x-axis
     @ param DistancebwPointsX : desired distance b/w points on the x-axis
     @ param numPointsY : number of points desired on the y-axis
@@ -297,7 +298,7 @@ class UserInterface:
     @ param units : desired units, 'um' or 'mm'
     @ param Microscope_Base_Input : reference to the microscope base object on which to move
     '''
-    def take_map(self, numPointsX, DistancebwPointsX, numPointsY, DistancebwPointsY, units, Microscope_Base_Input):
+    def take_map(self, mapping_name, numPointsX, DistancebwPointsX, numPointsY, DistancebwPointsY, units, Microscope_Base_Input):
         
         # Check that all the inputs are integral
         if not (numPointsX % 1 == 0 or DistancebwPointsX % 1 == 0 or numPointsY % 1 == 0 or DistancebwPointsY % 1 == 0):
@@ -343,9 +344,10 @@ class UserInterface:
         # Performs map going up to down, left to right in that order.
         for i in range(numPointsX):
 
-            # If not the first column, then move right
+            # If not the first column, then move back up and move right
             if i != 0:
                 move_x(DistancebwPointsX, Microscope_Base_Input)
+                move_y(-1*numPointsY*(DistancebwPointsY-1), Microscope_Base_Input)
 
             for j in range(numPointsY):
                 
@@ -361,7 +363,7 @@ class UserInterface:
                 # The next few lines save this measuremnet
 
                 print "Now saving!"
-                desired_file_name = "MyFirstMap_{0}_{1}".format(i,j)
+                desired_file_name = mapping_name + "_{0}_{1}".format(i,j)
                 currFileDir = "C:/Users/HMNL/Documents/Test/"
 
                 # Save the .fmspe file into its own folder.
