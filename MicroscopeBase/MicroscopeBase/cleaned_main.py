@@ -35,6 +35,7 @@ def main():
         rb_button      =   0
         start_button   =   0
         rt_button      =   0
+        lt_button      =   0
 
         # If joystick on, assign the appropriate buttons. If not, assign keyboard ones
         if Interface.using_joystick:
@@ -46,6 +47,8 @@ def main():
             rb_button      = Interface.rb_button   
             start_button   = Interface.start_button
             rt_button      = Interface.rt_button   
+            lt_button      = Interface.lt_button   
+
         else:
             if Interface.keys[pygame.K_h]:
                 start_button = 1
@@ -97,6 +100,49 @@ def main():
         if rt_button == 1:                                                                          # Press rt to take measurement
             Interface.take_measurement()
 
+        # Press LT to initiate the mapping function!
+        if lt_button == 1:
+            print "Welcome to HMNL (c) 2016!"
+            print "Mapping function initialized!"
+
+            # Query the inputs as strings
+            points_x_raw = raw_input('Please enter how many points you would like to take on the x axis (odd numbers only pls)\n')
+            distance_bw_x_raw = raw_input('Please enter the distance between points on the x axis that you would like (units will be queried later)\n')
+
+            points_y_raw = raw_input('Please enter how many points you would like to take on the y axis (odd numbers only pls)\n')
+            distance_bw_y_raw = raw_input('Please enter the distance between points on the y axis that you would like (units will be queried later)\n')
+           
+            units = raw_input("Please enter the units you want everything to be in. (um or mm)\n")
+
+            # Change the strings to ints. Throws exception if not possible
+            points_x = 0
+            distance_bw_x = 0
+            points_y = 0
+            distance_bw_y = 0
+
+            if RepresentsInt(points_x_raw):
+                points_x = int(points_x_raw)
+            else:
+                print "Please enter all ints!"
+
+            if RepresentsInt(distance_bw_x_raw):
+                distance_bw_x = int(distance_bw_x_raw)
+            else:
+                print "Please enter all ints!"
+
+            if RepresentsInt(points_y_raw):
+                points_y = int(points_y_raw)
+            else:
+                print "Please enter all ints!"
+
+            if RepresentsInt(distance_bw_y_raw):
+                distance_bw_y = int(distance_bw_y_raw)
+            else:
+                print "Please enter all ints!"
+                
+            # Take map with the queried inputs
+            Interface.take_map(points_x, distance_bw_x, points_y, distance_bw_y, units, Microscope_Base)
+
 
         if Interface.keys[pygame.K_r]:                                                              # Press 'r' to update whether user is using joystick or not
             Interface.initialize_joystick()
@@ -126,6 +172,7 @@ def main():
                 Interface.y_move_mm(int(i))
             else:
                 print "Error! Please enter in an integral amount of mm!"
+
 
         
 
