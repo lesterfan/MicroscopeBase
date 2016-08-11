@@ -347,7 +347,7 @@ class UserInterface:
             # If not the first column, then move back up and move right
             if i != 0:
                 move_x(DistancebwPointsX, Microscope_Base_Input)
-                move_y(-1*numPointsY*(DistancebwPointsY-1), Microscope_Base_Input)
+                move_y(-1*(numPointsY-1)*(DistancebwPointsY), Microscope_Base_Input)
 
             for j in range(numPointsY):
                 
