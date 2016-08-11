@@ -305,13 +305,10 @@ class UserInterface:
             self.message1 = "Error! Please make sure everything is integral!"
 
 
-        # Check that numPointsX, numPointsY only accepts odd inputs
-        if numPointsX % 2 == 0 or numPointsY % 2 == 0:
-            self.message1 = "Please enter in an ODD number of points on the x/y axes!"
-            return
-
-        xPointsRadius = int((numPointsX - 1)/2)                                           # Will always be integral, so cast it straight away
-        yPointsRadius = int((numPointsY - 1)/2)                                           # Will always be integral, so cast it straight away
+        # If the entered amount is odd, the exact center will be measured along with the spectrum. If it's even, then the center won't be measured, but
+        # the software will measure AROUND the center.
+        xPointsRadius = int((numPointsX - 1)/2)                                           
+        yPointsRadius = int((numPointsY - 1)/2)                                           
 
 
         # Set the moving function according to the units entered
