@@ -344,14 +344,9 @@ class UserInterface:
             # If not the first column, then move back up and move right
             if i != 0:
                 move_x(DistancebwPointsX, Microscope_Base_Input)
-                move_y(-1*numPointsY*(DistancebwPointsY-1), Microscope_Base_Input)
+                move_y(-1*(numPointsY)*(DistancebwPointsY), Microscope_Base_Input)
 
             for j in range(numPointsY):
-                
-                # If not the first row, then move down
-                if j != 0:
-                    move_y(DistancebwPointsY, Microscope_Base_Input)
-
 
                 # Take a measurement.
                 print "Now measuring"
@@ -372,7 +367,9 @@ class UserInterface:
                 # Save the image file into its own folder
                 self.mAnalyzer.SaveImageTo(currFileDir + "Images/", desired_file_name)
 
-                
+                # Move down
+                move_y(DistancebwPointsY, Microscope_Base_Input)
+
                 # Update display to provide a real time view of the map
                 self.refresh_pygame_display(Microscope_Base_Input)
 
