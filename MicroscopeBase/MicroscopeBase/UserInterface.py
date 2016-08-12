@@ -18,6 +18,12 @@ class UserInterface:
     Clock = None                              # Internal Pygame variable
     keys = None                               # Internal Pygame variable
 
+    lx_axis = -1                              # Internal Pygame variable
+    ly_axis = -1                              # Internal Pygame variable
+    trigger_axis = -1                         # Internal Pygame variable
+    rx_axis = -1                              # Internal Pygame variable
+    ry_axis = -1                              # Internal Pygame variable
+
     a_button =  0                             # Internal Pygame variable
     x_button =  0                             # Internal Pygame variable
     y_button =  0                             # Internal Pygame variable
@@ -107,8 +113,15 @@ class UserInterface:
     '''
     Initializes the self.joystick variable and maps the button nums to their respective positions
     '''
-    def initialize_joystick(self, a_button_num = 0, x_button_num = 3, y_button_num = 4,
-                            b_button_num = 1, rb_button_num = 7, start_button_num = 11, rt_button_num = 9, lt_button_num = 8):
+    # For the other joystick : def initialize_joystick(self, a_button_num = 0, x_button_num = 3, y_button_num = 4,
+    # For the other joystick :                         b_button_num = 1, rb_button_num = 7, start_button_num = 11, 
+    # For the other joystick :                         lx_axis = 0, ly_axis = 1, trigger_axis = None, rx_axis = 2, ry_axis = 3,
+    # For the other joystick :                         rt_button_num = 9, lt_button_num = 8):
+
+    def initialize_joystick(self, a_button_num = 0, x_button_num = 2, y_button_num = 3,
+                            b_button_num = 1, rb_button_num = 5, start_button_num = 7, 
+                            lx_axis = 0, ly_axis = 1, trigger_axis = 2, rx_axis = 3, ry_axis = 4, 
+                            rt_button_num = None, lt_button_num = None):
 
         pygame.joystick.quit()
 
@@ -127,6 +140,11 @@ class UserInterface:
             self.start_button_num     =  start_button_num 
             self.rt_button_num        =  rt_button_num   
             self.lt_button_num        =  lt_button_num   
+            self.lx_axis              =  lx_axis
+            self.ly_axis              =  ly_axis
+            self.trigger_axis         =  trigger_axis
+            self.rx_axis              =  rx_axis
+            self.ry_axis              =  ry_axis
 
             # Initialize the joystick
             self.joystick = pygame.joystick.Joystick(0)
@@ -155,20 +173,38 @@ class UserInterface:
 
 
     '''
-    The next few functions get the positions of the joysticks
+    The next few functions get the positions of the joysticks and if the buttons are pressed
     '''
 
     def get_joystick_xfine(self):
-        return self.joystick.get_axis(2)
+        return self.joystick.get_axis(self.rx_axis)
     
     def get_joystick_yfine(self):
-        return self.joystick.get_axis(3)
+        return self.joystick.get_axis(self.ry_axis)
 
     def get_joystick_x(self):
-        return self.joystick.get_axis(0)
+        return self.joystick.get_axis(self.lx_axis)
 
     def get_joystick_y(self):
-        return self.joystick.get_axis(1)
+        return self.joystick.get_axis(self.ly_axis)
+
+    def check_rt_button_pressed(self):
+        if self.rt_button_num !=  None:
+            return self.joystick.get_button      (  self.rt_button_num     )
+        else:
+            if self.joystick.get_axis(self.trigger_axis) <= -1*0.07:
+                return 1
+            else:
+                return 0
+
+    def check_lt_button_pressed(self):
+        if self.lt_button_num != None:
+            return self.joystick.get_button      (  self.lt_button_num     )
+        else:
+            if self.joystick.get_axis(self.trigger_axis) >= 0.07:
+                return 1
+            else:
+                return 0
 
     '''
     Sets the value of self.a_button, self.x_button, etc. for this specific frame.
@@ -180,8 +216,11 @@ class UserInterface:
         self.b_button     =     self.joystick.get_button      (  self.b_button_num      )
         self.rb_button    =     self.joystick.get_button      (  self.rb_button_num     )
         self.start_button =     self.joystick.get_button      (  self.start_button_num  )
-        self.rt_button    =     self.joystick.get_button      (  self.rt_button_num     )
-        self.lt_button    =     self.joystick.get_button      (  self.lt_button_num     )
+
+        # On one controller the triggers are buttons, but on the other, the triggers are an axis. We control for that here.
+        self.rt_button    =     self.check_rt_button_pressed()
+        self.lt_button    =     self.check_lt_button_pressed()
+
 
     
     '''
