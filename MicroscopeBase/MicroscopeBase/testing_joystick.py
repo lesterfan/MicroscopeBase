@@ -57,8 +57,8 @@ def main():
                 #print("Position : (",JOYSTICK.get_axis(0),JOYSTICK.get_axis(1),JOYSTICK.get_axis(2),JOYSTICK.get_axis(3),")")
 
             if event.type == pygame.JOYAXISMOTION:
-               if event.axis == 2 or event.axis == 3:
-                   print("yeeee")
+               if event.axis == 2:
+                   print JOYSTICK.get_axis(2)
                    #print("Position : (",JOYSTICK.get_axis(0),JOYSTICK.get_axis(1),")")
                    # TEST_MAN.xstart += JOYSTICK.get_axis(0)
                    # TEST_MAN.ystart += JOYSTICK.get_axis(1)
@@ -84,9 +84,9 @@ def main():
 
         # Testing buttons
         buttons = JOYSTICK.get_numbuttons()
-        i = 8
+        i = 0
         button = JOYSTICK.get_button(i)
-        print("Button {} value {}".format(i,button))
+        # print("Button {} value {}".format(i,button))
 
         MICROSCOPE_DISPLAY.fill(colors.black)
         #TEST_MAN.drawToScreen()
