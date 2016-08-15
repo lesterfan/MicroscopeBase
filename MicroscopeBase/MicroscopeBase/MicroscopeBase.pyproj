@@ -39,19 +39,10 @@
     <Compile Include="gameobjects.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="GUI.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GUIContainer.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="hello_microscope.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="helper_minion_functions.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="learning_TKinter.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="main.py" />
