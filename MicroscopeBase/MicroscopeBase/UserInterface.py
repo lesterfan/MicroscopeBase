@@ -236,7 +236,7 @@ class UserInterface:
         # Place the GUI marker down.
         x, y = absolute_position
         self.GUIButton_dict[string_input].xstart = int( x / 2000 ) + 500
-        self.GUIButton_dict[string_input].ystart = int( y / 2000 ) + 500
+        self.GUIButton_dict[string_input].ystart = int( y / 2000 )
 
     '''
     Loads the position of button string_input using Microscope_Base_Input
@@ -314,7 +314,7 @@ class UserInterface:
 
         # Draw the microscope object according to current absolute location
         self.microscope_position_GUIobject.xstart = int( x / 2000 ) + 500
-        self.microscope_position_GUIobject.ystart = int( y / 2000 ) + 500
+        self.microscope_position_GUIobject.ystart = int( y / 2000 )
         self.microscope_position_GUIobject.drawToScreen()
 
         # Print messages to screen
