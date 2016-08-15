@@ -113,15 +113,15 @@ class UserInterface:
     '''
     Initializes the self.joystick variable and maps the button nums to their respective positions
     '''
-    # For the other joystick : def initialize_joystick(self, a_button_num = 0, x_button_num = 3, y_button_num = 4,
-    # For the other joystick :                         b_button_num = 1, rb_button_num = 7, start_button_num = 11, 
-    # For the other joystick :                         lx_axis = 0, ly_axis = 1, trigger_axis = None, rx_axis = 2, ry_axis = 3,
-    # For the other joystick :                         rt_button_num = 9, lt_button_num = 8):
+    def initialize_joystick(self, a_button_num = 0, x_button_num = 3, y_button_num = 4,
+                            b_button_num = 1, rb_button_num = 7, start_button_num = 11, 
+                            lx_axis = 0, ly_axis = 1, trigger_axis = None, rx_axis = 2, ry_axis = 3,
+                            rt_button_num = 9, lt_button_num = 8):
 
-    def initialize_joystick(self, a_button_num = 0, x_button_num = 2, y_button_num = 3,
-                            b_button_num = 1, rb_button_num = 5, start_button_num = 7, 
-                            lx_axis = 0, ly_axis = 1, trigger_axis = 2, rx_axis = 3, ry_axis = 4, 
-                            rt_button_num = None, lt_button_num = None):
+    # For da other joystick : def initialize_joystick(self, a_button_num = 0, x_button_num = 2, y_button_num = 3,
+    # For da other joystick :                         b_button_num = 1, rb_button_num = 5, start_button_num = 7, 
+    # For da other joystick :                         lx_axis = 0, ly_axis = 1, trigger_axis = 2, rx_axis = 3, ry_axis = 4, 
+    # For da other joystick :                         rt_button_num = None, lt_button_num = None):
 
         pygame.joystick.quit()
 
