@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>ddfa242f-c91b-408c-a5a2-a8067b0490a7</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>testing_joystick.py</StartupFile>
+    <StartupFile>GUIContainer.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -39,10 +39,19 @@
     <Compile Include="gameobjects.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GUI.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GUIContainer.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="hello_microscope.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="helper_minion_functions.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="learning_TKinter.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="main.py" />

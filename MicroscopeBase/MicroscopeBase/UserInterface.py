@@ -43,8 +43,8 @@ class UserInterface:
     lt_button_num = 0                         # Which joystick numbers should be checked internally
 
 
-    display_width = 330                       # Internal Pygame variable
-    display_height = 425                      # Internal Pygame variable
+    display_width = 830                       # Internal Pygame variable
+    display_height = 325                      # Internal Pygame variable
    
     pygame_display = None                     # Reference to pygame display
 
@@ -91,7 +91,7 @@ class UserInterface:
         self.x_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.hot_pink)  
         self.y_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.green)
         self.b_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.orange)   
-        self.home_position_GUIobject       = gameobjects.Enemy(0, 0, 10, 10, colors.red)   
+        self.home_position_GUIobject       = gameobjects.Enemy(500, 0, 10, 10, colors.red)   
 
         # Place the GUIObjects for buttons into a dictionary to retrieve
         self.GUIButton_dict['a'] = self.a_position_GUIobject
@@ -235,8 +235,8 @@ class UserInterface:
 
         # Place the GUI marker down.
         x, y = absolute_position
-        self.GUIButton_dict[string_input].xstart = int( x / 2000 ) 
-        self.GUIButton_dict[string_input].ystart = int( y / 2000 )
+        self.GUIButton_dict[string_input].xstart = int( x / 2000 ) + 500
+        self.GUIButton_dict[string_input].ystart = int( y / 2000 ) + 500
 
     '''
     Loads the position of button string_input using Microscope_Base_Input
@@ -298,9 +298,10 @@ class UserInterface:
     '''
     def refresh_pygame_display(self, Microscope_Base_Input):
         # Fill with pretty colors
-        self.pygame_display.fill(colors.black)
-        pygame.draw.rect(self.pygame_display, colors.white, [0, 333, 330, 100])
-        pygame.draw.rect(self.pygame_display, colors.red, [0, 333, 330, 10])
+        self.pygame_display.fill(colors.white)
+        pygame.draw.rect(self.pygame_display, colors.black, [500, 0, 330, 325])
+        # pygame.draw.rect(self.pygame_display, colors.white, [500, 333, 330, 100])
+        # pygame.draw.rect(self.pygame_display, colors.red, [500, 333, 330, 10])
 
         # Get absolute position to print
         absolute_location = Microscope_Base_Input.get_absolute_position()
@@ -312,15 +313,15 @@ class UserInterface:
             self.GUIButton_dict[key].drawToScreen()
 
         # Draw the microscope object according to current absolute location
-        self.microscope_position_GUIobject.xstart = int( x / 2000 ) 
-        self.microscope_position_GUIobject.ystart = int( y / 2000 )
+        self.microscope_position_GUIobject.xstart = int( x / 2000 ) + 500
+        self.microscope_position_GUIobject.ystart = int( y / 2000 ) + 500
         self.microscope_position_GUIobject.drawToScreen()
 
         # Print messages to screen
-        printfunctions.message_to_screen("Location : "+str(absolute_location), colors.black, y_displace = 150, size = 'medium')
-        printfunctions.message_to_screen(self.message1,colors.black, y_displace = 170)
-        printfunctions.message_to_screen("RB + X,Y,B to save a position. Press X,Y,B to return to that", colors.black, y_displace = 185)
-        printfunctions.message_to_screen("position. A to home.", colors.black, y_displace = 195)
+        # printfunctions.message_to_screen("Location : "+str(absolute_location), colors.black, y_displace = 150, size = 'medium')
+        # printfunctions.message_to_screen(self.message1,colors.black, y_displace = 170)
+        # printfunctions.message_to_screen("RB + X,Y,B to save a position. Press X,Y,B to return to that", colors.black, y_displace = 185)
+        # printfunctions.message_to_screen("position. A to home.", colors.black, y_displace = 195)
 
         
         pygame.display.update()
