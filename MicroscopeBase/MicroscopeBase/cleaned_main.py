@@ -108,6 +108,25 @@ def main():
             Interface.load_position_from_button('b', Microscope_Base)
 
 
+        # ------------------------------- READ INPUTS FROM GUI ------------------------------------------------
+        
+        # Pass the event to the GUI / set up exit
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return
+            gui_app.event(event)
+
+        Interface.update_values_from_gui()
+        if Interface.single_measurement_pressed:
+            print "Taking measurement!"
+            Interface.take_measurement()
+        elif Interface.start_pause_map_pressed:
+            print "Start/pause button pressed!"
+        elif Interface.stop_button_pressed:
+            print "Stop button pressed!"
+        elif Interface.update_joystick_pressed:
+            print "Update joystick button pressed!"
+
 
 
         # ------------------------ FURTHER UTILITY BUTTONS ---------------------------------------------------------------------------------------------------------
@@ -188,21 +207,6 @@ def main():
             else:
                 print "Error! Please enter in an integral amount of mm!"
 
-        # ------------------------------- READ INPUTS FROM GUI ------------------------------------------------
-        
-        # Pass the event to the GUI / set up exit
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                return
-            gui_app.event(event)
-
-        Interface.update_values_from_gui()
-        if Interface.single_measurement_pressed:
-            print "single measurement pressed!"
-        elif Interface.start_pause_map_pressed:
-            print "Start/pause button pressed!"
-        elif Interface.stop_button_pressed:
-            print "Stop button pressed!"
 
         # ------------------------------ MOVING THE MICROSCOPE BASE ---------------------------------------------------------------------------------------------------
         

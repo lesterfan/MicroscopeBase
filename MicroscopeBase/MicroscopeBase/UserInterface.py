@@ -74,6 +74,7 @@ class UserInterface:
     image_dir = ""
     map_name = ""
     units = ""
+    update_joystick_pressed = False
     single_measurement_pressed = False
     start_pause_map_pressed = False
     stop_button_pressed = False
@@ -187,6 +188,7 @@ class UserInterface:
         
         if self.gui_container.take_measurement_button.pcls == "down":
             self.single_measurement_pressed = True
+            self.gui_container.take_measurement_button.pcls = "up"
         else:
             self.single_measurement_pressed = False
 
@@ -199,6 +201,11 @@ class UserInterface:
             self.stop_button_pressed = True
         else:
             self.stop_button_pressed = False
+
+        if self.gui_container.update_joystick_button.pcls == "down":
+            self.update_joystick_pressed = True
+        else:
+            self.update_joystick_pressed = False
 
     '''
     Checks if the user leaves a key in the keyboard. Returns True if key_up, False otherwise
