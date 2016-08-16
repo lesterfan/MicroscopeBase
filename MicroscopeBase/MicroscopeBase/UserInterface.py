@@ -208,12 +208,13 @@ class UserInterface:
             self.update_joystick_pressed = False
 
     '''
-    Checks if the user leaves a key in the keyboard. Returns True if key_up, False otherwise
+    Checks if the user leaves a key in the keyboard. Returns True if key_up, False otherwise, in addition, sends events to the GUI.
     '''
     def check_keyboard_key_up(self):
        for event in pygame.event.get():
             if event.type == pygame.KEYUP:
                 return True
+            self.gui_app.event(event)
        return False
 
 

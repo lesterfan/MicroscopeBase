@@ -76,8 +76,8 @@ def main():
                 rt_button = 1
             if Interface.keys[pygame.K_LSHIFT] or Interface.keys[pygame.K_RSHIFT]:
                 rb_button = 1 
-            if Interface.keys[pygame.K_s]:
-                lt_button = 1
+            # if Interface.keys[pygame.K_s]:
+            #     lt_button = 1
 
         # Checking if each button is pressed. If so, do appropriate actions.
         if start_button == 1:                                              # Start button to home device
@@ -112,10 +112,13 @@ def main():
         # ------------------------------- READ INPUTS FROM GUI ------------------------------------------------
         
         # Pass the event to the GUI / set up exit
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                return
-            gui_app.event(event)
+        # for event in pygame.event.get():
+        #     if event.type == pygame.QUIT:
+        #         return
+        #     if event.type == pygame.KEYUP:
+        #         x_change = 0
+        #         y_change = 0
+        #     gui_app.event(event)
 
         # Interface.update_values_from_gui()
         # if Interface.single_measurement_pressed:
