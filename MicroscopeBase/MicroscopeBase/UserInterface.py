@@ -495,7 +495,7 @@ class UserInterface:
                             self.stop_button_pressed = False
                             return
 
-                        self.refresh_pygame_display()
+                        self.refresh_pygame_display(Microscope_Base_Input)
 
                 # Update display to provide a real time view of the map
                 self.refresh_pygame_display(Microscope_Base_Input)
