@@ -14,6 +14,9 @@ def main():
     Interface = UserInterface.UserInterface()
     Interface.initialize_joystick()
 
+    # Adding the GUI
+
+
 
     unit_change = 1000                           # Each unit of change
     x = 0                                        # Current x position
