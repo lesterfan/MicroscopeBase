@@ -76,7 +76,7 @@ class UserInterface:
     units = ""
     update_joystick_pressed = False
     single_measurement_pressed = False
-    start_pause_map_pressed = False
+    pause_button_pressed = False
     stop_button_pressed = False
 
 
@@ -178,34 +178,34 @@ class UserInterface:
     '''
     Reads the GUI elements and updates the self variables accordingly
     '''
-    def update_values_from_gui(self):
-        self.joystick_selected = self.gui_container.joystick_selection.value
-        self.fmspe_dir = self.gui_container.fmspe_dir_input.value
-        self.xml_dir = self.gui_container.xml_dir_input.value
-        self.image_dir = self.gui_container.image_dir_input.value
-        self.map_name = self.gui_container.map_name_input.value
-        self.units = self.gui_container.unit_selection.value
-        
-        if self.gui_container.take_measurement_button.pcls == "down":
-            self.single_measurement_pressed = True
-            self.gui_container.take_measurement_button.pcls = "up"
-        else:
-            self.single_measurement_pressed = False
-
-        if self.gui_container.start_or_pause_button.pcls == "down":
-            self.start_pause_map_pressed = True
-        else:
-            self.start_pause_map_pressed = False
-
-        if self.gui_container.stop_button.pcls == "down":
-            self.stop_button_pressed = True
-        else:
-            self.stop_button_pressed = False
-
-        if self.gui_container.update_joystick_button.pcls == "down":
-            self.update_joystick_pressed = True
-        else:
-            self.update_joystick_pressed = False
+    # Deprecated : def update_values_from_gui(self):
+    # Deprecated :     self.joystick_selected = self.gui_container.joystick_selection.value
+    # Deprecated :     self.fmspe_dir = self.gui_container.fmspe_dir_input.value
+    # Deprecated :     self.xml_dir = self.gui_container.xml_dir_input.value
+    # Deprecated :     self.image_dir = self.gui_container.image_dir_input.value
+    # Deprecated :     self.map_name = self.gui_container.map_name_input.value
+    # Deprecated :     self.units = self.gui_container.unit_selection.value
+    # Deprecated :     
+    # Deprecated :     if self.gui_container.take_measurement_button.pcls == "down":
+    # Deprecated :         self.single_measurement_pressed = True
+    # Deprecated :         self.gui_container.take_measurement_button.pcls = "up"
+    # Deprecated :     else:
+    # Deprecated :         self.single_measurement_pressed = False
+    # Deprecated : 
+    # Deprecated :     if self.gui_container.start_or_pause_button.pcls == "down":
+    # Deprecated :         self.start_pause_map_pressed = True
+    # Deprecated :     else:
+    # Deprecated :         self.start_pause_map_pressed = False
+    # Deprecated : 
+    # Deprecated :     if self.gui_container.stop_button.pcls == "down":
+    # Deprecated :         self.stop_button_pressed = True
+    # Deprecated :     else:
+    # Deprecated :         self.stop_button_pressed = False
+    # Deprecated : 
+    # Deprecated :     if self.gui_container.update_joystick_button.pcls == "down":
+    # Deprecated :         self.update_joystick_pressed = True
+    # Deprecated :     else:
+    # Deprecated :         self.update_joystick_pressed = False
 
     '''
     Checks if the user leaves a key in the keyboard. Returns True if key_up, False otherwise, in addition, sends events to the GUI.
@@ -476,6 +476,26 @@ class UserInterface:
                     self.load_position_from_button('CENTER', Microscope_Base_Input)
                     self.stop_button_pressed = False
                     return
+
+                # If the pause button is clicked, then pause it indefinitely until the user clicks it again
+                if self.pause_button_pressed:
+                    self.pause_button_pressed = False
+                    while True:
+                        self.message1 = "Map paused! Press start/pause to resume, stop to terminate!"
+                        self.check_keyboard_key_up()
+
+                        # If they click the pause button again, breaks out of this infinite loop
+                        if self.pause_button_pressed:
+                            self.pause_button_pressed = False
+                            break
+
+                        # If they click the stop button, returns from the mapping function
+                        if self.stop_button_pressed:
+                            self.load_position_from_button('CENTER', Microscope_Base_Input)
+                            self.stop_button_pressed = False
+                            return
+
+                        self.refresh_pygame_display()
 
                 # Update display to provide a real time view of the map
                 self.refresh_pygame_display(Microscope_Base_Input)

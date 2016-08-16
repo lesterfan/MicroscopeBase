@@ -38,6 +38,12 @@ def main():
     while True:
         Interface.check_keyboard_keys()                 # Fill Interface.keys with keyboard inputs
 
+        # HACK: reset the guicontainer.started_map, Interface.stop_button_pressed and Interface.pause_button_pressed every frame
+        gui_container.started_map = False
+        Interface.pause_button_pressed = False
+        Interface.stop_button_pressed = False
+
+
         # ------------------------- CONFIGURING SAVE/LOAD BUTTONS ----------------------------------------------------------------------------------------------
 
         # If button == 1, then it is clicked

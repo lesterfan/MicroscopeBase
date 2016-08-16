@@ -154,20 +154,21 @@ class GUIContainer(gui.Container):
                                         self.Microscope_Base)
                 self.started_map = False
             else :                          # If a map is already in progress, pause it
-                while True :
-                    self.Interface.message1 = "Map paused! Press start/pause to resume, stop to terminate!"
-                    self.Interface.check_keyboard_key_up()
-
-                    # If they press start/pause again, resume
-                    if self.start_or_pause_button.pcls == "down":
-                        break
-
-                    # If they press stop, stop the mapping
-                    if self.stop_button.pcls == "down":
-                        self.stop_button_pressed = True
-                        return
-
-                    self.Interface.refresh_pygame_display(self.Microscope_Base)
+                self.Interface.pause_button_pressed = True
+                # while True :
+                #     self.Interface.message1 = "Map paused! Press start/pause to resume, stop to terminate!"
+                #     self.Interface.check_keyboard_key_up()
+                # 
+                #     # If they press start/pause again, resume
+                #     if self.start_or_pause_button.pcls == "down":
+                #         break
+                # 
+                #     # If they press stop, stop the mapping
+                #     if self.stop_button.pcls == "down":
+                #         self.stop_button_pressed = True
+                #         return
+                # 
+                #     self.Interface.refresh_pygame_display(self.Microscope_Base)
 
         self.start_or_pause_button = gui.Button("Start / Pause Map")
         self.start_or_pause_button.connect(gui.CLICK, StartOrPauseButtonCallback)
