@@ -6,6 +6,7 @@ import colors
 class GUIContainer(gui.Container):
     """description of class"""
     Interface = None
+    Microscope_Base = None
 
     joystick_selection = None
     update_joystick_button = None
@@ -142,7 +143,12 @@ class GUIContainer(gui.Container):
         self.add(self.take_measurement_button, 17, 242)
 
         def StartOrPauseButtonCallback():
-            print "Start/Pause button clicked!"
+            print "Map started!"
+            self.Interface.take_map(self.map_name_input.value, int(self.num_pts_x_input.value),
+                                    int(self.distance_bw_pts_x_input.value), int(self.num_pts_y_input.value),
+                                    int(self.distance_bw_pts_y_input.value), self.unit_selection.value, 
+                                    self.Microscope_Base)
+
         self.start_or_pause_button = gui.Button("Start / Pause Map")
         self.start_or_pause_button.connect(gui.CLICK, StartOrPauseButtonCallback)
         self.add(self.start_or_pause_button, 190, 242)

@@ -452,7 +452,6 @@ class UserInterface:
                 self.take_measurement()
 
                 # The next few lines save this measuremnet
-
                 print "Now saving!"
                 desired_file_name = mapping_name + "_{0}_{1}".format(i,j)
                 currFileDir = "C:/Users/HMNL/Documents/Test/"

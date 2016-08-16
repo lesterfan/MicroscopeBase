@@ -25,6 +25,7 @@ def main():
     gui_app.init(gui_container)
     Interface.set_gui(gui_app, gui_container)
     gui_container.Interface = Interface
+    gui_container.Microscope_Base = Microscope_Base
     
 
     unit_change = 1000                           # Each unit of change
@@ -107,29 +108,6 @@ def main():
 
         if rb_button == 0 and b_button == 1:
             Interface.load_position_from_button('b', Microscope_Base)
-
-
-        # ------------------------------- READ INPUTS FROM GUI ------------------------------------------------
-        
-        # Pass the event to the GUI / set up exit
-        # for event in pygame.event.get():
-        #     if event.type == pygame.QUIT:
-        #         return
-        #     if event.type == pygame.KEYUP:
-        #         x_change = 0
-        #         y_change = 0
-        #     gui_app.event(event)
-
-        # Interface.update_values_from_gui()
-        # if Interface.single_measurement_pressed:
-        #     print "Taking measurement!"
-        #     Interface.take_measurement()
-        # elif Interface.start_pause_map_pressed:
-        #     print "Start/pause button pressed!"
-        # elif Interface.stop_button_pressed:
-        #     print "Stop button pressed!"
-        # elif Interface.update_joystick_pressed:
-        #     print "Update joystick button pressed!"
 
 
 
