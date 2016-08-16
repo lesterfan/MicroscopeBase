@@ -18,6 +18,8 @@ class GUIContainer(gui.Container):
     image_dir_input = None
     image_browse_button = None
 
+    map_name_input = None
+
     unit_selection = None
     num_pts_x_input = None
     distance_bw_pts_x_input = None
@@ -88,12 +90,17 @@ class GUIContainer(gui.Container):
         self.image_browse_button.connect(gui.CLICK, open_image_file_browser, None)
         self.add(self.image_browse_button, 400, 122)
 
+        # Get the name that the user wants the map to be called
+        self.add(gui.Label("Map name"), 7, 152)
+        self.map_name_input = gui.Input(size = 25)
+        self.add(self.map_name_input, 107, 150)
+
         # Get the units of measurement
-        self.add(gui.Label("Units of Measurement"), 7, 152)
+        self.add(gui.Label("Units"), 365, 152)
         self.unit_selection = gui.Select()
         self.unit_selection.add("um",'um')
         self.unit_selection.add("mm",'mm')
-        self.add(self.unit_selection, 200, 150)
+        self.add(self.unit_selection, 425, 150)
 
         # Inputs for the mapping function
         self.add(gui.Label("Number Points X"), 7, 182)
@@ -130,6 +137,7 @@ class GUIContainer(gui.Container):
         self.xml_dir_input.value = "C:\\Users\\HMNL\\Documents\\Test\\XML\\"
         self.image_dir_input.value = "C:\\Users\\HMNL\\Documents\\Test\\Images\\"
 
+        self.map_name_input.value = "Columbus"
         self.unit_selection.value = "um"
 
         self.num_pts_x_input.value = '5'
@@ -137,23 +145,23 @@ class GUIContainer(gui.Container):
         self.distance_bw_pts_x_input.value = '5'
         self.distance_bw_pts_y_input.value = '5'
 
-# def main():
-#     pygame.init()
-#     game_display = pygame.display.set_mode((500,325))
-#     gui_app = gui.App()
-#     gui_container = GUIContainer(align = -1, valign = -1)
-#     gui_app.init(gui_container)
-# 
-#     clock = pygame.time.Clock()
-#     
-#     while True:
-#         for event in pygame.event.get():
-#             gui_app.event(event)
-# 
-#         game_display.fill(colors.white)
-#         gui_app.paint()
-#         gui_app.update()
-# 
-#         pygame.display.update()
-#         clock.tick(60)
-# main()
+def main():
+    pygame.init()
+    game_display = pygame.display.set_mode((500,325))
+    gui_app = gui.App()
+    gui_container = GUIContainer(align = -1, valign = -1)
+    gui_app.init(gui_container)
+
+    clock = pygame.time.Clock()
+    
+    while True:
+        for event in pygame.event.get():
+            gui_app.event(event)
+
+        game_display.fill(colors.white)
+        gui_app.paint()
+        gui_app.update()
+
+        pygame.display.update()
+        clock.tick(60)
+main()
