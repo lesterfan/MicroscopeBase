@@ -197,6 +197,19 @@ class GUIContainer(gui.Container):
         self.distance_bw_pts_x_input.value = '5'
         self.distance_bw_pts_y_input.value = '5'
 
+    def LTButtonCallback(self):
+        print "Map started!"
+        if not self.started_map :       # If it's the first time, then start taking the map
+            self.started_map = True
+            self.Interface.take_map(self.map_name_input.value, int(self.num_pts_x_input.value),
+                                    int(self.distance_bw_pts_x_input.value), int(self.num_pts_y_input.value),
+                                    int(self.distance_bw_pts_y_input.value), self.unit_selection.value, 
+                                    self.Microscope_Base)
+            self.started_map = False
+        else :                          # If a map is already in progress, pause it
+            self.Interface.pause_button_pressed = True
+
+
 # def main():
 #     pygame.init()
 #     game_display = pygame.display.set_mode((500,325))

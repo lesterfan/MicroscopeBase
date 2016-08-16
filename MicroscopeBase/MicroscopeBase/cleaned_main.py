@@ -123,47 +123,48 @@ def main():
 
         # Press LT to initiate the mapping function!
         if lt_button == 1:
-            print "Welcome to HMNL (c) 2016!"
-            print "Mapping function initialized!"
-
-            # Query the inputs as strings
-            mapping_name = raw_input('Please enter what name you want this map to be called when you save it\n')
-            points_x_raw = raw_input('Please enter how many points you would like to take on the x axis (odd numbers only pls)\n')
-            distance_bw_x_raw = raw_input('Please enter the distance between points on the x axis that you would like (units will be queried later)\n')
-
-            points_y_raw = raw_input('Please enter how many points you would like to take on the y axis (odd numbers only pls)\n')
-            distance_bw_y_raw = raw_input('Please enter the distance between points on the y axis that you would like (units will be queried later)\n')
-           
-            units = raw_input("Please enter the units you want everything to be in. (um or mm)\n")
-
-            # Change the strings to ints. Throws exception if not possible
-            points_x = 0
-            distance_bw_x = 0
-            points_y = 0
-            distance_bw_y = 0
-
-            if RepresentsInt(points_x_raw):
-                points_x = int(points_x_raw)
-            else:
-                print "Please enter all ints!"
-
-            if RepresentsInt(distance_bw_x_raw):
-                distance_bw_x = int(distance_bw_x_raw)
-            else:
-                print "Please enter all ints!"
-
-            if RepresentsInt(points_y_raw):
-                points_y = int(points_y_raw)
-            else:
-                print "Please enter all ints!"
-
-            if RepresentsInt(distance_bw_y_raw):
-                distance_bw_y = int(distance_bw_y_raw)
-            else:
-                print "Please enter all ints!"
-                
-            # Take map with the queried inputs
-            Interface.take_map(mapping_name, points_x, distance_bw_x, points_y, distance_bw_y, units, Microscope_Base)
+            gui_container.LTButtonCallback()
+            # print "Welcome to HMNL (c) 2016!"
+            # print "Mapping function initialized!"
+            # 
+            # # Query the inputs as strings
+            # mapping_name = raw_input('Please enter what name you want this map to be called when you save it\n')
+            # points_x_raw = raw_input('Please enter how many points you would like to take on the x axis (odd numbers only pls)\n')
+            # distance_bw_x_raw = raw_input('Please enter the distance between points on the x axis that you would like (units will be queried later)\n')
+            # 
+            # points_y_raw = raw_input('Please enter how many points you would like to take on the y axis (odd numbers only pls)\n')
+            # distance_bw_y_raw = raw_input('Please enter the distance between points on the y axis that you would like (units will be queried later)\n')
+            # 
+            # units = raw_input("Please enter the units you want everything to be in. (um or mm)\n")
+            # 
+            # # Change the strings to ints. Throws exception if not possible
+            # points_x = 0
+            # distance_bw_x = 0
+            # points_y = 0
+            # distance_bw_y = 0
+            # 
+            # if RepresentsInt(points_x_raw):
+            #     points_x = int(points_x_raw)
+            # else:
+            #     print "Please enter all ints!"
+            # 
+            # if RepresentsInt(distance_bw_x_raw):
+            #     distance_bw_x = int(distance_bw_x_raw)
+            # else:
+            #     print "Please enter all ints!"
+            # 
+            # if RepresentsInt(points_y_raw):
+            #     points_y = int(points_y_raw)
+            # else:
+            #     print "Please enter all ints!"
+            # 
+            # if RepresentsInt(distance_bw_y_raw):
+            #     distance_bw_y = int(distance_bw_y_raw)
+            # else:
+            #     print "Please enter all ints!"
+            #     
+            # # Take map with the queried inputs
+            # Interface.take_map(mapping_name, points_x, distance_bw_x, points_y, distance_bw_y, units, Microscope_Base)
 
 
         # if Interface.keys[pygame.K_r]:                                                              # Press 'r' to update whether user is using joystick or not
