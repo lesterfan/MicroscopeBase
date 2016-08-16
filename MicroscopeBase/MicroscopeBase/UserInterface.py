@@ -471,6 +471,12 @@ class UserInterface:
                 # Check the GUI to see if the pause button has been clicked
                 self.check_keyboard_key_up()
 
+                # If the stop button is clicked, return the base to its center location, set the flag back to False, and exit
+                if self.stop_button_pressed:
+                    self.load_position_from_button('CENTER', Microscope_Base_Input)
+                    self.stop_button_pressed = False
+                    return
+
                 # Update display to provide a real time view of the map
                 self.refresh_pygame_display(Microscope_Base_Input)
 
