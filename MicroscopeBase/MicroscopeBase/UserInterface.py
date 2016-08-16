@@ -42,7 +42,6 @@ class UserInterface:
     rt_button_num = 0                         # Which joystick numbers should be checked internally
     lt_button_num = 0                         # Which joystick numbers should be checked internally
 
-
     display_width = 830                       # Internal Pygame variable
     display_height = 325                      # Internal Pygame variable
    
@@ -64,8 +63,20 @@ class UserInterface:
     home_position_GUIobject       = None      # GUI object for the home button
 
     gui_app = None
+    gui_container = None
 
     mAnalyzer = None
+
+    # Internal variables to be read from the GUI
+    joystick_selected = ""
+    fmspe_dir = ""
+    xml_dir = ""
+    image_dir = ""
+    map_name = ""
+    units = ""
+    single_measurement_pressed = False
+    start_pause_map_pressed = False
+    stop_button_pressed = False
 
 
     ''' 
@@ -163,6 +174,31 @@ class UserInterface:
     def check_keyboard_keys(self):
         self.keys = pygame.key.get_pressed()
 
+    '''
+    Reads the GUI elements and updates the self variables accordingly
+    '''
+    def update_values_from_gui(self):
+        self.joystick_selected = self.gui_container.joystick_selection.value
+        self.fmspe_dir = self.gui_container.fmspe_dir_input.value
+        self.xml_dir = self.gui_container.xml_dir_input.value
+        self.image_dir = self.gui_container.image_dir_input.value
+        self.map_name = self.gui_container.map_name_input.value
+        self.units = self.gui_container.unit_selection.value
+        
+        if self.gui_container.take_measurement_button.pcls == "down":
+            self.single_measurement_pressed = True
+        else:
+            self.single_measurement_pressed = False
+
+        if self.gui_container.start_or_pause_button.pcls == "down":
+            self.start_pause_map_pressed = True
+        else:
+            self.start_pause_map_pressed = False
+
+        if self.gui_container.stop_button.pcls == "down":
+            self.stop_button_pressed = True
+        else:
+            self.stop_button_pressed = False
 
     '''
     Checks if the user leaves a key in the keyboard. Returns True if key_up, False otherwise
@@ -299,10 +335,11 @@ class UserInterface:
         self.mAnalyzer.Measure()
 
     '''
-    Sets the internal GUI object to the user defined guiApp
+    Sets the internal GUI objects to the user defined guiApp and guiContainer
     '''
-    def set_gui(self, guiApp):
+    def set_gui(self, guiApp, guiContainer):
         self.gui_app = guiApp
+        self.gui_container = guiContainer
 
     '''
     Refreshes the pygame display according to the information in the rest of this class

@@ -8,6 +8,7 @@ class GUIContainer(gui.Container):
 
     joystick_selection = None
     update_joystick_button = None
+    update_joystick_button_clicked = False
 
     fmspe_dir_input = None
     fmspe_browse_button = None
@@ -27,8 +28,11 @@ class GUIContainer(gui.Container):
     distance_bw_pts_y_input = None
 
     take_measurement_button = None
+    # take_measurement_button_clicked = False
     start_or_pause_button = None
+    # start_or_pause_button_clicked = False
     stop_button = None
+    # stop_button_clicked = False
 
     def __init__(self, **params):
         gui.Container.__init__(self, **params)
@@ -150,6 +154,7 @@ class GUIContainer(gui.Container):
 #     game_display = pygame.display.set_mode((500,325))
 #     gui_app = gui.App()
 #     gui_container = GUIContainer(align = -1, valign = -1)
+#     gui_container.set_default_values()
 #     gui_app.init(gui_container)
 # 
 #     clock = pygame.time.Clock()
@@ -157,10 +162,16 @@ class GUIContainer(gui.Container):
 #     while True:
 #         for event in pygame.event.get():
 #             gui_app.event(event)
+#             
+#         print gui_container.joystick_selection.value
+#         if gui_container.take_measurement_button.pcls == "down":
+#             print "Take measurement button clicked!"
 # 
 #         game_display.fill(colors.white)
 #         gui_app.paint()
 #         gui_app.update()
+# 
+# 
 # 
 #         pygame.display.update()
 #         clock.tick(60)
