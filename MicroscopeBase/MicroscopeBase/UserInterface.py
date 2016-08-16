@@ -471,21 +471,24 @@ class UserInterface:
                 # Check the GUI to see if the pause button has been clicked
                 self.check_keyboard_key_up()
 
+                # Check joystick to see if LT (pause has been clicked)
+                self.check_joystick_button()
+
                 # If the stop button is clicked, return the base to its center location, set the flag back to False, and exit
-                if self.stop_button_pressed:
+                if self.stop_button_pressed or self.lt_button == 1:
                     self.load_position_from_button('CENTER', Microscope_Base_Input)
                     self.stop_button_pressed = False
                     return
 
                 # If the pause button is clicked, then pause it indefinitely until the user clicks it again
-                if self.pause_button_pressed:
+                if self.pause_button_pressed or self.lt_button == 1:
                     self.pause_button_pressed = False
                     while True:
                         self.message1 = "Map paused! Press start/pause to resume, stop to terminate!"
                         self.check_keyboard_key_up()
 
                         # If they click the pause button again, breaks out of this infinite loop
-                        if self.pause_button_pressed:
+                        if self.pause_button_pressed or self.lt_button == 1:
                             self.pause_button_pressed = False
                             break
 
