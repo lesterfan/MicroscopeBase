@@ -36,6 +36,8 @@ class GUIContainer(gui.Container):
     stop_button = None
     # stop_button_clicked = False
 
+    started_map = False
+
     def __init__(self, **params):
         gui.Container.__init__(self, **params)
 
@@ -144,10 +146,20 @@ class GUIContainer(gui.Container):
 
         def StartOrPauseButtonCallback():
             print "Map started!"
-            self.Interface.take_map(self.map_name_input.value, int(self.num_pts_x_input.value),
-                                    int(self.distance_bw_pts_x_input.value), int(self.num_pts_y_input.value),
-                                    int(self.distance_bw_pts_y_input.value), self.unit_selection.value, 
-                                    self.Microscope_Base)
+            if not self.started_map :       # If it's the first time, then start taking the map
+                self.started_map = True
+                self.Interface.take_map(self.map_name_input.value, int(self.num_pts_x_input.value),
+                                        int(self.distance_bw_pts_x_input.value), int(self.num_pts_y_input.value),
+                                        int(self.distance_bw_pts_y_input.value), self.unit_selection.value, 
+                                        self.Microscope_Base)
+                self.started_map = False
+            else :                          # If a map is already in progress, pause it
+                while True :
+                    print "Waiting!"
+                    self.Interface.check_keyboard_key_up()
+                    if self.start_or_pause_button.pcls == "down":
+                        break
+                    self.Interface.refresh_pygame_display(self.Microscope_Base)
 
         self.start_or_pause_button = gui.Button("Start / Pause Map")
         self.start_or_pause_button.connect(gui.CLICK, StartOrPauseButtonCallback)

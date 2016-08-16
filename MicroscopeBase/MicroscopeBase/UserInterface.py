@@ -468,6 +468,9 @@ class UserInterface:
                 # Move down
                 move_y(DistancebwPointsY, Microscope_Base_Input)
 
+                # Check the GUI to see if the pause button has been clicked
+                self.check_keyboard_key_up()
+
                 # Update display to provide a real time view of the map
                 self.refresh_pygame_display(Microscope_Base_Input)
 
