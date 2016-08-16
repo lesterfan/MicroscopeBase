@@ -155,7 +155,7 @@ class GUIContainer(gui.Container):
                 self.started_map = False
             else :                          # If a map is already in progress, pause it
                 while True :
-                    print "Waiting!"
+                    self.Interface.message1 = "Map paused! Press start/pause to resume, stop to terminate!"
                     self.Interface.check_keyboard_key_up()
                     if self.start_or_pause_button.pcls == "down":
                         break

@@ -160,34 +160,34 @@ def main():
             Interface.take_map(mapping_name, points_x, distance_bw_x, points_y, distance_bw_y, units, Microscope_Base)
 
 
-        if Interface.keys[pygame.K_r]:                                                              # Press 'r' to update whether user is using joystick or not
-            Interface.initialize_joystick()
-
-
-        if Interface.keys[pygame.K_u]:                                                              # Press 'u' to move x axis a given amount of um
-            i = raw_input('Please enter the amount of microns you want to move on the x axis')
-            if RepresentsInt(i):
-                Interface.x_move_microns(int(i))
-            else:
-                print "Error! Please enter in an integral amount of microns!"
-        if Interface.keys[pygame.K_i]:                                                              # Press 'i' to move y axis a given amount of um
-            i = raw_input('Please enter the amount of microns you want to move on the y axis')
-            if RepresentsInt(i):
-                Interface.y_move_microns(int(i))
-            else:
-                print "Error! Please enter in an integral amount of microns!"
-        if Interface.keys[pygame.K_o]:                                                              # Press 'o' to move x axis a given amount of mm
-            i = raw_input('Please enter the amount of mm you want to move on the x axis')
-            if RepresentsInt(i):
-                Interface.x_move_mm(int(i))
-            else:
-                print "Error! Please enter in an integral amount of mm!"
-        if Interface.keys[pygame.K_p]:                                                              # Press 'p' to move y axis a given amount of mm
-            i = raw_input('Please enter the amount of mm you want to move on the y axis')
-            if RepresentsInt(i):
-                Interface.y_move_mm(int(i))
-            else:
-                print "Error! Please enter in an integral amount of mm!"
+        # if Interface.keys[pygame.K_r]:                                                              # Press 'r' to update whether user is using joystick or not
+        #     Interface.initialize_joystick()
+        # 
+        # 
+        # if Interface.keys[pygame.K_u]:                                                              # Press 'u' to move x axis a given amount of um
+        #     i = raw_input('Please enter the amount of microns you want to move on the x axis')
+        #     if RepresentsInt(i):
+        #         Interface.x_move_microns(int(i))
+        #     else:
+        #         print "Error! Please enter in an integral amount of microns!"
+        # if Interface.keys[pygame.K_i]:                                                              # Press 'i' to move y axis a given amount of um
+        #     i = raw_input('Please enter the amount of microns you want to move on the y axis')
+        #     if RepresentsInt(i):
+        #         Interface.y_move_microns(int(i))
+        #     else:
+        #         print "Error! Please enter in an integral amount of microns!"
+        # if Interface.keys[pygame.K_o]:                                                              # Press 'o' to move x axis a given amount of mm
+        #     i = raw_input('Please enter the amount of mm you want to move on the x axis')
+        #     if RepresentsInt(i):
+        #         Interface.x_move_mm(int(i))
+        #     else:
+        #         print "Error! Please enter in an integral amount of mm!"
+        # if Interface.keys[pygame.K_p]:                                                              # Press 'p' to move y axis a given amount of mm
+        #     i = raw_input('Please enter the amount of mm you want to move on the y axis')
+        #     if RepresentsInt(i):
+        #         Interface.y_move_mm(int(i))
+        #     else:
+        #         print "Error! Please enter in an integral amount of mm!"
 
 
         # ------------------------------ MOVING THE MICROSCOPE BASE ---------------------------------------------------------------------------------------------------
