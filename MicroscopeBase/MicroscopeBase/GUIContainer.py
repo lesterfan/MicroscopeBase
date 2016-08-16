@@ -163,30 +163,30 @@ class GUIContainer(gui.Container):
         self.distance_bw_pts_x_input.value = '5'
         self.distance_bw_pts_y_input.value = '5'
 
-def main():
-    pygame.init()
-    game_display = pygame.display.set_mode((500,325))
-    gui_app = gui.App()
-    gui_container = GUIContainer(align = -1, valign = -1)
-    gui_container.set_default_values()
-    gui_app.init(gui_container)
-
-    clock = pygame.time.Clock()
-    
-    while True:
-        for event in pygame.event.get():
-            gui_app.event(event)
-            
-        # print gui_container.joystick_selection.value
-        # if gui_container.take_measurement_button.pcls == "down":
-        #     print "Take measurement button clicked!"
-
-        game_display.fill(colors.white)
-        gui_app.paint()
-        gui_app.update()
-
-
-
-        pygame.display.update()
-        clock.tick(60)
-main()
+# def main():
+#     pygame.init()
+#     game_display = pygame.display.set_mode((500,325))
+#     gui_app = gui.App()
+#     gui_container = GUIContainer(align = -1, valign = -1)
+#     gui_container.set_default_values()
+#     gui_app.init(gui_container)
+# 
+#     clock = pygame.time.Clock()
+#     
+#     while True:
+#         for event in pygame.event.get():
+#             gui_app.event(event)
+#             
+#         # print gui_container.joystick_selection.value
+#         # if gui_container.take_measurement_button.pcls == "down":
+#         #     print "Take measurement button clicked!"
+# 
+#         game_display.fill(colors.white)
+#         gui_app.paint()
+#         gui_app.update()
+# 
+# 
+# 
+#         pygame.display.update()
+#         clock.tick(60)
+# main()
