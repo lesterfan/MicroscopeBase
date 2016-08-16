@@ -1,6 +1,10 @@
 import MicroscopeBase
 import UserInterface
+import GUIContainer
+
 import pygame
+
+from pgu import gui
 
 def RepresentsInt(s):
     try: 
@@ -15,8 +19,12 @@ def main():
     Interface.initialize_joystick()
 
     # Adding the GUI
-
-
+    gui_app = gui.App()
+    gui_container = GUIContainer.GUIContainer(align = -1, valign = -1)
+    gui_container.set_default_values()
+    gui_app.init(gui_container)
+    Interface.set_gui(gui_app)
+    
 
     unit_change = 1000                           # Each unit of change
     x = 0                                        # Current x position
@@ -73,6 +81,7 @@ def main():
         # Checking if each button is pressed. If so, do appropriate actions.
         if start_button == 1:                                              # Start button to home device
             Microscope_Base.home_device()
+            Interface.message1 = "Microscope base homed!"
 
         if rb_button == 1 and a_button == 1:                               # Save functions
             Interface.save_position_to_button('a',Microscope_Base)
@@ -180,8 +189,11 @@ def main():
                 print "Error! Please enter in an integral amount of mm!"
 
 
-        
-
+        # Pass the event to the GUI / set up exit
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return
+            gui_app.event(event)
 
         # ------------------------------ MOVING THE MICROSCOPE BASE ---------------------------------------------------------------------------------------------------
         

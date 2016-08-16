@@ -63,6 +63,8 @@ class UserInterface:
     b_position_GUIobject          = None      # GUI object for the b button
     home_position_GUIobject       = None      # GUI object for the home button
 
+    gui_app = None
+
     mAnalyzer = None
 
 
@@ -238,6 +240,9 @@ class UserInterface:
         self.GUIButton_dict[string_input].xstart = int( x / 2000 ) + 500
         self.GUIButton_dict[string_input].ystart = int( y / 2000 )
 
+        # Change the message display
+        self.message1 = "Successfully saved position to button "+string_input
+
     '''
     Loads the position of button string_input using Microscope_Base_Input
     @ param string_input : String that describes which button we're saving, eg. 'a', 'x', ...
@@ -294,6 +299,12 @@ class UserInterface:
         self.mAnalyzer.Measure()
 
     '''
+    Sets the internal GUI object to the user defined guiApp
+    '''
+    def set_gui(self, guiApp):
+        self.gui_app = guiApp
+
+    '''
     Refreshes the pygame display according to the information in the rest of this class
     '''
     def refresh_pygame_display(self, Microscope_Base_Input):
@@ -317,12 +328,15 @@ class UserInterface:
         self.microscope_position_GUIobject.ystart = int( y / 2000 )
         self.microscope_position_GUIobject.drawToScreen()
 
+        # Refresh / render GUI
+        self.gui_app.paint()
+        self.gui_app.update()
+
         # Print messages to screen
-        # printfunctions.message_to_screen("Location : "+str(absolute_location), colors.black, y_displace = 150, size = 'medium')
-        # printfunctions.message_to_screen(self.message1,colors.black, y_displace = 170)
+        printfunctions.message_to_screen("Location : "+str(absolute_location), colors.black, y_displace = 125, x_displace = -165, size = 'medium')
+        printfunctions.message_to_screen(self.message1,colors.black, y_displace = 145, x_displace = -165)
         # printfunctions.message_to_screen("RB + X,Y,B to save a position. Press X,Y,B to return to that", colors.black, y_displace = 185)
         # printfunctions.message_to_screen("position. A to home.", colors.black, y_displace = 195)
-
         
         pygame.display.update()
         self.Clock.tick(self.FPS)

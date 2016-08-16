@@ -5,8 +5,8 @@ import colors
 pygame.init()
 
 
-display_width = 330                               # The microscope goes from 0 to 640k
-display_height = 425                              # The microscope goes from 0 to 768k
+display_width = 830                               # The microscope goes from 0 to 640k
+display_height = 325                              # The microscope goes from 0 to 768k
 
 gameDisplay = pygame.display.set_mode((display_width, display_height))
 smallfont = pygame.font.SysFont("comicsansms",10)
