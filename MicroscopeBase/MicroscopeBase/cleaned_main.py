@@ -24,6 +24,7 @@ def main():
     gui_container.set_default_values()
     gui_app.init(gui_container)
     Interface.set_gui(gui_app, gui_container)
+    gui_container.Interface = Interface
     
 
     unit_change = 1000                           # Each unit of change
@@ -116,16 +117,16 @@ def main():
                 return
             gui_app.event(event)
 
-        Interface.update_values_from_gui()
-        if Interface.single_measurement_pressed:
-            print "Taking measurement!"
-            Interface.take_measurement()
-        elif Interface.start_pause_map_pressed:
-            print "Start/pause button pressed!"
-        elif Interface.stop_button_pressed:
-            print "Stop button pressed!"
-        elif Interface.update_joystick_pressed:
-            print "Update joystick button pressed!"
+        # Interface.update_values_from_gui()
+        # if Interface.single_measurement_pressed:
+        #     print "Taking measurement!"
+        #     Interface.take_measurement()
+        # elif Interface.start_pause_map_pressed:
+        #     print "Start/pause button pressed!"
+        # elif Interface.stop_button_pressed:
+        #     print "Stop button pressed!"
+        # elif Interface.update_joystick_pressed:
+        #     print "Update joystick button pressed!"
 
 
 
