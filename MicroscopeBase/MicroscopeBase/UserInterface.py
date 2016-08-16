@@ -475,7 +475,7 @@ class UserInterface:
                 self.check_joystick_button()
 
                 # If the stop button is clicked, return the base to its center location, set the flag back to False, and exit
-                if self.stop_button_pressed or self.lt_button == 1:
+                if self.stop_button_pressed:
                     self.load_position_from_button('CENTER', Microscope_Base_Input)
                     self.stop_button_pressed = False
                     return
@@ -486,6 +486,7 @@ class UserInterface:
                     while True:
                         self.message1 = "Map paused! Press start/pause to resume, stop to terminate!"
                         self.check_keyboard_key_up()
+                        self.check_joystick_button()
 
                         # If they click the pause button again, breaks out of this infinite loop
                         if self.pause_button_pressed or self.lt_button == 1:
