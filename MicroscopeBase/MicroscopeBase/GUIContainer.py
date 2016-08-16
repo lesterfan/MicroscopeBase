@@ -43,7 +43,7 @@ class GUIContainer(gui.Container):
         # Select joystick GUI
         self.add(gui.Label("Select joystick"), 7, 32)
         self.joystick_selection = gui.Select()
-        self.joystick_selection.add("None",'None')
+        # self.joystick_selection.add("None",'None')
         self.joystick_selection.add("Shenzhen",'Shenzhen')
         self.joystick_selection.add("The unworking backup", "The unworking backup")
         self.joystick_selection.add("Xbox >>>>> Playstation", "Xbox >>>>> Playstation")
@@ -51,7 +51,13 @@ class GUIContainer(gui.Container):
         
         # Update joystick button
         def UpdateJoystickButtonCallBack():
-            print "Update joystick button pressed!"
+            if self.joystick_selection.value == "Shenzhen" or self.joystick_selection.value == "Xbox >>>>> Playstation":
+                self.Interface.initialize_joystick()
+            else:
+                self.Interface.initialize_joystick(self, a_button_num = 0, x_button_num = 2, y_button_num = 3,
+                                    b_button_num = 1, rb_button_num = 5, start_button_num = 7, 
+                                    lx_axis = 0, ly_axis = 1, trigger_axis = 2, rx_axis = 3, ry_axis = 4, 
+                                    rt_button_num = None, lt_button_num = None)
         self.update_joystick_button = gui.Button("Update JS")
         self.update_joystick_button.connect(gui.CLICK, UpdateJoystickButtonCallBack)
         self.add(self.update_joystick_button, 400, 32)
@@ -129,7 +135,7 @@ class GUIContainer(gui.Container):
 
         # Measure, Start/Pause, Stop buttons
         def MeasureOnceButtonCallback():
-            print "Taking measurement!"
+            self.Interface.message1 = "Taking measurement!"
             self.Interface.take_measurement()
         self.take_measurement_button = gui.Button("Measure once")
         self.take_measurement_button.connect(gui.CLICK, MeasureOnceButtonCallback)
