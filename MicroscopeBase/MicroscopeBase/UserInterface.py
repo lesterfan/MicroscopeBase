@@ -396,8 +396,9 @@ class UserInterface:
     @ param DistancebwPointsY : desired distance b/w points on the y-axis
     @ param units : desired units, 'um' or 'mm'
     @ param Microscope_Base_Input : reference to the microscope base object on which to move
+    @ param currFileDir : string that represents the directory in which the map data will be saved.
     '''
-    def take_map(self, mapping_name, numPointsX, DistancebwPointsX, numPointsY, DistancebwPointsY, units, Microscope_Base_Input):
+    def take_map(self, mapping_name, numPointsX, DistancebwPointsX, numPointsY, DistancebwPointsY, units, Microscope_Base_Input): 
         
         # Check that all the inputs are integral
         if not (numPointsX % 1 == 0 or DistancebwPointsX % 1 == 0 or numPointsY % 1 == 0 or DistancebwPointsY % 1 == 0):
@@ -451,19 +452,19 @@ class UserInterface:
                 print "Now measuring"
                 self.take_measurement()
 
-                # The next few lines save this measuremnet
+                # The next few lines save this measuremnet with an x,y location stamp on it.
                 print "Now saving!"
-                desired_file_name = mapping_name + "_{0}_{1}".format(i,j)
-                currFileDir = "C:/Users/HMNL/Documents/Test/"
+                x, y = Microscope_Base_Input.get_absolute_position()
+                desired_file_name = mapping_name + "_x{0}_y{1}".format(x,y)
 
                 # Save the .fmspe file into its own folder.
-                self.mAnalyzer.SaveSpectrum(currFileDir + "FMSPE/", desired_file_name)
+                self.mAnalyzer.SaveSpectrum(self.gui_container.fmspe_dir_input.value, desired_file_name)
 
                 # Save the .xml file into its own folder
-                self.mAnalyzer.SaveResultsTo(currFileDir + "XML/", desired_file_name)
+                self.mAnalyzer.SaveResultsTo(self.gui_container.xml_dir_input.value, desired_file_name)
 
                 # Save the image file into its own folder
-                self.mAnalyzer.SaveImageTo(currFileDir + "Images/", desired_file_name)
+                self.mAnalyzer.SaveImageTo(self.gui_container.image_dir_input.value, desired_file_name)
 
                 # Move down
                 move_y(DistancebwPointsY, Microscope_Base_Input)
