@@ -375,6 +375,7 @@ class UserInterface:
         self.gui_app.paint()
         self.gui_app.update()
 
+
         # Print messages to screen
         printfunctions.message_to_screen("Location : "+str(absolute_location), colors.black, y_displace = 125, x_displace = -165, size = 'medium')
         printfunctions.message_to_screen(self.message1,colors.black, y_displace = 145, x_displace = -165)
