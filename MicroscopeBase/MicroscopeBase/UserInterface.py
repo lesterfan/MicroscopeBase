@@ -381,8 +381,6 @@ class UserInterface:
         printfunctions.message_to_screen("1 unit = 1 microstep = 0.15625 um", colors.red, y_displace = 110, x_displace = -165, size = 'small')
         printfunctions.message_to_screen("Location : "+str(absolute_location), colors.black, y_displace = 125, x_displace = -165, size = 'medium')
         printfunctions.message_to_screen(self.message1,colors.black, y_displace = 145, x_displace = -165)
-        # printfunctions.message_to_screen("RB + X,Y,B to save a position. Press X,Y,B to return to that", colors.black, y_displace = 185)
-        # printfunctions.message_to_screen("position. A to home.", colors.black, y_displace = 195)
         
         pygame.display.update()
         self.Clock.tick(self.FPS)
