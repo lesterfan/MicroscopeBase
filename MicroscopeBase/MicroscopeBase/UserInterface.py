@@ -356,8 +356,6 @@ class UserInterface:
         # Fill with pretty colors
         self.pygame_display.fill(colors.white)
         pygame.draw.rect(self.pygame_display, colors.black, [500, 0, 330, 325])
-        # pygame.draw.rect(self.pygame_display, colors.white, [500, 333, 330, 100])
-        # pygame.draw.rect(self.pygame_display, colors.red, [500, 333, 330, 10])
 
         # Get absolute position to print
         absolute_location = Microscope_Base_Input.get_absolute_position()
@@ -380,8 +378,6 @@ class UserInterface:
         # Print messages to screen
         printfunctions.message_to_screen("Location : "+str(absolute_location), colors.black, y_displace = 125, x_displace = -165, size = 'medium')
         printfunctions.message_to_screen(self.message1,colors.black, y_displace = 145, x_displace = -165)
-        # printfunctions.message_to_screen("RB + X,Y,B to save a position. Press X,Y,B to return to that", colors.black, y_displace = 185)
-        # printfunctions.message_to_screen("position. A to home.", colors.black, y_displace = 195)
         
         pygame.display.update()
         self.Clock.tick(self.FPS)
