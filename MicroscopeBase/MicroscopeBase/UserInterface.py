@@ -537,20 +537,25 @@ class UserInterface:
 
         # Parse through the files and take out the important information, and write it
         for file in xml_files:
-            test_result = MicroscopeAnalyzerLibrary.MicroscopeAnalyzer.LoadResultsFrom(xml_dir + file)
+            result = MicroscopeAnalyzerLibrary.MicroscopeAnalyzer.LoadResultsFrom(xml_dir + file)
 
             # Write the file name which includes x and y coordinates in it
-            output_txt_file.write(file+"\n")
+            output_txt_file.write(file+" ")
+
+            if result == None:
+                print "None!"
 
             # Write the items for each file
             if "Layer Roughnesses" in analysis_items.values():
-                output_txt_file.write("Layer_Roughnesses {}\n".format([i for i in test_result.LayerRoughnesses]))
+                output_txt_file.write("Layer_Roughnesses {} ".format([i for i in result.LayerRoughnesses]))
             if "Layer Thicknesses" in analysis_items.values():
-                output_txt_file.write("Layer_Thicknesses {}\n".format([i for i in test_result.LayerThicknesses]))
+                output_txt_file.write("Layer_Thicknesses {} ".format([i for i in result.LayerThicknesses]))
             if "Measured FFT Intensity" in analysis_items.values():
-                output_txt_file.write("Measured_FFT_Intensity {}\n".format([i for i in test_result.MeasFFTIntensity]))
+                output_txt_file.write("Measured_FFT_Intensity {} ".format([i for i in result.MeasFFTIntensity]))
             if "Measured FFT Thickness" in analysis_items.values():
-                output_txt_file.write("Measured_FFT_Thicknesses {}\n".format([i for i in test_result.MeasFFTThickness]))
+                output_txt_file.write("Measured_FFT_Thicknesses {} ".format([i for i in result.MeasFFTThickness]))
+
+            output_txt_file.write("\n")
 
         # After everything is written, close the file
         output_txt_file.close()
