@@ -38,6 +38,7 @@ class GUIContainer(gui.Container):
 
     started_map = False
 
+
     def __init__(self, **params):
         gui.Container.__init__(self, **params)
 
@@ -210,7 +211,7 @@ class GUIContainer(gui.Container):
 
         # Performs analysis and saves it as a .txt file in the out directory that the user specifies
         def check_out(arg):
-            print "Insufficient funding! Please apply to more grants!"
+            self.Interface.PostProcessAndSave(xml_directory_post_processing.value, text_dir_input.value, post_map_name_input.value, cart_items)
 
         # Cart button GUI objects... the functions are defined above
         add_to_cart_button = gui.Button("Add to cart", width = 90)
@@ -235,11 +236,11 @@ class GUIContainer(gui.Container):
         def handle_xml_post_file_browser_closed(dlg):
             if dlg.value : xml_directory_post_processing.value = dlg.value
         def open_xml_post_file_browser(arg):
-            d = gui.FileDialog(path = "C:\\Users\\Huafeng\\Desktop\\TestXMLFiles\\")
+            d = gui.FileDialog(path = "C:\\Users\\HMNL\\Documents\\Test\\")
             d.connect(gui.CHANGE, handle_xml_post_file_browser_closed, d)
             d.open()
         xml_directory_post_processing = gui.Input(size = 19)
-        xml_directory_post_processing.value = "C:\\Users\\Huafeng\\Desktop\\TestXMLFiles\\xmlfiles\\"
+        xml_directory_post_processing.value = "C:\\Users\\HMNL\\Documents\\Test\\XML\\"
         self.add(gui.Label("XML Directory"),    xalign + 7, 252)
         self.add(xml_directory_post_processing, xalign + 125, 250)
         post_browse_button = gui.Button("Browse", width = 50)
@@ -250,11 +251,11 @@ class GUIContainer(gui.Container):
         def handle_text_browser_closed(dlg):
             if dlg.value : text_dir_input.value = dlg.value
         def open_text_file_browser(arg):
-            d = gui.FileDialog(value = "C:\\Users\\Huafeng\\Desktop\\TestXMLFiles\\AnalysisFiles\\")
+            d = gui.FileDialog(value = "C:\\Users\\HMNL\\Documents\\Test\\")
             d.connect(gui.CHANGE, handle_text_browser_closed, d)
             d.open()
         text_dir_input = gui.Input(size = 19)
-        text_dir_input.value = "C:\\Users\\Huafeng\\Desktop\\TestXMLFiles\\AnalysisFiles\\"
+        text_dir_input.value = "C:\\Users\\HMNL\\Documents\\Test\\AnalysisFiles\\"
         self.add(gui.Label("Out Directory"), xalign + 7, 282)
         self.add(text_dir_input,             xalign + 125, 280)
         text_dir_browse_button = gui.Button("Browse", width = 50)

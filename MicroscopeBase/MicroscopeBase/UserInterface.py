@@ -4,7 +4,7 @@ import colors
 import printfunctions
 import gameobjects
 import dotnet.seamless
-
+import os
 
 DEFAULT_OUT_OF_SCREEN_VALUE = 100000
 
@@ -114,8 +114,7 @@ class UserInterface:
         self.GUIButton_dict['b'] = self.b_position_GUIobject
 
 
-        
-        # Load the compiled C# library to analyze the microscope with.
+        # Load the compiled C# library with which to interact with the Filmmetrics software
         dotnet.add_assemblies('C:\\Users\\HMNL\\Desktop\\VsGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\')
         dotnet.load_assembly('MicroscopeAnalyzerLibrary')
         import MicroscopeAnalyzerLibrary
@@ -507,3 +506,46 @@ class UserInterface:
 
         # After the map is over, return the base to its center location
         self.load_position_from_button('CENTER', Microscope_Base_Input)
+
+    '''
+    Takes in a directory of where the .xml files are saved in the map, output directory,
+    and the map name, and saves a .txt file containing the neat information of the analysis_items
+    in the output file
+    @ param xml_dir : string representing the directory of the .xml files
+    @ param output_dir : string representing the directory of the desired output .txt file
+    @ param map_name : string representing the name of the map the user saved
+    @ analysis_items : dictionary object representing the items needed to analyze
+    '''
+    def PostProcessAndSave(xml_dir, output_dir, map_name, analysis_items):
+        # Fill up a list of strings with the relevant .xml files
+        xml_files = [filename for filename in os.listdir(xml_dir) if filename.startswith(map_name) and filename.endswith(".xml")]
+        
+        # Open the output .txt file to write
+        output_txt_file = open(output_dir + "Analysis_" + map_name + ".txt", 'w')
+
+        # Parse through the files and take out the important information, and write it
+        for file in xml_files:
+            test_result = MicroscopeAnalyzerLibrary.MicroscopeAnalyzer.LoadResultsFrom(xml_dir + file)
+
+            # Write the file name which includes x and y coordinates in it
+            output_txt_file.write(file+"\n")
+
+            # Write the items for each file
+            if "Layer Roughnesses" in analysis_items:
+                output_txt_file.write("Layer_Roughnesses {}\n".format([i for i in test_result.LayerRoughnesses]))
+            if "Layer Thicknesses" in analysis_items:
+                output_txt_file.write("Layer_Thicknesses {}\n".format([i for i in test_result.LayerThicknesses]))
+            if "Measured FFT Intensity" in analysis_items:
+                output_txt_file.write("Measured_FFT_Intensity {}\n".format([i for i in test_result.MeasFFTIntensity]))
+            if "Measured FFT Thickness" in analysis_items:
+                output_txt_file.write("Measured_FFT_Thicknesses {}\n".format([i for i in test_result.MeasFFTThickness]))
+
+        # After everything is written, close the file
+        output_txt_file.close()
+
+
+
+
+
+
+
