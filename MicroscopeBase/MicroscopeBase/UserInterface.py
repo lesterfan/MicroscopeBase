@@ -540,20 +540,34 @@ class UserInterface:
             result = MicroscopeAnalyzerLibrary.MicroscopeAnalyzer.LoadResultsFrom(xml_dir + file)
 
             # Write the file name which includes x and y coordinates in it
-            output_txt_file.write(file+" ")
+            coordinates_string = file[len(map_name):]
+            coordinates_string = coordinates_string[:-4]
+            output_txt_file.write(coordinates_string + " ")
 
             if result == None:
                 print "None!"
 
             # Write the items for each file
             if "Layer Roughnesses" in analysis_items.values():
-                output_txt_file.write("Layer_Roughnesses {} ".format([i for i in result.LayerRoughnesses]))
+                if result.LayerRoughnesses == None:
+                    output_txt_file.write("Layer_Roughnesses None ")
+                else:
+                    output_txt_file.write("Layer_Roughnesses {} ".format([i for i in result.LayerRoughnesses]))
             if "Layer Thicknesses" in analysis_items.values():
-                output_txt_file.write("Layer_Thicknesses {} ".format([i for i in result.LayerThicknesses]))
+                if result.LayerThicknesses == None:
+                    output_txt_file.write("Layer_Thicknesses None ")
+                else:
+                    output_txt_file.write("Layer_Thicknesses {} ".format([i for i in result.LayerThicknesses]))
             if "Measured FFT Intensity" in analysis_items.values():
-                output_txt_file.write("Measured_FFT_Intensity {} ".format([i for i in result.MeasFFTIntensity]))
+                if result.MeasFFTIntensity == None:
+                    output_txt_file.write("Measured_FFT_Intensity None ")
+                else:
+                    output_txt_file.write("Measured_FFT_Intensity {} ".format([i for i in result.MeasFFTIntensity]))
             if "Measured FFT Thickness" in analysis_items.values():
-                output_txt_file.write("Measured_FFT_Thicknesses {} ".format([i for i in result.MeasFFTThickness]))
+                if result.MeasFFTThickness == None:
+                    output_txt_file.write("Measured_FFT_Thickness None ")
+                else:
+                    output_txt_file.write("Measured_FFT_Thicknesses {} ".format([i for i in result.MeasFFTThickness]))
 
             output_txt_file.write("\n")
 
