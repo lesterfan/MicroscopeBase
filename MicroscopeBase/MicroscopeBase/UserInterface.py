@@ -79,6 +79,8 @@ class UserInterface:
     pause_button_pressed = False
     stop_button_pressed = False
 
+    # Pictures that add color to the GUI
+    dino_image = None
 
     ''' 
     Constructor that sets up connection to user interface. Instantiates all the 
@@ -100,7 +102,7 @@ class UserInterface:
 
 
         # Initialize pygame GUI objects to show where things are
-        self.microscope_position_GUIobject = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.white)
+        self.microscope_position_GUIobject = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.black)
         self.a_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.blue) 
         self.x_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.hot_pink)  
         self.y_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.green)
@@ -122,6 +124,10 @@ class UserInterface:
         # Creates the MicroscopeAnalyzer object from the loaded C# library
         self.mAnalyzer = MicroscopeAnalyzerLibrary.MicroscopeAnalyzer(True)
 
+        
+        # Loading up the colorful pictures
+        self.dino_image = pygame.image.load(os.path.join("dino_pic.jpg"))
+        self.dino_image.convert()
 
     '''
     Initializes the self.joystick variable and maps the button nums to their respective positions
@@ -354,7 +360,8 @@ class UserInterface:
     def refresh_pygame_display(self, Microscope_Base_Input):
         # Fill with pretty colors
         self.pygame_display.fill(colors.white)
-        pygame.draw.rect(self.pygame_display, colors.black, [500, 0, 330, 325])
+        # pygame.draw.rect(self.pygame_display, colors.black, [500, 0, 330, 325])
+        self.pygame_display.blit(self.dino_image, (500,0))
 
         # Get absolute position to print
         absolute_location = Microscope_Base_Input.get_absolute_position()
