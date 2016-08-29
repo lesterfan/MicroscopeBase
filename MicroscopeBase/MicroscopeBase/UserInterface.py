@@ -529,7 +529,7 @@ class UserInterface:
     @ analysis_items : dictionary object representing the items needed to analyze
     '''
     def PostProcessAndSave(self, xml_dir, output_dir, map_name, analysis_items):
-        # Fill up a list of strings with the relevant .xml files
+        # Fill up a list of strings with the relevant .xml files!
         xml_files = [filename for filename in os.listdir(xml_dir) if filename.startswith(map_name) and filename.endswith(".xml")]
         
         # Open the output .txt file to write
