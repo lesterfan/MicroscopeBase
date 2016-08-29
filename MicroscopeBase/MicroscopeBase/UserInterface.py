@@ -540,7 +540,7 @@ class UserInterface:
             result = MicroscopeAnalyzerLibrary.MicroscopeAnalyzer.LoadResultsFrom(xml_dir + file)
 
             # Write the file name which includes x and y coordinates in it
-            coordinates_string = file[len(map_name):]
+            coordinates_string = file[len(map_name)+1:]
             coordinates_string = coordinates_string[:-4]
             output_txt_file.write(coordinates_string + " ")
 
