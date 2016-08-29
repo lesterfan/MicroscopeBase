@@ -107,12 +107,12 @@ class UserInterface:
 
 
         # Initialize pygame GUI objects to show where things are
-        self.microscope_position_GUIobject = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.black)
-        self.a_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.blue) 
-        self.x_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.hot_pink)  
-        self.y_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.green)
-        self.b_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.orange)   
-        self.home_position_GUIobject       = gameobjects.Enemy(500, 0, 10, 10, colors.red)   
+        self.microscope_position_GUIobject = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.black   , img = "HMNL_sprite.png")
+        self.a_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.blue    , img = "a_button_sprite.png") 
+        self.x_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.hot_pink, img = "x_button_sprite.png")  
+        self.y_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.green   , img = "y_button_sprite.png")
+        self.b_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.orange  , img = "b_button_sprite.png")   
+        self.home_position_GUIobject       = gameobjects.Enemy(500, 0, 10, 10, colors.red                                                       , img = "home_position_sprite.png")   
 
         # Place the GUIObjects for buttons into a dictionary to retrieve
         self.GUIButton_dict['a'] = self.a_position_GUIobject
@@ -341,14 +341,14 @@ class UserInterface:
         x, y = absolute_location
 
         # Draw the home location as well as the saved GUI marker objects
-        self.home_position_GUIobject.drawToScreen()
+        self.home_position_GUIobject.drawToScreen(self.pygame_display)
         for key in self.GUIButton_dict:
-            self.GUIButton_dict[key].drawToScreen()
+            self.GUIButton_dict[key].drawToScreen(self.pygame_display)
 
         # Draw the microscope object according to current absolute location
         self.microscope_position_GUIobject.xstart = int( x / 2000 ) + 500
         self.microscope_position_GUIobject.ystart = int( y / 2000 )
-        self.microscope_position_GUIobject.drawToScreen()
+        self.microscope_position_GUIobject.drawToScreen(self.pygame_display)
 
         # Refresh / render GUI
         self.gui_app.paint()

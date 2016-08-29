@@ -35,15 +35,16 @@ class Enemy:
         self.img = img 
         self.microscope_x = 0
         self.microscope_y = 0
+        if self.img != "":
+            self.image = pygame.image.load(os.path.join(self.img))
+            self.image.convert()
        
 
 
-    def drawToScreen(self):
+    def drawToScreen(self, gameDisplay):
         if self.img == "":
-            pygame.draw.rect(MICROSCOPE_DISPLAY, self.color, [self.xstart, self.ystart, self.enemyWidth, self.enemyHeight])
+            pygame.draw.rect(gameDisplay, self.color, [self.xstart, self.ystart, self.enemyWidth, self.enemyHeight])
         else:
-            path = os.path.join("Sprites",str(self.img))
-            image = pygame.image.load(path)
             gameDisplay.blit(image,[self.xstart,self.ystart])
     
 
