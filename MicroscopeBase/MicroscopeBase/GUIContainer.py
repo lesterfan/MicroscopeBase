@@ -172,6 +172,97 @@ class GUIContainer(gui.Container):
 
         # ----------------------------------------------- Post Processing GUI Components -------------------------------------------------------------------------------
 
+        xalign = 400                    # Alignment between standalone program and the final program
+
+        self.add(gui.Label("Post Processing Shopping Cart", color = colors.blue), xalign + 85, 10)
+        
+        # Attributes list from which the user can pick out items
+        initial_attributes_list_object = gui.List(width = 180, height = 140)
+        for i in range(len(attribute_items)):
+            item = attribute_items[i]
+            initial_attributes_list_object.add(item, value = i)
+        self.add(initial_attributes_list_object, xalign + 10, 40)
+
+        # List of items that the user selected into their carts
+        cart_items_object = gui.List(width = 180, height = 140)
+        self.add(cart_items_object, xalign + 210, 40)
+
+        # Functions to add/remove items from cart in the attribute_items list and cart_items hash
+        attribute_items = ["Layer Roughnesses", "Layer Thicknesses", "Measured FFT Intensity", "Measured FFT Thickness"]
+        cart_items = {}
+
+        def add_item_to_cart(arg):
+            v = initial_attributes_list_object.value
+            if v != None and v not in cart_items:
+                cart_items[v] = v
+                index = v
+                cart_items_object.add(attribute_items[index], value = index)
+                cart_items_object.resize()
+                cart_items_object.repaint()
+                
+        def remove_item_from_cart(arg):
+            v = cart_items_object.value
+            if v != None:
+                cart_items.pop(v)
+                cart_items_object.remove(v)
+                cart_items_object.resize()
+                cart_items_object.repaint()
+                cart_items_object.value = None
+
+        # Performs analysis and saves it as a .txt file in the out directory that the user specifies
+        def check_out(arg):
+            print "Insufficient funding! Please apply to more grants!"
+
+        # Cart button GUI objects... the functions are defined above
+        add_to_cart_button = gui.Button("Add to cart", width = 90)
+        add_to_cart_button.connect(gui.CLICK, add_item_to_cart, None)
+        self.add(add_to_cart_button, xalign + 10, 190)
+
+        remove_from_cart_button = gui.Button("Remove from cart", width = 90)
+        remove_from_cart_button.connect(gui.CLICK, remove_item_from_cart, None)
+        self.add(remove_from_cart_button, xalign + 125, 190)
+
+        save_analysis_button = gui.Button("Checkout", width = 85)
+        save_analysis_button.connect(gui.CLICK, check_out, None)
+        self.add(save_analysis_button, xalign + 290, 190)
+        
+        # The name of the map that we should be looking for
+        self.add(gui.Label("Map name"), xalign + 7, 222)
+        post_map_name_input = gui.Input(size = 28)
+        post_map_name_input.value = "Columbus"
+        self.add(post_map_name_input, xalign + 125, 220) 
+
+        # Post processing XML directory input
+        def handle_xml_post_file_browser_closed(dlg):
+            if dlg.value : xml_directory_post_processing.value = dlg.value
+        def open_xml_post_file_browser(arg):
+            d = gui.FileDialog(path = "C:\\Users\\Huafeng\\Desktop\\TestXMLFiles\\")
+            d.connect(gui.CHANGE, handle_xml_post_file_browser_closed, d)
+            d.open()
+        xml_directory_post_processing = gui.Input(size = 19)
+        xml_directory_post_processing.value = "C:\\Users\\Huafeng\\Desktop\\TestXMLFiles\\xmlfiles\\"
+        self.add(gui.Label("XML Directory"),    xalign + 7, 252)
+        self.add(xml_directory_post_processing, xalign + 125, 250)
+        post_browse_button = gui.Button("Browse", width = 50)
+        self.add(post_browse_button, xalign + 315, 252)
+        post_browse_button.connect(gui.CLICK, open_xml_post_file_browser, None)
+
+        # Output file directory
+        def handle_text_browser_closed(dlg):
+            if dlg.value : text_dir_input.value = dlg.value
+        def open_text_file_browser(arg):
+            d = gui.FileDialog(value = "C:\\Users\\Huafeng\\Desktop\\TestXMLFiles\\AnalysisFiles\\")
+            d.connect(gui.CHANGE, handle_text_browser_closed, d)
+            d.open()
+        text_dir_input = gui.Input(size = 19)
+        text_dir_input.value = "C:\\Users\\Huafeng\\Desktop\\TestXMLFiles\\AnalysisFiles\\"
+        self.add(gui.Label("Out Directory"), xalign + 7, 282)
+        self.add(text_dir_input,             xalign + 125, 280)
+        text_dir_browse_button = gui.Button("Browse", width = 50)
+        self.add(text_dir_browse_button, xalign + 315, 282)
+        text_dir_browse_button.connect(gui.CLICK, open_text_file_browser, None)
+        
+
 
 
     def set_default_values(self):
