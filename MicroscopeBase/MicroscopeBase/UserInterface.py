@@ -401,6 +401,7 @@ class UserInterface:
         # Check that all the inputs are integral
         if not (numPointsX % 1 == 0 or DistancebwPointsX % 1 == 0 or numPointsY % 1 == 0 or DistancebwPointsY % 1 == 0):
             self.message1 = "Error! Please make sure everything is integral!"
+            return
 
 
         # If the entered amount is odd, the exact center will be measured along with the spectrum. If it's even, then the center won't be measured, but
