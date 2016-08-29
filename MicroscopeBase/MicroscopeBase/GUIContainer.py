@@ -251,7 +251,7 @@ class GUIContainer(gui.Container):
         def handle_text_browser_closed(dlg):
             if dlg.value : text_dir_input.value = dlg.value
         def open_text_file_browser(arg):
-            d = gui.FileDialog(value = "C:\\Users\\HMNL\\Documents\\Test\\")
+            d = gui.FileDialog(path = "C:\\Users\\HMNL\\Documents\\Test\\")
             d.connect(gui.CHANGE, handle_text_browser_closed, d)
             d.open()
         text_dir_input = gui.Input(size = 19)

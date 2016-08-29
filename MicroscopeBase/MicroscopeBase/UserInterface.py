@@ -6,6 +6,11 @@ import gameobjects
 import dotnet.seamless
 import os
 
+# Load the compiled C# library with which to interact with the Filmmetrics software
+dotnet.add_assemblies('C:\\Users\\HMNL\\Desktop\\VsGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\')
+dotnet.load_assembly('MicroscopeAnalyzerLibrary')
+import MicroscopeAnalyzerLibrary
+
 DEFAULT_OUT_OF_SCREEN_VALUE = 100000
 
 class UserInterface:
@@ -117,9 +122,9 @@ class UserInterface:
 
 
         # Load the compiled C# library with which to interact with the Filmmetrics software
-        dotnet.add_assemblies('C:\\Users\\HMNL\\Desktop\\VsGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\')
-        dotnet.load_assembly('MicroscopeAnalyzerLibrary')
-        import MicroscopeAnalyzerLibrary
+        # dotnet.add_assemblies('C:\\Users\\HMNL\\Desktop\\VsGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\')
+        # dotnet.load_assembly('MicroscopeAnalyzerLibrary')
+        # import MicroscopeAnalyzerLibrary
 
         # Creates the MicroscopeAnalyzer object from the loaded C# library
         self.mAnalyzer = MicroscopeAnalyzerLibrary.MicroscopeAnalyzer(True)
@@ -523,7 +528,7 @@ class UserInterface:
     @ param map_name : string representing the name of the map the user saved
     @ analysis_items : dictionary object representing the items needed to analyze
     '''
-    def PostProcessAndSave(xml_dir, output_dir, map_name, analysis_items):
+    def PostProcessAndSave(self, xml_dir, output_dir, map_name, analysis_items):
         # Fill up a list of strings with the relevant .xml files
         xml_files = [filename for filename in os.listdir(xml_dir) if filename.startswith(map_name) and filename.endswith(".xml")]
         
