@@ -172,7 +172,9 @@ class GUIContainer(gui.Container):
 
         # ----------------------------------------------- Post Processing GUI Components -------------------------------------------------------------------------------
 
-        xalign = 400                    # Alignment between standalone program and the final program
+        xalign = 830                    # Alignment between standalone program and the final program
+        attribute_items = ["Layer Roughnesses", "Layer Thicknesses", "Measured FFT Intensity", "Measured FFT Thickness"]           # Attributes that are available to write to .txt file
+        cart_items = {}
 
         self.add(gui.Label("Post Processing Shopping Cart", color = colors.blue), xalign + 85, 10)
         
@@ -187,10 +189,7 @@ class GUIContainer(gui.Container):
         cart_items_object = gui.List(width = 180, height = 140)
         self.add(cart_items_object, xalign + 210, 40)
 
-        # Functions to add/remove items from cart in the attribute_items list and cart_items hash
-        attribute_items = ["Layer Roughnesses", "Layer Thicknesses", "Measured FFT Intensity", "Measured FFT Thickness"]
-        cart_items = {}
-
+        # Functions to add/remove items from cart 
         def add_item_to_cart(arg):
             v = initial_attributes_list_object.value
             if v != None and v not in cart_items:
