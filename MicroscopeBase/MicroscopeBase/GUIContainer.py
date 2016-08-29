@@ -38,10 +38,6 @@ class GUIContainer(gui.Container):
 
     started_map = False
 
-    # Post processing variables
-    attribute_items = []
-    cart_items      = {}
-
     def __init__(self, **params):
         gui.Container.__init__(self, **params)
 
@@ -176,14 +172,16 @@ class GUIContainer(gui.Container):
 
         # ----------------------------------------------- Post Processing GUI Components -------------------------------------------------------------------------------
 
-        xalign = 400                    # Alignment between standalone program and the final program
+        xalign = 830                    # Alignment between standalone program and the final program
+        attribute_items = ["Layer Roughnesses", "Layer Thicknesses", "Measured FFT Intensity", "Measured FFT Thickness"]           # Attributes that are available to write to .txt file
+        cart_items = {}
 
         self.add(gui.Label("Post Processing Shopping Cart", color = colors.blue), xalign + 85, 10)
         
         # Attributes list from which the user can pick out items
         initial_attributes_list_object = gui.List(width = 180, height = 140)
-        for i in range(len(self.attribute_items)):
-            item = self.attribute_items[i]
+        for i in range(len(attribute_items)):
+            item = attribute_items[i]
             initial_attributes_list_object.add(item, value = i)
         self.add(initial_attributes_list_object, xalign + 10, 40)
 
@@ -191,10 +189,7 @@ class GUIContainer(gui.Container):
         cart_items_object = gui.List(width = 180, height = 140)
         self.add(cart_items_object, xalign + 210, 40)
 
-        # Functions to add/remove items from cart in the attribute_items list and cart_items hash
-        self.attribute_items = ["Layer Roughnesses", "Layer Thicknesses", "Measured FFT Intensity", "Measured FFT Thickness"]
-        self.cart_items      = {}
-
+        # Functions to add/remove items from cart 
         def add_item_to_cart(arg):
             v = initial_attributes_list_object.value
             if v != None and v not in cart_items:
@@ -243,7 +238,7 @@ class GUIContainer(gui.Container):
             d = gui.FileDialog(path = "C:\\Users\\Huafeng\\Desktop\\TestXMLFiles\\")
             d.connect(gui.CHANGE, handle_xml_post_file_browser_closed, d)
             d.open()
-        xml_directory_post_processing       = gui.Input(size = 19)
+        xml_directory_post_processing = gui.Input(size = 19)
         xml_directory_post_processing.value = "C:\\Users\\Huafeng\\Desktop\\TestXMLFiles\\xmlfiles\\"
         self.add(gui.Label("XML Directory"),    xalign + 7, 252)
         self.add(xml_directory_post_processing, xalign + 125, 250)
