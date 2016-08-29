@@ -42,7 +42,7 @@ class UserInterface:
     rt_button_num = 0                         # Which joystick numbers should be checked internally
     lt_button_num = 0                         # Which joystick numbers should be checked internally
 
-    display_width = 830                       # Internal Pygame variable
+    display_width = 1230                       # Internal Pygame variable
     display_height = 325                      # Internal Pygame variable
    
     pygame_display = None                     # Reference to pygame display
