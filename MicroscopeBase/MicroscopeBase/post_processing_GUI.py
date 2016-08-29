@@ -31,6 +31,7 @@ def main():
 
     def add_item_to_cart(arg):
         v = initial_attributes_list_object.value
+        print v
         if v != None and v not in cart_items:
             cart_items[v] = v
             index = v
@@ -40,6 +41,7 @@ def main():
             
     def remove_item_from_cart(arg):
         v = cart_items_object.value
+        print v
         if v != None:
             cart_items.pop(v)
             cart_items_object.remove(v)

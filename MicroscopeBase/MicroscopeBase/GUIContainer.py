@@ -194,7 +194,7 @@ class GUIContainer(gui.Container):
         def add_item_to_cart(arg):
             v = initial_attributes_list_object.value
             if v != None and v not in cart_items:
-                cart_items[v] = v
+                cart_items[v] = attribute_items[v]
                 index = v
                 cart_items_object.add(attribute_items[index], value = index)
                 cart_items_object.resize()

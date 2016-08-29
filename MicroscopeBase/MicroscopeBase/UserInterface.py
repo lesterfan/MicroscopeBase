@@ -538,13 +538,13 @@ class UserInterface:
             output_txt_file.write(file+"\n")
 
             # Write the items for each file
-            if "Layer Roughnesses" in analysis_items:
+            if "Layer Roughnesses" in analysis_items.values():
                 output_txt_file.write("Layer_Roughnesses {}\n".format([i for i in test_result.LayerRoughnesses]))
-            if "Layer Thicknesses" in analysis_items:
+            if "Layer Thicknesses" in analysis_items.values():
                 output_txt_file.write("Layer_Thicknesses {}\n".format([i for i in test_result.LayerThicknesses]))
-            if "Measured FFT Intensity" in analysis_items:
+            if "Measured FFT Intensity" in analysis_items.values():
                 output_txt_file.write("Measured_FFT_Intensity {}\n".format([i for i in test_result.MeasFFTIntensity]))
-            if "Measured FFT Thickness" in analysis_items:
+            if "Measured FFT Thickness" in analysis_items.values():
                 output_txt_file.write("Measured_FFT_Thicknesses {}\n".format([i for i in test_result.MeasFFTThickness]))
 
         # After everything is written, close the file
