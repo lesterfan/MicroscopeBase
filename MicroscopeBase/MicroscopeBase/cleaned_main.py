@@ -259,6 +259,6 @@ def main():
 
         # --------------------------------- UPDATE DISPLAY ACCORDINGLY ---------------------------------------------------------------------------------------------------------
 
-        Interface.refresh_pygame_display(Microscope_Base)
+        Interface.refresh_pygame_display(Microscope_Base, xmove = x_change, ymove = y_change)
 
 main()
