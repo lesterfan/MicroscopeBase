@@ -130,12 +130,12 @@ class UserInterface:
         # Creates the MicroscopeAnalyzer object from the loaded C# library
         self.mAnalyzer = MicroscopeAnalyzerLibrary.MicroscopeAnalyzer(True)
 
-        self.set_dino_image()
+        self.set_theme()
         
     '''
     Initializes the theme of the GUI
     '''
-    def set_dino_image(self):
+    def set_theme(self):
         pics_list = ["dino_pic.jpg", "jordan_pic.jpg", "keg_pic.jpg", "lamborghini_pic.jpg", "machop_pic.jpg", "nitzsche_pic.jpg", "snoopy_pic.jpg", "zubats_sketch.jpg"]
 
         # Loading up the colorful pictures

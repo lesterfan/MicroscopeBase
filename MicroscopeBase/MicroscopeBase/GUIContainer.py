@@ -264,6 +264,15 @@ class GUIContainer(gui.Container):
         
 
 
+        # ------------------------------------------------------- Fun -------------------------------------------------------
+
+        # Change theme button
+        self.xml_browse_button = gui.Button("Change theme")
+        # self.xml_browse_button.connect(gui.CLICK, open_xml_file_browser, None)
+        self.add(self.xml_browse_button, 400, 402)
+
+
+
 
     def set_default_values(self):
         self.joystick_selection.value = "Shenzhen"
