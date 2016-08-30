@@ -26,7 +26,7 @@ INSTRUCTION_HEIGHT = 50
 MICROSCOPE_DISPLAY = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT+LOCATION_HEIGHT + INSTRUCTION_HEIGHT))
 
 # Set the title
-pygame.display.set_caption("HMNL (c) 2016: All rights reserved.")
+pygame.display.set_caption("HMNL (tm) 2016: All rights reserved.")
 
 if using_joystick:
     JOYSTICK = pygame.joystick.Joystick(0)

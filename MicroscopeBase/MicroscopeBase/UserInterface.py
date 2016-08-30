@@ -93,7 +93,7 @@ class UserInterface:
     @ param pygame_title : String that shows the text that should be displayed
     Returns None
     '''
-    def __init__(self, pygame_title = "HMNL (c) 2016: All rights reserved."):
+    def __init__(self, pygame_title = "HMNL (tm) 2016: All rights reserved."):
 
         # Initialize pygame / joystick
         pygame.init()
@@ -510,29 +510,31 @@ class UserInterface:
         # Open the output .txt file to write
         output_txt_file = open(output_dir + "Analysis_" + map_name + ".txt", 'w')
 
-        # Write the top labels in the file
-        output_txt_file.write("x\ty")
-        if "Layer Roughnesses" in analysis_items.values():
-            if result.LayerRoughnesses != None:
-                for i in range(len(result.LayerRoughnesses)):
-                    output_txt_file.write("\tLR{}".format(i))
-        if "Layer Thicknesses" in analysis_items.values():
-            if result.LayerThicknesses != None:
-                for i in range(len(result.LayerThicknesses)):
-                    output_txt_file.write("\tLT{}".format(i))
-        if "Measured FFT Intensity" in analysis_items.values():
-            if result.MeasFFTIntensity != None:
-                for i in range(len(result.MeasFFTIntensity)):
-                    output_txt_file.write("\tFFTI{}".format(i))
-        if "Measured FFT Thickness" in analysis_items.values():
-            if result.MeasFFTThickness != None:
-                for i in range(len(result.MeasFFTThickness)):
-                    output_txt_file.write("\tFFTT{}".format(i))
-        output_txt_file.write("\n")
-
         # Parse through the files and take out the important information, and write it
         for file in xml_files:
             result = MicroscopeAnalyzerLibrary.MicroscopeAnalyzer.LoadResultsFrom(xml_dir + file)
+
+            # If it's the first iteration, write the labels at the top first
+            if file == xml_files[0]:
+                 output_txt_file.write("x\ty")
+                 if "Layer Roughnesses" in analysis_items.values():
+                     if result.LayerRoughnesses != None:
+                         for i in range(len(result.LayerRoughnesses)):
+                             output_txt_file.write("\tLR{}".format(i))
+                 if "Layer Thicknesses" in analysis_items.values():
+                     if result.LayerThicknesses != None:
+                         for i in range(len(result.LayerThicknesses)):
+                             output_txt_file.write("\tLayerThickness{}".format(i))
+                 if "Measured FFT Intensity" in analysis_items.values():
+                     if result.MeasFFTIntensity != None:
+                         for i in range(len(result.MeasFFTIntensity)):
+                             output_txt_file.write("\tFFTIntensity{}".format(i))
+                 if "Measured FFT Thickness" in analysis_items.values():
+                     if result.MeasFFTThickness != None:
+                         for i in range(len(result.MeasFFTThickness)):
+                             output_txt_file.write("\tFFTThickness{}".format(i))
+                 output_txt_file.write("\n")
+
 
             # Write the file name which includes x and y coordinates in it
             coordinates_string = file[len(map_name)+1:]

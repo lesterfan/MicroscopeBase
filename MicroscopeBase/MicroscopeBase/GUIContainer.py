@@ -42,7 +42,7 @@ class GUIContainer(gui.Container):
     def __init__(self, **params):
         gui.Container.__init__(self, **params)
 
-        self.add(gui.Label("Microscope Analyzer - HMNL (c) 2016", color = colors.blue), 95, 5)
+        self.add(gui.Label("Microscope Analyzer - HMNL (tm) 2016", color = colors.blue), 95, 5)
         
         # Select joystick GUI
         self.add(gui.Label("Select joystick"), 7, 32)
