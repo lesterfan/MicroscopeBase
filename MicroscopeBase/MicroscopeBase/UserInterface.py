@@ -5,6 +5,7 @@ import printfunctions
 import gameobjects
 import dotnet.seamless
 import os
+from random import randint
 
 # Load the compiled C# library with which to interact with the Filmmetrics software
 dotnet.add_assemblies('C:\\Users\\HMNL\\Desktop\\VsGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\')
@@ -129,10 +130,19 @@ class UserInterface:
         # Creates the MicroscopeAnalyzer object from the loaded C# library
         self.mAnalyzer = MicroscopeAnalyzerLibrary.MicroscopeAnalyzer(True)
 
+        self.set_dino_image()
         
+    '''
+    Initializes the theme of the GUI
+    '''
+    def set_dino_image(self):
+        pics_list = ["dino_pic.jpg", "jordan_pic.jpg", "keg_pic.jpg", "lamborghini_pic.jpg", "machop_pic.jpg", "nitzsche_pic.jpg", "snoopy_pic.jpg", "zubats_sketch.jpg"]
+
         # Loading up the colorful pictures
-        self.dino_image = pygame.image.load(os.path.join("dino_pic.jpg"))
+        self.dino_image = pygame.image.load(os.path.join(pics_list[randint(0,len(pics_list))]))
         self.dino_image.convert()
+
+
 
     '''
     Initializes the self.joystick variable and maps the button nums to their respective positions
