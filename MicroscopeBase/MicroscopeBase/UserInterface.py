@@ -342,19 +342,15 @@ class UserInterface:
     '''
     Refreshes the pygame display according to the information in the rest of this class
     '''
-    def refresh_pygame_display(self, Microscope_Base_Input, xmove = 0, ymove = 0):
+    def refresh_pygame_display(self, Microscope_Base_Input):
         # Fill with pretty colors
         self.pygame_display.fill(colors.white)
         # pygame.draw.rect(self.pygame_display, colors.black, [500, 0, 330, 325])
         self.pygame_display.blit(self.dino_image, (500,0))
 
         # Get absolute position to print
-        if xmove != 0 or ymove != 0:
-            absolute_location = Microscope_Base_Input.get_absolute_position()
-            self.prev_absolute_location = absolute_location
-            x, y = absolute_location
-        else:
-            x, y = self.prev_absolute_location
+        absolute_location = Microscope_Base_Input.get_absolute_position()
+        x, y = absolute_location
 
         # Draw the home location as well as the saved GUI marker objects
         self.home_position_GUIobject.drawToScreen(self.pygame_display)
@@ -373,7 +369,7 @@ class UserInterface:
 
         # Print messages to screen
         printfunctions.message_to_screen("1 unit = 1 microstep = 0.15625 um", colors.red,    y_displace = 110, x_displace = -365, size = 'small')
-        printfunctions.message_to_screen("Location : "+str(absolute_location), colors.black, y_displace = 125, x_displace = -365, size = 'medium')
+        printfunctions.message_to_screen("Location : "+str((x,y)), colors.black, y_displace = 125, x_displace = -365, size = 'medium')
         printfunctions.message_to_screen(self.message1,colors.black,                         y_displace = 145, x_displace = -365)
         
         pygame.display.update()
