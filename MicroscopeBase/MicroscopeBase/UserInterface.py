@@ -520,29 +520,27 @@ class UserInterface:
             for char in "xy":
                 coordinates_string = coordinates_string.replace(char, '')
             coordinates_string = coordinates_string.replace('_','\t')
-            output_txt_file.write(coordinates_string + "\t")
+            output_txt_file.write(coordinates_string)
 
             # Write the items for each file
             if "Layer Roughnesses" in analysis_items.values():
                 if result.LayerRoughnesses != None:
-                    for i in [x for x in result.LayerRoughnesses]:
-                        output_txt_file.write("{}\t".format(i))
+                    for i in result.LayerRoughnesses:
+                        output_txt_file.write("\t{}".format(i))
             if "Layer Thicknesses" in analysis_items.values():
-                if result.LayerThicknesses == None:
-                    output_txt_file.write("Layer_Thicknesses None ")
-                else:
-                    output_txt_file.write("Layer_Thicknesses {} ".format([i for i in result.LayerThicknesses]))
+                if result.Thicknesses != None:
+                    for i in result.LayerThicknesses:
+                        output_txt_file.write("\t{}".format(i))
             if "Measured FFT Intensity" in analysis_items.values():
-                if result.MeasFFTIntensity == None:
-                    output_txt_file.write("Measured_FFT_Intensity None ")
-                else:
-                    output_txt_file.write("Measured_FFT_Intensity {} ".format([i for i in result.MeasFFTIntensity]))
+                if result.MeasFFTIntensity != None:
+                    for i in result.MeasFFTIntensity:
+                        output_txt_file.write("\t{}".format(i))
             if "Measured FFT Thickness" in analysis_items.values():
-                if result.MeasFFTThickness == None:
-                    output_txt_file.write("Measured_FFT_Thickness None ")
-                else:
-                    output_txt_file.write("Measured_FFT_Thicknesses {} ".format([i for i in result.MeasFFTThickness]))
+                if result.MeasFFTThickness != None:
+                    for i in result.MeasFFTThickness:
+                        output_txt_file.write("\t{}".format(i))
 
+            # New line
             output_txt_file.write("\n")
 
         # After everything is written, close the file
