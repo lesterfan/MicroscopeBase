@@ -528,7 +528,7 @@ class UserInterface:
                     for i in result.LayerRoughnesses:
                         output_txt_file.write("\t{}".format(i))
             if "Layer Thicknesses" in analysis_items.values():
-                if result.Thicknesses != None:
+                if result.LayerThicknesses != None:
                     for i in result.LayerThicknesses:
                         output_txt_file.write("\t{}".format(i))
             if "Measured FFT Intensity" in analysis_items.values():
