@@ -517,6 +517,9 @@ class UserInterface:
             # Write the file name which includes x and y coordinates in it
             coordinates_string = file[len(map_name)+1:]
             coordinates_string = coordinates_string[:-4]
+            for char in "xy":
+                coordinates_string = coordinates_string.replace(char, '')
+            coordinates_string = coordinates_string.replace('_','\t')
             output_txt_file.write(coordinates_string + " ")
 
             # Write the items for each file
