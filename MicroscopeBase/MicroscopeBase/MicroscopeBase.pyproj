@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>ddfa242f-c91b-408c-a5a2-a8067b0490a7</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>post_processing_test.py</StartupFile>
+    <StartupFile>cleaned_main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>

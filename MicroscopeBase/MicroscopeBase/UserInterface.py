@@ -520,14 +520,13 @@ class UserInterface:
             for char in "xy":
                 coordinates_string = coordinates_string.replace(char, '')
             coordinates_string = coordinates_string.replace('_','\t')
-            output_txt_file.write(coordinates_string + " ")
+            output_txt_file.write(coordinates_string + "\t")
 
             # Write the items for each file
             if "Layer Roughnesses" in analysis_items.values():
-                if result.LayerRoughnesses == None:
-                    output_txt_file.write("Layer_Roughnesses None ")
-                else:
-                    output_txt_file.write("Layer_Roughnesses {} ".format([i for i in result.LayerRoughnesses]))
+                if result.LayerRoughnesses != None:
+                    for i in [x for x in result.LayerRoughnesses]:
+                        output_txt_file.write("{}\t".format(i))
             if "Layer Thicknesses" in analysis_items.values():
                 if result.LayerThicknesses == None:
                     output_txt_file.write("Layer_Thicknesses None ")

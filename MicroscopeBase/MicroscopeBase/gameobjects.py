@@ -45,6 +45,6 @@ class Enemy:
         if self.img == "":
             pygame.draw.rect(gameDisplay, self.color, [self.xstart, self.ystart, self.enemyWidth, self.enemyHeight])
         else:
-            gameDisplay.blit(image,[self.xstart,self.ystart])
+            gameDisplay.blit(self.image,[self.xstart,self.ystart])
     
 
