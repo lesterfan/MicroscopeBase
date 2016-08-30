@@ -68,6 +68,8 @@ class UserInterface:
     b_position_GUIobject          = None      # GUI object for the b button
     home_position_GUIobject       = None      # GUI object for the home button
 
+    prev_absolute_location = None
+
     gui_app = None
     gui_container = None
 
@@ -340,15 +342,19 @@ class UserInterface:
     '''
     Refreshes the pygame display according to the information in the rest of this class
     '''
-    def refresh_pygame_display(self, Microscope_Base_Input):
+    def refresh_pygame_display(self, Microscope_Base_Input, xmove = 0, ymove = 0):
         # Fill with pretty colors
         self.pygame_display.fill(colors.white)
         # pygame.draw.rect(self.pygame_display, colors.black, [500, 0, 330, 325])
         self.pygame_display.blit(self.dino_image, (500,0))
 
         # Get absolute position to print
-        absolute_location = Microscope_Base_Input.get_absolute_position()
-        x, y = absolute_location
+        if xmove != 0 or ymove != 0:
+            absolute_location = Microscope_Base_Input.get_absolute_position()
+            self.prev_absolute_location = absolute_location
+            x, y = absolute_location
+        else:
+            x, y = self.prev_absolute_location
 
         # Draw the home location as well as the saved GUI marker objects
         self.home_position_GUIobject.drawToScreen(self.pygame_display)

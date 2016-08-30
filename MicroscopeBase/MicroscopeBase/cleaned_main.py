@@ -26,6 +26,7 @@ def main():
     Interface.set_gui(gui_app, gui_container)
     gui_container.Interface = Interface
     gui_container.Microscope_Base = Microscope_Base
+    Interface.prev_absolute_location = Microscope_Base.get_absolute_position()
     
 
     unit_change = 1000                           # Each unit of change
