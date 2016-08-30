@@ -68,8 +68,6 @@ class UserInterface:
     b_position_GUIobject          = None      # GUI object for the b button
     home_position_GUIobject       = None      # GUI object for the home button
 
-    prev_absolute_location = None
-
     gui_app = None
     gui_container = None
 
