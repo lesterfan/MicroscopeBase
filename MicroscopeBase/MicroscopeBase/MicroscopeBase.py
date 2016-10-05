@@ -17,6 +17,7 @@ class MicroscopeBase:
     mLastRet = 0                         # Will be 1 if there was an error in the last operation done
 
 
+
     ''' 
     Constructor that sets up connection to the microscope base. Instantiates all the 
     internal variables

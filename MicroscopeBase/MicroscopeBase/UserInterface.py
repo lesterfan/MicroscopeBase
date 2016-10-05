@@ -136,8 +136,8 @@ class UserInterface:
     Initializes the theme of the GUI
     '''
     def set_theme(self):
-        pics_list = ["dino_pic.jpg", "jordan_pic.jpg", "keg_pic.jpg", "lamborghini_pic.jpg", "machop_pic.jpg", "nitzsche_pic.jpg", "snoopy_pic.jpg", "zubats_sketch.jpg", "minato_pic.jpg", "snorlax_pic.jpg"]
-
+        #pics_list = ["dino_pic.jpg", "jordan_pic.jpg", "keg_pic.jpg", "lamborghini_pic.jpg", "machop_pic.jpg", "nitzsche_pic.jpg", "snoopy_pic.jpg", "zubats_sketch.jpg", "minato_pic.jpg", "snorlax_pic.jpg"]
+        pics_list=["buttonmap_fit.png"]
         # Loading up the colorful pictures
         self.dino_image = pygame.image.load(os.path.join(pics_list[randint(0,len(pics_list)-1)]))
         self.dino_image.convert()
