@@ -400,6 +400,11 @@ class UserInterface:
     def take_map(self, mapping_name, numPointsX, DistancebwPointsX, numPointsY, DistancebwPointsY, units, Microscope_Base_Input): 
         
         self.message1 = "Now taking a map!"
+        
+        # Opening the map_history.txt file to which the history will be written and writing in that we are making a map now.
+        history_file = open('History/map_history.txt', 'w')
+        history_file.write(mapping_name+" "+str(numPointsX)+" "+str(DistancebwPointsX)+" "+str(numPointsY)+" "+str(DistancebwPointsY)+" "+time.strftime("%m/%d/%y %H:%M:%S") + "\n")
+        history_file.close()
 
         # Check that all the inputs are integral
         if not (numPointsX % 1 == 0 or DistancebwPointsX % 1 == 0 or numPointsY % 1 == 0 or DistancebwPointsY % 1 == 0):
