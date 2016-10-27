@@ -196,4 +196,6 @@ def main(dummy_version = False):
         # Interface.refresh_pygame_display(Microscope_Base_Input = Microscope_Base)
         Interface.refresh_pygame_display()
 
-main(dummy_version = True)
+
+if __name__ == "__main__":
+    main(dummy_version = True)
