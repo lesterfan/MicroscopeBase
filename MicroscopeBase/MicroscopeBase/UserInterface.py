@@ -7,10 +7,12 @@ import dotnet.seamless
 import os
 from random import randint
 
+dummy_version = False
+
 # Load the compiled C# library with which to interact with the Filmmetrics software
-# dotnet.add_assemblies('C:\\Users\\HMNL\\Desktop\\VsGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\')
-# dotnet.load_assembly('MicroscopeAnalyzerLibrary')
-# import MicroscopeAnalyzerLibrary
+dotnet.add_assemblies('C:\\Users\\HMNL\\Desktop\\VsGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\')
+dotnet.load_assembly('MicroscopeAnalyzerLibrary')
+import MicroscopeAnalyzerLibrary
 
 DEFAULT_OUT_OF_SCREEN_VALUE = 100000
 

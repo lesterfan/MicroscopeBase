@@ -16,7 +16,7 @@ def RepresentsInt(s):
 def main(dummy_version = False):
     if not dummy_version:
         Microscope_Base = MicroscopeBase.MicroscopeBase("COM5")
-    Interface = UserInterface.UserInterface(dummy_mode = True)
+    Interface = UserInterface.UserInterface(dummy_mode = dummy_version)
     if not dummy_version:
         Interface.initialize_joystick()
 
@@ -193,9 +193,11 @@ def main(dummy_version = False):
 
         # --------------------------------- UPDATE DISPLAY ACCORDINGLY ---------------------------------------------------------------------------------------------------------
 
-        # Interface.refresh_pygame_display(Microscope_Base_Input = Microscope_Base)
-        Interface.refresh_pygame_display()
+        if not dummy_version:
+            Interface.refresh_pygame_display(Microscope_Base_Input = Microscope_Base)
+        else:
+            Interface.refresh_pygame_display()
 
 
 if __name__ == "__main__":
-    main(dummy_version = True)
+    main(dummy_version = False)
