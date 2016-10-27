@@ -13,10 +13,12 @@ def RepresentsInt(s):
     except ValueError:
         return False
 
-def main():
-    Microscope_Base = MicroscopeBase.MicroscopeBase("COM5")
-    Interface = UserInterface.UserInterface()
-    Interface.initialize_joystick()
+def main(dummy_version = False):
+    if not dummy_version:
+        Microscope_Base = MicroscopeBase.MicroscopeBase("COM5")
+    Interface = UserInterface.UserInterface(dummy_mode = True)
+    if not dummy_version:
+        Interface.initialize_joystick()
 
     # Adding the GUI
     gui_app = gui.App()
@@ -25,8 +27,9 @@ def main():
     gui_app.init(gui_container)
     Interface.set_gui(gui_app, gui_container)
     gui_container.Interface = Interface
-    gui_container.Microscope_Base = Microscope_Base
-    Interface.prev_absolute_location = Microscope_Base.get_absolute_position()
+    if not dummy_version:
+        gui_container.Microscope_Base = Microscope_Base
+        Interface.prev_absolute_location = Microscope_Base.get_absolute_position()
     
 
     unit_change = 1000                           # Each unit of change
@@ -35,7 +38,6 @@ def main():
     x_change = 0                                 # Current change in x
     y_change = 0                                 # Current change in y
 
-    # Forever while loop
     while True:
         Interface.check_keyboard_keys()                 # Fill Interface.keys with keyboard inputs
 
@@ -84,11 +86,9 @@ def main():
                 rt_button = 1
             if Interface.keys[pygame.K_LSHIFT] or Interface.keys[pygame.K_RSHIFT]:
                 rb_button = 1 
-            # if Interface.keys[pygame.K_s]:
-            #     lt_button = 1
 
         # Checking if each button is pressed. If so, do appropriate actions.
-        if start_button == 1:                                              # Start button to home device
+        if start_button == 1 and not dummy_version:                                              # Start button to home device
             Microscope_Base.home_device()
             Interface.message1 = "Microscope base homed!"
 
@@ -125,81 +125,10 @@ def main():
         # Press LT to initiate the mapping function!
         if lt_button == 1:
             gui_container.LTButtonCallback()
-            # print "Welcome to HMNL (c) 2016!"
-            # print "Mapping function initialized!"
-            # 
-            # # Query the inputs as strings
-            # mapping_name = raw_input('Please enter what name you want this map to be called when you save it\n')
-            # points_x_raw = raw_input('Please enter how many points you would like to take on the x axis (odd numbers only pls)\n')
-            # distance_bw_x_raw = raw_input('Please enter the distance between points on the x axis that you would like (units will be queried later)\n')
-            # 
-            # points_y_raw = raw_input('Please enter how many points you would like to take on the y axis (odd numbers only pls)\n')
-            # distance_bw_y_raw = raw_input('Please enter the distance between points on the y axis that you would like (units will be queried later)\n')
-            # 
-            # units = raw_input("Please enter the units you want everything to be in. (um or mm)\n")
-            # 
-            # # Change the strings to ints. Throws exception if not possible
-            # points_x = 0
-            # distance_bw_x = 0
-            # points_y = 0
-            # distance_bw_y = 0
-            # 
-            # if RepresentsInt(points_x_raw):
-            #     points_x = int(points_x_raw)
-            # else:
-            #     print "Please enter all ints!"
-            # 
-            # if RepresentsInt(distance_bw_x_raw):
-            #     distance_bw_x = int(distance_bw_x_raw)
-            # else:
-            #     print "Please enter all ints!"
-            # 
-            # if RepresentsInt(points_y_raw):
-            #     points_y = int(points_y_raw)
-            # else:
-            #     print "Please enter all ints!"
-            # 
-            # if RepresentsInt(distance_bw_y_raw):
-            #     distance_bw_y = int(distance_bw_y_raw)
-            # else:
-            #     print "Please enter all ints!"
-            #     
-            # # Take map with the queried inputs
-            # Interface.take_map(mapping_name, points_x, distance_bw_x, points_y, distance_bw_y, units, Microscope_Base)
 
 
-        # if Interface.keys[pygame.K_r]:                                                              # Press 'r' to update whether user is using joystick or not
-        #     Interface.initialize_joystick()
-        # 
-        # 
-        # if Interface.keys[pygame.K_u]:                                                              # Press 'u' to move x axis a given amount of um
-        #     i = raw_input('Please enter the amount of microns you want to move on the x axis')
-        #     if RepresentsInt(i):
-        #         Interface.x_move_microns(int(i))
-        #     else:
-        #         print "Error! Please enter in an integral amount of microns!"
-        # if Interface.keys[pygame.K_i]:                                                              # Press 'i' to move y axis a given amount of um
-        #     i = raw_input('Please enter the amount of microns you want to move on the y axis')
-        #     if RepresentsInt(i):
-        #         Interface.y_move_microns(int(i))
-        #     else:
-        #         print "Error! Please enter in an integral amount of microns!"
-        # if Interface.keys[pygame.K_o]:                                                              # Press 'o' to move x axis a given amount of mm
-        #     i = raw_input('Please enter the amount of mm you want to move on the x axis')
-        #     if RepresentsInt(i):
-        #         Interface.x_move_mm(int(i))
-        #     else:
-        #         print "Error! Please enter in an integral amount of mm!"
-        # if Interface.keys[pygame.K_p]:                                                              # Press 'p' to move y axis a given amount of mm
-        #     i = raw_input('Please enter the amount of mm you want to move on the y axis')
-        #     if RepresentsInt(i):
-        #         Interface.y_move_mm(int(i))
-        #     else:
-        #         print "Error! Please enter in an integral amount of mm!"
-
-
+            
         # ------------------------------ MOVING THE MICROSCOPE BASE ---------------------------------------------------------------------------------------------------
-        
         # Movement using keyboard / arrow keys
         if Interface.keys[pygame.K_LEFT]:
             x_change = -unit_change
@@ -223,6 +152,10 @@ def main():
         if Interface.check_keyboard_key_up():
             x_change = 0
             y_change = 0
+
+        # If the user presses the quit key, then we exit
+        if Interface.quit_button_pressed:
+            return
 
         # If using joystick, modify x_move and y_move accordingly
         if Interface.using_joystick:
@@ -251,14 +184,16 @@ def main():
                 y_change += 0
                 
         # Actually move the microscope base
-        Microscope_Base.x_move_vel(x_change)
-        Microscope_Base.y_move_vel(y_change)
+        if not dummy_version:
+            Microscope_Base.x_move_vel(x_change)
+            Microscope_Base.y_move_vel(y_change)
 
 
 
 
         # --------------------------------- UPDATE DISPLAY ACCORDINGLY ---------------------------------------------------------------------------------------------------------
 
-        Interface.refresh_pygame_display(Microscope_Base)
+        # Interface.refresh_pygame_display(Microscope_Base_Input = Microscope_Base)
+        Interface.refresh_pygame_display()
 
-main()
+main(dummy_version = True)
