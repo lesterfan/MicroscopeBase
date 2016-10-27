@@ -8,9 +8,9 @@ import os
 from random import randint
 
 # Load the compiled C# library with which to interact with the Filmmetrics software
-# dotnet.add_assemblies('C:\\Users\\HMNL\\Desktop\\VsGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\')
-# dotnet.load_assembly('MicroscopeAnalyzerLibrary')
-# import MicroscopeAnalyzerLibrary
+dotnet.add_assemblies('C:\\Users\\HMNL\\Desktop\\VsGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\')
+dotnet.load_assembly('MicroscopeAnalyzerLibrary')
+import MicroscopeAnalyzerLibrary
 
 DEFAULT_OUT_OF_SCREEN_VALUE = 100000
 
@@ -69,7 +69,6 @@ class UserInterface:
     home_position_GUIobject       = None      # GUI object for the home button
 
     gui_app = None
-    quit_button_pressed = False
     gui_container = None
 
     mAnalyzer = None
@@ -88,8 +87,6 @@ class UserInterface:
 
     # Pictures that add color to the GUI
     dino_image = None
-    
-    dummy_mode = False
 
     ''' 
     Constructor that sets up connection to user interface. Instantiates all the 
@@ -97,7 +94,7 @@ class UserInterface:
     @ param pygame_title : String that shows the text that should be displayed
     Returns None
     '''
-    def __init__(self, pygame_title = "HMNL (tm) 2016: All rights reserved.", dummy_mode = False):
+    def __init__(self, pygame_title = "HMNL (tm) 2016: All rights reserved."):
 
         # Initialize pygame / joystick
         pygame.init()
@@ -108,13 +105,15 @@ class UserInterface:
         self.pygame_display = pygame.display.set_mode((self.display_width, self.display_height))
         pygame.display.set_caption(pygame_title)
 
+
+
         # Initialize pygame GUI objects to show where things are
-        self.microscope_position_GUIobject = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.black   , img = "Sprites/HMNL_sprite.png")
-        self.a_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.blue    , img = "Sprites/a_button_sprite.png") 
-        self.x_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.hot_pink, img = "Sprites/x_button_sprite.png")  
-        self.y_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.green   , img = "Sprites/y_button_sprite.png")
-        self.b_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.orange  , img = "Sprites/b_button_sprite.png")   
-        self.home_position_GUIobject       = gameobjects.Enemy(500, 0, 10, 10, colors.red                                                       , img = "Sprites/home_position_sprite.png")   
+        self.microscope_position_GUIobject = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.black   , img = "HMNL_sprite.png")
+        self.a_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.blue    , img = "a_button_sprite.png") 
+        self.x_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.hot_pink, img = "x_button_sprite.png")  
+        self.y_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.green   , img = "y_button_sprite.png")
+        self.b_position_GUIobject          = gameobjects.Enemy(DEFAULT_OUT_OF_SCREEN_VALUE, DEFAULT_OUT_OF_SCREEN_VALUE, 10, 10, colors.orange  , img = "b_button_sprite.png")   
+        self.home_position_GUIobject       = gameobjects.Enemy(500, 0, 10, 10, colors.red                                                       , img = "home_position_sprite.png")   
 
         # Place the GUIObjects for buttons into a dictionary to retrieve
         self.GUIButton_dict['a'] = self.a_position_GUIobject
@@ -122,23 +121,27 @@ class UserInterface:
         self.GUIButton_dict['y'] = self.y_position_GUIobject
         self.GUIButton_dict['b'] = self.b_position_GUIobject
 
+
+        # Load the compiled C# library with which to interact with the Filmmetrics software
+        # dotnet.add_assemblies('C:\\Users\\HMNL\\Desktop\\VsGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\')
+        # dotnet.load_assembly('MicroscopeAnalyzerLibrary')
+        # import MicroscopeAnalyzerLibrary
+
         # Creates the MicroscopeAnalyzer object from the loaded C# library
-        self.dummy_mode = dummy_mode
-        if not self.dummy_mode:
-            self.mAnalyzer = MicroscopeAnalyzerLibrary.MicroscopeAnalyzer(True)
+        self.mAnalyzer = MicroscopeAnalyzerLibrary.MicroscopeAnalyzer(True)
 
         self.set_theme()
         
-
     '''
     Initializes the theme of the GUI
     '''
     def set_theme(self):
-        pics_list = ["Themes/dino_pic.jpg", "Themes/jordan_pic.jpg", "Themes/keg_pic.jpg", "Themes/lamborghini_pic.jpg", "Themes/machop_pic.jpg", "Themes/nitzsche_pic.jpg", "Themes/snoopy_pic.jpg", "Themes/zubats_sketch.jpg", "Themes/minato_pic.jpg", "Themes/snorlax_pic.jpg"]
-
+        #pics_list = ["dino_pic.jpg", "jordan_pic.jpg", "keg_pic.jpg", "lamborghini_pic.jpg", "machop_pic.jpg", "nitzsche_pic.jpg", "snoopy_pic.jpg", "zubats_sketch.jpg", "minato_pic.jpg", "snorlax_pic.jpg"]
+        pics_list=["buttonmap_fit.png"]
         # Loading up the colorful pictures
         self.dino_image = pygame.image.load(os.path.join(pics_list[randint(0,len(pics_list)-1)]))
         self.dino_image.convert()
+
 
 
     '''
@@ -199,20 +202,9 @@ class UserInterface:
        for event in pygame.event.get():
             if event.type == pygame.KEYUP:
                 return True
-            if event.type == pygame.QUIT:
-                self.quit_button_pressed = True
             self.gui_app.event(event)
-            
        return False
 
-    '''
-    Checks if the user pressed the quit button.
-    '''
-    def check_quit_pressed(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                return True
-        return False
 
     '''
     The next few functions get the positions of the joysticks and if the buttons are pressed
@@ -348,18 +340,15 @@ class UserInterface:
     '''
     Refreshes the pygame display according to the information in the rest of this class
     '''
-    def refresh_pygame_display(self, Microscope_Base_Input = None):
+    def refresh_pygame_display(self, Microscope_Base_Input):
         # Fill with pretty colors
         self.pygame_display.fill(colors.white)
         # pygame.draw.rect(self.pygame_display, colors.black, [500, 0, 330, 325])
         self.pygame_display.blit(self.dino_image, (500,0))
 
         # Get absolute position to print
-        if Microscope_Base_Input != None:
-            absolute_location = Microscope_Base_Input.get_absolute_position()
-            x, y = absolute_location
-        else:
-            x, y = (0,0)
+        absolute_location = Microscope_Base_Input.get_absolute_position()
+        x, y = absolute_location
 
         # Draw the home location as well as the saved GUI marker objects
         self.home_position_GUIobject.drawToScreen(self.pygame_display)
@@ -377,8 +366,8 @@ class UserInterface:
 
 
         # Print messages to screen
-        printfunctions.message_to_screen("1 unit = 1 microstep = 0.15625 um", colors.red,    y_displace = 110, x_displace = -365, size = 'small')
-        printfunctions.message_to_screen("Location : "+str((x,y)), colors.black, y_displace = 125, x_displace = -365, size = 'medium')
+        printfunctions.message_to_screen("Units in um", colors.red,    y_displace = 110, x_displace = -365, size = 'small')
+        printfunctions.message_to_screen("Location : ({},{})".format(format(x*0.15625,'.5f'),format(y*0.15625,'.5f')), colors.black, y_displace = 125, x_displace = -365, size = 'medium')
         printfunctions.message_to_screen(self.message1,colors.black,                         y_displace = 145, x_displace = -365)
         
         pygame.display.update()
@@ -533,8 +522,7 @@ class UserInterface:
 
         # Parse through the files and take out the important information, and write it
         for file in xml_files:
-            if not self.dummy_mode:
-                result = MicroscopeAnalyzerLibrary.MicroscopeAnalyzer.LoadResultsFrom(xml_dir + file)
+            result = MicroscopeAnalyzerLibrary.MicroscopeAnalyzer.LoadResultsFrom(xml_dir + file)
 
             # If it's the first iteration, write the labels at the top first
             if file == xml_files[0]:
