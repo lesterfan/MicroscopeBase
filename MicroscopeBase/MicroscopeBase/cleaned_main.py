@@ -71,21 +71,21 @@ def main(dummy_version = False):
             rt_button      = Interface.rt_button   
             lt_button      = Interface.lt_button   
 
-        else:
-            if Interface.keys[pygame.K_h]:
-                start_button = 1
-            if Interface.keys[pygame.K_v]:
-                a_button = 1
-            if Interface.keys[pygame.K_x]:
-                x_button = 1
-            if Interface.keys[pygame.K_z]:
-                y_button = 1
-            if Interface.keys[pygame.K_c]:
-                b_button = 1
-            if Interface.keys[pygame.K_m]:
-                rt_button = 1
-            if Interface.keys[pygame.K_LSHIFT] or Interface.keys[pygame.K_RSHIFT]:
-                rb_button = 1 
+        # else:
+        #     if Interface.keys[pygame.K_h]:
+        #         start_button = 1
+        #     if Interface.keys[pygame.K_v]:
+        #         a_button = 1
+        #     if Interface.keys[pygame.K_x]:
+        #         x_button = 1
+        #     if Interface.keys[pygame.K_z]:
+        #         y_button = 1
+        #     if Interface.keys[pygame.K_c]:
+        #         b_button = 1
+        #     if Interface.keys[pygame.K_m]:
+        #         rt_button = 1
+        #     if Interface.keys[pygame.K_LSHIFT] or Interface.keys[pygame.K_RSHIFT]:
+        #         rb_button = 1 
 
         # Checking if each button is pressed. If so, do appropriate actions.
         if start_button == 1 and not dummy_version:                                              # Start button to home device
@@ -139,14 +139,14 @@ def main(dummy_version = False):
         if Interface.keys[pygame.K_UP]:
             y_change = -unit_change
             
-        if Interface.keys[pygame.K_a]:
-            x_change = -unit_change*100
-        if Interface.keys[pygame.K_d]:
-            x_change = unit_change*100
-        if Interface.keys[pygame.K_w]:
-            y_change = -unit_change*100
-        if Interface.keys[pygame.K_s]:
-            y_change = unit_change*100
+        # if Interface.keys[pygame.K_a]:
+        #     x_change = -unit_change*100
+        # if Interface.keys[pygame.K_d]:
+        #     x_change = unit_change*100
+        # if Interface.keys[pygame.K_w]:
+        #     y_change = -unit_change*100
+        # if Interface.keys[pygame.K_s]:
+        #     y_change = unit_change*100
 
         # Check if the user is no longer pressing a key
         if Interface.check_keyboard_key_up():
