@@ -408,7 +408,7 @@ class UserInterface:
         
         # Opening the map_history.txt file to which the history will be written and writing in that we are making a map now.
         history_file = open('History/map_history.txt', 'a')
-        history_file.write("{} {} {} {} {} {} {} {} {}\n".format(mapping_name, self.fmspe_dir, self.xml_dir, self.image_dir, numPointsX, DistancebwPointsX, numPointsY, DistancebwPointsY, time.strftime("%m/%d/%y %H:%M:%S")))
+        history_file.write("{} {} {} {} {} {} {} {} {}\n".format(mapping_name, self.gui_container.fmspe_dir_input.value, self.gui_container.xml_dir_input.value, self.gui_container.image_dir_input.value, numPointsX, DistancebwPointsX, numPointsY, DistancebwPointsY, time.strftime("%m/%d/%y %H:%M:%S")))
         history_file.close()
 
         # Check that all the inputs are integral
