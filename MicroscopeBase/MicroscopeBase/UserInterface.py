@@ -253,6 +253,10 @@ class UserInterface:
     Sets the value of self.a_button, self.x_button, etc. for this specific frame.
     '''
     def check_joystick_button(self):
+
+        if self.joystick == None:
+            return
+
         self.a_button     =     self.joystick.get_button      (  self.a_button_num      )
         self.x_button     =     self.joystick.get_button      (  self.x_button_num      )
         self.y_button     =     self.joystick.get_button      (  self.y_button_num      )
