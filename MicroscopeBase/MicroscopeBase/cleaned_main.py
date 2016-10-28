@@ -22,11 +22,11 @@ def main(dummy_version = False):
 
     # Adding the GUI
     gui_app = gui.App()
-    gui_container = GUIContainer.GUIContainer(align = -1, valign = -1)
+    gui_container = GUIContainer.GUIContainer(interface = Interface, align = -1, valign = -1)
+    # gui_container.Interface = Interface
     gui_container.set_default_values()
     gui_app.init(gui_container)
     Interface.set_gui(gui_app, gui_container)
-    gui_container.Interface = Interface
     if not dummy_version:
         gui_container.Microscope_Base = Microscope_Base
         Interface.prev_absolute_location = Microscope_Base.get_absolute_position()
@@ -200,4 +200,4 @@ def main(dummy_version = False):
 
 
 if __name__ == "__main__":
-    main(dummy_version = False)
+    main(dummy_version = True)

@@ -5,14 +5,16 @@ import printfunctions
 import gameobjects
 import dotnet.seamless
 import os
+
 from random import randint
+from FinishedMap import FinishedMap
 
 dummy_version = False
 
 # Load the compiled C# library with which to interact with the Filmmetrics software
-dotnet.add_assemblies('C:\\Users\\HMNL\\Desktop\\VsGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\')
-dotnet.load_assembly('MicroscopeAnalyzerLibrary')
-import MicroscopeAnalyzerLibrary
+# dotnet.add_assemblies('C:\\Users\\HMNL\\Desktop\\VsGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\')
+# dotnet.load_assembly('MicroscopeAnalyzerLibrary')
+# import MicroscopeAnalyzerLibrary
 
 DEFAULT_OUT_OF_SCREEN_VALUE = 100000
 
@@ -51,7 +53,7 @@ class UserInterface:
     lt_button_num = 0                         # Which joystick numbers should be checked internally
 
     display_width = 1230                       # Internal Pygame variable
-    display_height = 325                      # Internal Pygame variable
+    display_height = 2*325                      # Internal Pygame variable
    
     pygame_display = None                     # Reference to pygame display
 
@@ -79,9 +81,6 @@ class UserInterface:
 
     # Internal variables to be read from the GUI
     joystick_selected = ""
-    fmspe_dir = ""
-    xml_dir = ""
-    image_dir = ""
     map_name = ""
     units = ""
     update_joystick_pressed = False
@@ -92,6 +91,8 @@ class UserInterface:
 
     # Pictures that add color to the GUI
     dino_image = None
+
+    map_history = []
 
     ''' 
     Constructor that sets up connection to user interface. Instantiates all the 
@@ -408,7 +409,7 @@ class UserInterface:
         
         # Opening the map_history.txt file to which the history will be written and writing in that we are making a map now.
         history_file = open('History/map_history.txt', 'a')
-        history_file.write("{} {} {} {} {} {} {} {} {}\n".format(mapping_name, self.gui_container.fmspe_dir_input.value, self.gui_container.xml_dir_input.value, self.gui_container.image_dir_input.value, numPointsX, DistancebwPointsX, numPointsY, DistancebwPointsY, time.strftime("%m/%d/%y %H:%M:%S")))
+        history_file.write("{} {} {} {} {} {} {} {} {} {}\n".format(mapping_name, self.gui_container.fmspe_dir_input.value, self.gui_container.xml_dir_input.value, self.gui_container.image_dir_input.value, numPointsX, DistancebwPointsX, numPointsY, DistancebwPointsY, time.strftime("%m/%d/%y %H:%M:%S"), units))
         history_file.close()
 
         # Check that all the inputs are integral
