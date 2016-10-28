@@ -2,6 +2,9 @@ import pygame
 from pygame.locals import *
 from pgu import gui
 import colors
+import os
+
+from FinishedMap import FinishedMap
 
 class GUIContainer(gui.Container):
     """description of class"""
@@ -39,9 +42,10 @@ class GUIContainer(gui.Container):
     started_map = False
 
 
-    def __init__(self, **params):
+    def __init__(self, interface = None , **params):
         gui.Container.__init__(self, **params)
 
+        self.Interface = interface
         self.add(gui.Label("Microscope Analyzer - HMNL (tm) 2016", color = colors.blue), 95, 5)
         
         # Select joystick GUI
@@ -266,6 +270,233 @@ class GUIContainer(gui.Container):
         self.add(text_dir_browse_button, xalign + 315, 282)
         text_dir_browse_button.connect(gui.CLICK, open_text_file_browser, None)
         
+
+        # ------------------------------------------------------- View / Delete Map History -----------------------------------------------------------------
+            
+        yalign = 325                   # Alignment between standalone program and the final program
+        cart_items = {}
+
+        self.add(gui.Label("Map History", color = colors.blue), 575, yalign)
+        lines = [line.rstrip('\n') for line in open("History/map_history.txt")]
+
+        # Attributes list from which the user can pick out items
+        maps_in_history_list = gui.List(width = 200, height = 270)
+        for i in range(len(lines)):
+            vals_array = lines[i].split(" ")
+            new_map_info = FinishedMap(vals_array[0], vals_array[1], vals_array[2], vals_array[3], vals_array[4],
+                                       vals_array[5], vals_array[6], vals_array[7], vals_array[8], vals_array[9], vals_array[10])
+            self.Interface.map_history.append(new_map_info)
+
+            maps_in_history_list.add(new_map_info.map_name, value = i)
+
+        self.add(maps_in_history_list, 300, yalign + 30)
+
+        MapNameLabel                    = gui.Input(size = 40)
+        FMSPEDirLabel                   = gui.Input(size = 40)
+        XMLDirLabel                     = gui.Input(size = 40)
+        ImageDirLabel                   = gui.Input(size = 40)
+        NumMeasurementsXLabel           = gui.Input(size = 40)
+        DistanceMeasurementsXLabel      = gui.Input(size = 40)
+        NumMeasurementsYLabel           = gui.Input(size = 40)
+        DistanceMeasurementsYLabel      = gui.Input(size = 40)
+        DateTakenLabel                  = gui.Input(size = 40)
+        TimeTakenLabel                  = gui.Input(size = 40)
+        UnitsLabel                      = gui.Input(size = 40)
+       
+        self.add(gui.Label("Map name : "                   ), 525, yalign + 30 )
+        self.add(gui.Label("FMSPE Dir : "                  ), 525, yalign + 55 )
+        self.add(gui.Label("XML Dir : "                    ), 525, yalign + 80 )
+        self.add(gui.Label("Image Dir : "                  ), 525, yalign + 105)
+        self.add(gui.Label("# Measurements x : "           ), 525, yalign + 130)
+        self.add(gui.Label("Distance b/w x meas. : "),        525, yalign + 155)
+        self.add(gui.Label("# Measurements y : "           ), 525, yalign + 180)
+        self.add(gui.Label("Distance b/w y meas.: "),         525, yalign + 205)
+        self.add(gui.Label("Date taken : "                 ), 525, yalign + 230)
+        self.add(gui.Label("Time taken : "                 ), 525, yalign + 255)
+        self.add(gui.Label("Units: "                 ),       525, yalign + 280)
+                 
+        self.add(MapNameLabel              , 720, yalign + 30 )
+        self.add(FMSPEDirLabel             , 720, yalign + 55 )
+        self.add(XMLDirLabel               , 720, yalign + 80 )
+        self.add(ImageDirLabel             , 720, yalign + 105)
+        self.add(NumMeasurementsXLabel     , 720, yalign + 130)
+        self.add(DistanceMeasurementsXLabel, 720, yalign + 155)
+        self.add(NumMeasurementsYLabel     , 720, yalign + 180)
+        self.add(DistanceMeasurementsYLabel, 720, yalign + 205)
+        self.add(DateTakenLabel            , 720, yalign + 230)
+        self.add(TimeTakenLabel            , 720, yalign + 255)
+        self.add(UnitsLabel                , 720, yalign + 280)
+
+        def show_info():
+            v = maps_in_history_list.value
+            if v == None:
+                return
+            try:
+                MapNameLabel.value = "{}".format(self.Interface.map_history[v].map_name)
+                FMSPEDirLabel.value = "{}".format(self.Interface.map_history[v].fmspedir)
+                XMLDirLabel.value= "{}".format(self.Interface.map_history[v].xmldir  )
+                ImageDirLabel.value= "{}".format(self.Interface.map_history[v].imagedir)
+                NumMeasurementsXLabel.value= "{}".format(self.Interface.map_history[v].numx    )
+                DistanceMeasurementsXLabel.value= "{}".format(self.Interface.map_history[v].distbwx )
+                NumMeasurementsYLabel.value= "{}".format(self.Interface.map_history[v].numy    )
+                DistanceMeasurementsYLabel.value= "{}".format(self.Interface.map_history[v].distbwy )
+                DateTakenLabel.value= "{}".format(self.Interface.map_history[v].date    )
+                TimeTakenLabel.value= "{}".format(self.Interface.map_history[v].time    )
+                UnitsLabel.value= "{}".format(self.Interface.map_history[v].units    )
+            except BaseException:
+                pass
+
+
+            # print v
+            # print MapNameLabel.value
+
+
+        maps_in_history_list.connect(gui.CLICK, show_info)
+
+
+
+        # Implementing delete
+        def delete():
+            v = maps_in_history_list.value
+            if v == None:
+                return
+
+            # Get directories and map name
+            map_name = self.Interface.map_history[v].map_name
+
+            fmspe_dir = self.Interface.map_history[v].fmspedir
+            xml_dir   = self.Interface.map_history[v].xmldir  
+            image_dir = self.Interface.map_history[v].imagedir
+
+            # Gather all relevant files
+            try:
+                fmspe_files = [filename for filename in os.listdir(fmspe_dir) if filename.startswith(map_name) and filename.endswith(".fmspe")]
+                xml_files   = [filename for filename in os.listdir(xml_dir) if filename.startswith(map_name) and filename.endswith(".xml")]
+                image_files = [filename for filename in os.listdir(image_dir) if filename.startswith(map_name) and filename.endswith(".bmp")]
+            except WindowsError:
+                fmspe_files = []
+                xml_files   = []
+                image_files = []
+
+
+            # Delete all these relevant files
+            for file in fmspe_files:
+                try:
+                    os.remove(fmspe_dir + file)
+                except WindowsError:
+                    print "Couldn't find {}!".format(file)
+            for file in xml_files:
+                try:
+                    os.remove(xml_dir + file)
+                except WindowsError:
+                    print "Couldn't find {}!".format(file)
+            for file in image_files:
+                try:
+                    os.remove(image_dir + file)
+                except WindowsError:
+                    print "Couldn't find {}!".format(file)
+
+            # Remove the map from the text file
+            old_lines = [line.rstrip('\n') for line in open("History/map_history.txt")]
+            
+            with open("History/map_history.txt", "w") as f:
+                map_name       = self.Interface.map_history[v].map_name 
+                fmspe_dir      = self.Interface.map_history[v].fmspedir
+                xml_dir        = self.Interface.map_history[v].xmldir  
+                image_dir      = self.Interface.map_history[v].imagedir
+                num_pts_x      = self.Interface.map_history[v].numx
+                dist_bw_x      = self.Interface.map_history[v].distbwx
+                num_pts_y      = self.Interface.map_history[v].numy
+                dist_bw_y      = self.Interface.map_history[v].distbwy
+                date           = self.Interface.map_history[v].date   
+                time           = self.Interface.map_history[v].time   
+                units          = self.Interface.map_history[v].units    
+            
+                for line in old_lines:
+                    # print line
+                    compare_line = "{} {} {} {} {} {} {} {} {} {} {}".format(map_name, fmspe_dir, 
+                                                                         xml_dir, image_dir, 
+                                                                         num_pts_x, dist_bw_x, num_pts_y, dist_bw_y, 
+                                                                         date, time, units)
+                    # print compare_line
+                    if line != compare_line:
+                        f.write("{}\n".format(line))
+            
+            # The lines present in the file afterwards... Now we refill the list with these values
+            new_lines = [line.rstrip('\n') for line in open("History/map_history.txt")]
+
+            # Reset map history
+            self.Interface.map_history = []
+            maps_in_history_list.clear()
+
+            
+            for i in range(len(new_lines)):
+                vals_array = new_lines[i].split(" ")
+                new_map_info = FinishedMap(vals_array[0], vals_array[1], vals_array[2], vals_array[3], vals_array[4],
+                                           vals_array[5], vals_array[6], vals_array[7], vals_array[8], vals_array[9], vals_array[10])
+                self.Interface.map_history.append(new_map_info)
+                
+                maps_in_history_list.add(new_map_info.map_name, value = i)
+
+
+        delete_button = gui.Button("Delete Map", width = 50)
+        self.add(delete_button, 1110, yalign + 30)
+        delete_button.connect(gui.CLICK, delete)
+
+
+        # -------------- UPDATE THE LIST -----------------------------------
+        def update_list():
+            new_lines = [line.rstrip('\n') for line in open("History/map_history.txt")]
+
+            # Reset map history
+            self.Interface.map_history = []
+            maps_in_history_list.clear()
+
+            for i in range(len(new_lines)):
+                vals_array = new_lines[i].split(" ")
+                new_map_info = FinishedMap(vals_array[0], vals_array[1], vals_array[2], vals_array[3], vals_array[4],
+                                           vals_array[5], vals_array[6], vals_array[7], vals_array[8], vals_array[9], vals_array[10])
+                self.Interface.map_history.append(new_map_info)
+                
+                maps_in_history_list.add(new_map_info.map_name, value = i)
+
+
+        update_button = gui.Button("Update List", width = 50)
+        self.add(update_button, 1110, yalign + 65)
+        update_button.connect(gui.CLICK, update_list)
+
+        # 
+        # # List of items that the user selected into their carts
+        # cart_items_object = gui.List(width = 180, height = 140)
+        # self.add(cart_items_object, xalign + 210, 40)
+        # 
+        # # Functions to add/remove items from cart 
+        # def add_item_to_cart(arg):
+        #     v = initial_attributes_list_object.value
+        #     if v != None and v not in cart_items:
+        #         cart_items[v] = attribute_items[v]
+        #         index = v
+        #         cart_items_object.add(attribute_items[index], value = index)
+        #         cart_items_object.resize()
+        #         cart_items_object.repaint()
+        #         
+        # def remove_item_from_cart(arg):
+        #     v = cart_items_object.value
+        #     if v != None:
+        #         cart_items.pop(v)
+        #         cart_items_object.remove(v)
+        #         cart_items_object.resize()
+        #         cart_items_object.repaint()
+        #         cart_items_object.value = None
+
+
+
+
+
+
+
+
+
 
 
         # ------------------------------------------------------- Fun -------------------------------------------------------

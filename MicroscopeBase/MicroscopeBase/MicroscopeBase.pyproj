@@ -36,6 +36,9 @@
     <Compile Include="example_from_documentation.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FinishedMap.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="gameobjects.py">
       <SubType>Code</SubType>
     </Compile>
@@ -57,6 +60,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="printfunctions.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Reading_Formatted_Text.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="testing.py">
