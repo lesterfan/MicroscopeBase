@@ -377,7 +377,7 @@ class UserInterface:
         # Refresh / render GUI
         self.gui_app.paint()
         self.gui_app.update()
-
+        #
 
         # Print messages to screen
         printfunctions.message_to_screen("Units in um", colors.red,    y_displace = 110, x_displace = -365, size = 'small')
