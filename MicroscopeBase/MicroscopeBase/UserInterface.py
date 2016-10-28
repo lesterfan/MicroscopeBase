@@ -5,6 +5,7 @@ import printfunctions
 import gameobjects
 import dotnet.seamless
 import os
+import time
 
 from random import randint
 from FinishedMap import FinishedMap
@@ -12,9 +13,9 @@ from FinishedMap import FinishedMap
 dummy_version = False
 
 # Load the compiled C# library with which to interact with the Filmmetrics software
-# dotnet.add_assemblies('C:\\Users\\HMNL\\Desktop\\VsGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\')
-# dotnet.load_assembly('MicroscopeAnalyzerLibrary')
-# import MicroscopeAnalyzerLibrary
+dotnet.add_assemblies('C:\\Users\\HMNL\\Desktop\\VsGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\')
+dotnet.load_assembly('MicroscopeAnalyzerLibrary')
+import MicroscopeAnalyzerLibrary
 
 DEFAULT_OUT_OF_SCREEN_VALUE = 100000
 
@@ -488,6 +489,9 @@ class UserInterface:
                 # Check joystick to see if LT (pause has been clicked)
                 self.check_joystick_button()
 
+                # Stop the program for 3 seconds to get user input
+                time.sleep(3)
+
                 # If the stop button is clicked, return the base to its center location, set the flag back to False, and exit
                 if self.stop_button_pressed:
                     self.load_position_from_button('CENTER', Microscope_Base_Input)
@@ -515,6 +519,7 @@ class UserInterface:
                             return
 
                         self.refresh_pygame_display(Microscope_Base_Input)
+
 
                 # Update display to provide a real time view of the map
                 self.refresh_pygame_display(Microscope_Base_Input)
