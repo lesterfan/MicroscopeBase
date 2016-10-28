@@ -12,11 +12,6 @@ from FinishedMap import FinishedMap
 
 dummy_version = False
 
-# # Load the compiled C# library with which to interact with the Filmmetrics software
-# dotnet.add_assemblies('C:\\Users\\HMNL\\Desktop\\VsGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\')
-# dotnet.load_assembly('MicroscopeAnalyzerLibrary')
-# import MicroscopeAnalyzerLibrary
-
 # Load the compiled C# library with which to interact with the Filmmetrics software
 dotnet.add_assemblies('dll_dependencies/')
 dotnet.load_assembly('MicroscopeAnalyzerLibrary')

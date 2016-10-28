@@ -200,4 +200,4 @@ def main(dummy_version = False):
 
 
 if __name__ == "__main__":
-    main(dummy_version = True)
+    main(dummy_version = False)
