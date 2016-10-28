@@ -12,8 +12,13 @@ from FinishedMap import FinishedMap
 
 dummy_version = False
 
+# # Load the compiled C# library with which to interact with the Filmmetrics software
+# dotnet.add_assemblies('C:\\Users\\HMNL\\Desktop\\VsGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\')
+# dotnet.load_assembly('MicroscopeAnalyzerLibrary')
+# import MicroscopeAnalyzerLibrary
+
 # Load the compiled C# library with which to interact with the Filmmetrics software
-dotnet.add_assemblies('C:\\Users\\HMNL\\Desktop\\VsGithub\\MicroscopeBase\\MicroscopeBase\\MicroscopeBase\\')
+dotnet.add_assemblies('dll_dependencies/')
 dotnet.load_assembly('MicroscopeAnalyzerLibrary')
 import MicroscopeAnalyzerLibrary
 
@@ -92,6 +97,9 @@ class UserInterface:
 
     # Pictures that add color to the GUI
     dino_image = None
+    theme_image = None
+    rutgers_logo = None
+    rutgers_logo_2 = None
 
     map_history = []
 
@@ -142,12 +150,26 @@ class UserInterface:
     '''
     def set_theme(self):
         #pics_list = ["dino_pic.jpg", "jordan_pic.jpg", "keg_pic.jpg", "lamborghini_pic.jpg", "machop_pic.jpg", "nitzsche_pic.jpg", "snoopy_pic.jpg", "zubats_sketch.jpg", "minato_pic.jpg", "snorlax_pic.jpg"]
-        pics_list=["buttonmap_fit.png"]
+        pics_list = ["buttonmap_fit.png"]
+        themes_list = ["Themes/homemade_1.png", "Themes/homemade_2.png", "Themes/homemade_3.png"]
+
         # Loading up the colorful pictures
-        self.dino_image = pygame.image.load(os.path.join(pics_list[randint(0,len(pics_list)-1)]))
+        self.dino_image = pygame.image.load(os.path.join(pics_list[0]))
         self.dino_image.convert()
 
+        self.theme_image = pygame.image.load(os.path.join(themes_list[randint(0,len(themes_list)-1)]))
+        self.theme_image.convert()
 
+        self.rutgers_logo = pygame.image.load(os.path.join("Themes/RUrahrah.png"))
+        self.rutgers_logo.convert()
+
+        self.rutgers_logo_2 = pygame.image.load(os.path.join("Themes/RULogo2.png"))
+        self.rutgers_logo_2.convert()
+
+        # Set the icon to a smaller rutgers logo
+        self.smaller_rutgers_logo = pygame.image.load(os.path.join("Themes/smaller_rulogo.png"))
+        self.smaller_rutgers_logo.convert()
+        pygame.display.set_icon(self.smaller_rutgers_logo)
 
     '''
     Initializes the self.joystick variable and maps the button nums to their respective positions
@@ -360,6 +382,9 @@ class UserInterface:
         self.pygame_display.fill(colors.white)
         # pygame.draw.rect(self.pygame_display, colors.black, [500, 0, 330, 325])
         self.pygame_display.blit(self.dino_image, (500,0))
+        self.pygame_display.blit(self.theme_image, (20,355))
+        self.pygame_display.blit(self.rutgers_logo, (1100,565))
+        self.pygame_display.blit(self.rutgers_logo_2, (1100, 430))
 
         # Get absolute position to print
         if not self.dummy_mode:

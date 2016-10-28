@@ -46,7 +46,7 @@ class GUIContainer(gui.Container):
         gui.Container.__init__(self, **params)
 
         self.Interface = interface
-        self.add(gui.Label("Microscope Analyzer - HMNL (tm) 2016", color = colors.blue), 95, 5)
+        self.add(gui.Label("Microscope Analyzer - HMNL (tm) 2016", color = colors.red), 95, 5)
         
         # Select joystick GUI
         self.add(gui.Label("Select joystick"), 7, 32)
@@ -185,7 +185,7 @@ class GUIContainer(gui.Container):
         attribute_items = ["Layer Roughnesses", "Layer Thicknesses", "Measured FFT Intensity", "Measured FFT Thickness"]           # Attributes that are available to write to .txt file
         cart_items = {}
 
-        self.add(gui.Label("Post Processing Shopping Cart", color = colors.blue), xalign + 85, 10)
+        self.add(gui.Label("Post Processing Shopping Cart", color = colors.red), xalign + 85, 10)
         
         # Attributes list from which the user can pick out items
         initial_attributes_list_object = gui.List(width = 180, height = 140)
@@ -276,7 +276,7 @@ class GUIContainer(gui.Container):
         yalign = 325                   # Alignment between standalone program and the final program
         cart_items = {}
 
-        self.add(gui.Label("Map History", color = colors.blue), 575, yalign)
+        self.add(gui.Label("Map History", color = colors.red), 575, yalign - 10)
         lines = [line.rstrip('\n') for line in open("History/map_history.txt")]
 
         # Attributes list from which the user can pick out items
@@ -289,7 +289,7 @@ class GUIContainer(gui.Container):
 
             maps_in_history_list.add(new_map_info.map_name, value = i)
 
-        self.add(maps_in_history_list, 300, yalign + 30)
+        self.add(maps_in_history_list, 310, yalign + 30)
 
         MapNameLabel                    = gui.Input(size = 40)
         FMSPEDirLabel                   = gui.Input(size = 40)
@@ -303,17 +303,17 @@ class GUIContainer(gui.Container):
         TimeTakenLabel                  = gui.Input(size = 40)
         UnitsLabel                      = gui.Input(size = 40)
        
-        self.add(gui.Label("Map name : "                   ), 525, yalign + 30 )
-        self.add(gui.Label("FMSPE Dir : "                  ), 525, yalign + 55 )
-        self.add(gui.Label("XML Dir : "                    ), 525, yalign + 80 )
-        self.add(gui.Label("Image Dir : "                  ), 525, yalign + 105)
-        self.add(gui.Label("# Measurements x : "           ), 525, yalign + 130)
-        self.add(gui.Label("Distance b/w x meas. : "),        525, yalign + 155)
-        self.add(gui.Label("# Measurements y : "           ), 525, yalign + 180)
-        self.add(gui.Label("Distance b/w y meas.: "),         525, yalign + 205)
-        self.add(gui.Label("Date taken : "                 ), 525, yalign + 230)
-        self.add(gui.Label("Time taken : "                 ), 525, yalign + 255)
-        self.add(gui.Label("Units: "                 ),       525, yalign + 280)
+        self.add(gui.Label("Map name : "                   ), 535, yalign + 30 )
+        self.add(gui.Label("FMSPE Dir : "                  ), 535, yalign + 55 )
+        self.add(gui.Label("XML Dir : "                    ), 535, yalign + 80 )
+        self.add(gui.Label("Image Dir : "                  ), 535, yalign + 105)
+        self.add(gui.Label("# Measurements x : "           ), 535, yalign + 130)
+        self.add(gui.Label("Distance b/w x meas. : "),        535, yalign + 155)
+        self.add(gui.Label("# Measurements y : "           ), 535, yalign + 180)
+        self.add(gui.Label("Distance b/w y meas.: "),         535, yalign + 205)
+        self.add(gui.Label("Date taken : "                 ), 535, yalign + 230)
+        self.add(gui.Label("Time taken : "                 ), 535, yalign + 255)
+        self.add(gui.Label("Units: "                 ),       535, yalign + 280)
                  
         self.add(MapNameLabel              , 720, yalign + 30 )
         self.add(FMSPEDirLabel             , 720, yalign + 55 )
@@ -506,7 +506,7 @@ class GUIContainer(gui.Container):
             self.Interface.set_theme()
         self.change_theme_button = gui.Button("New Theme")
         self.change_theme_button.connect(gui.CLICK, change_theme, None)
-        self.add(self.change_theme_button, 380, 297)
+        self.add(self.change_theme_button, 110, 320)
 
 
 

@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>ddfa242f-c91b-408c-a5a2-a8067b0490a7</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>cleaned_main.py</StartupFile>
+    <StartupFile>main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -24,16 +24,10 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="cleaned_main.py">
+    <Compile Include="main.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="colors.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DotNetTest.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="example_from_documentation.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="FinishedMap.py">
@@ -43,47 +37,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GUIContainer.py" />
-    <Compile Include="hello_microscope.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="helper_minion_functions.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="main.py" />
     <Compile Include="MicroscopeBase.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="post_processing_GUI.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="post_processing_test.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="printfunctions.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Reading_Formatted_Text.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="testing.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="testing_delete_directory.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="testing_joystick.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="testing_moving.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="UserInterface.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="utility.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="writing_to_txt_file.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
