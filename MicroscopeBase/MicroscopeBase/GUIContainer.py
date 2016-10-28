@@ -149,11 +149,15 @@ class GUIContainer(gui.Container):
             print "Map started!"
             if not self.started_map :       # If it's the first time, then start taking the map
                 self.started_map = True
-                self.Interface.take_map(self.map_name_input.value, int(self.num_pts_x_input.value),
-                                        int(self.distance_bw_pts_x_input.value), int(self.num_pts_y_input.value),
-                                        int(self.distance_bw_pts_y_input.value), self.unit_selection.value, 
-                                        self.Microscope_Base)
-                self.started_map = False
+                try:
+                    self.Interface.take_map(self.map_name_input.value, int(self.num_pts_x_input.value),
+                                            int(self.distance_bw_pts_x_input.value), int(self.num_pts_y_input.value),
+                                            int(self.distance_bw_pts_y_input.value), self.unit_selection.value, 
+                                            self.Microscope_Base)
+                    self.started_map = False
+                except Exception:
+                    print "Error with taking map!"
+
             else :                          # If a map is already in progress, pause it
                 self.Interface.pause_button_pressed = True
 
@@ -295,11 +299,14 @@ class GUIContainer(gui.Container):
         print "Map started!"
         if not self.started_map :       # If it's the first time, then start taking the map
             self.started_map = True
-            self.Interface.take_map(self.map_name_input.value, int(self.num_pts_x_input.value),
-                                    int(self.distance_bw_pts_x_input.value), int(self.num_pts_y_input.value),
-                                    int(self.distance_bw_pts_y_input.value), self.unit_selection.value, 
-                                    self.Microscope_Base)
-            self.started_map = False
+            try:
+                self.Interface.take_map(self.map_name_input.value, int(self.num_pts_x_input.value),
+                                        int(self.distance_bw_pts_x_input.value), int(self.num_pts_y_input.value),
+                                        int(self.distance_bw_pts_y_input.value), self.unit_selection.value, 
+                                        self.Microscope_Base)
+                self.started_map = False
+            except SystemError:
+                print "Error with taking map!"
         else :                          # If a map is already in progress, pause it
             self.Interface.pause_button_pressed = True
 
