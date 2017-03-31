@@ -464,14 +464,14 @@ class UserInterface:
 
 
         # Move to the extreme top left of the user defined grid
-        move_x(-1*int(xPointsRadius * DistancebwPointsX), Microscope_Base_Input)
-        move_y(-1*int(yPointsRadius * DistancebwPointsY), Microscope_Base_Input)
+        # move_x(-1*int(xPointsRadius * DistancebwPointsX), Microscope_Base_Input)
+        # move_y(-1*int(yPointsRadius * DistancebwPointsY), Microscope_Base_Input)
 
 
         # Update display to provide a real time view of the map
         self.refresh_pygame_display(Microscope_Base_Input)
 
-
+        '''
         # Performs map going up to down, left to right in that order.
         for i in range(numPointsX):
 
@@ -502,6 +502,90 @@ class UserInterface:
 
                 # Move down
                 move_y(DistancebwPointsY, Microscope_Base_Input)
+
+                # Check the GUI to see if the pause button has been clicked
+                self.check_keyboard_key_up()
+
+                # Check joystick to see if LT (pause has been clicked)
+                self.check_joystick_button()
+
+                # Stop the program for 3 seconds to get user input
+                time.sleep(3)
+
+                # If the stop button is clicked, return the base to its center location, set the flag back to False, and exit
+                if self.stop_button_pressed:
+                    self.load_position_from_button('CENTER', Microscope_Base_Input)
+                    self.stop_button_pressed = False
+                    self.message1 = "Map stopped!"
+                    return
+
+                # If the pause button is clicked, then pause it indefinitely until the user clicks it again
+                if self.pause_button_pressed or self.lt_button == 1:
+                    self.pause_button_pressed = False
+                    while True:
+                        self.message1 = "Map paused! Press start/pause to resume, stop to terminate!"
+                        self.check_keyboard_key_up()
+                        self.check_joystick_button()
+
+                        # If they click the pause button again, breaks out of this infinite loop
+                        if self.pause_button_pressed or self.lt_button == 1:
+                            self.pause_button_pressed = False
+                            break
+
+                        # If they click the stop button, returns from the mapping function
+                        if self.stop_button_pressed:
+                            self.load_position_from_button('CENTER', Microscope_Base_Input)
+                            self.stop_button_pressed = False
+                            return
+
+                        self.refresh_pygame_display(Microscope_Base_Input)
+
+
+                # Update display to provide a real time view of the map
+                self.refresh_pygame_display(Microscope_Base_Input)
+        '''
+
+        # Fix the direction that the microscope moves
+        DistancebwPointsX = -DistancebwPointsX
+        
+
+        # Performs map going left to right, up to down in that order
+        for i in range(numPointsY):
+
+            # If not the first column, then move back up and move right
+            if i != 0:
+                # move_x(DistancebwPointsX, Microscope_Base_Input)
+                # move_y(-1*(numPointsY)*(DistancebwPointsY), Microscope_Base_Input)
+
+                move_y(-DistancebwPointsY, Microscope_Base_Input)
+                move_x(-1*numPointsX*DistancebwPointsX, Microscope_Base_Input)
+
+            for j in range(numPointsX):
+
+                # Take a measurement.
+                print "Now measuring - modified"
+                self.take_measurement()
+
+                # The next few lines save this measurement with an x,y location stamp on it.
+                print "Now saving!"
+                x, y = Microscope_Base_Input.get_absolute_position()
+                desired_file_name = mapping_name + "_x{0}_y{1}".format(format(x*0.15625,'.5f'),format(y*0.15625,'.5f'))
+                print "Just saved the map at location x = {}, y = {}".format(format(x*0.15625,'.5f'),format(y*0.15625,'.5f'))
+
+                # Save the .fmspe file into its own folder.
+                self.mAnalyzer.SaveSpectrum(self.gui_container.fmspe_dir_input.value, desired_file_name)
+
+                # Save the .xml file into its own folder
+                self.mAnalyzer.SaveResultsTo(self.gui_container.xml_dir_input.value, desired_file_name)
+
+                # Save the image file into its own folder
+                self.mAnalyzer.SaveImageTo(self.gui_container.image_dir_input.value, desired_file_name)
+
+                # Move right
+                move_x(DistancebwPointsX, Microscope_Base_Input)
+
+                # Move down
+                # move_y(DistancebwPointsY, Microscope_Base_Input)
 
                 # Check the GUI to see if the pause button has been clicked
                 self.check_keyboard_key_up()
