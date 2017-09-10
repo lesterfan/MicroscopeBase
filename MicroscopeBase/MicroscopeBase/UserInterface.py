@@ -3,7 +3,7 @@ import time
 import colors
 import printfunctions
 import gameobjects
-import dotnet.seamless
+import dotnet
 import os
 import time
 
@@ -145,7 +145,7 @@ class UserInterface:
     '''
     def set_theme(self):
         #pics_list = ["dino_pic.jpg", "jordan_pic.jpg", "keg_pic.jpg", "lamborghini_pic.jpg", "machop_pic.jpg", "nitzsche_pic.jpg", "snoopy_pic.jpg", "zubats_sketch.jpg", "minato_pic.jpg", "snorlax_pic.jpg"]
-        pics_list = ["buttonmap_fit.png"]
+        pics_list = ["keyboard_mappings.png"]
         themes_list = ["Themes/homemade_1.png", "Themes/homemade_2.png", "Themes/homemade_3.png"]
 
         # Loading up the colorful pictures

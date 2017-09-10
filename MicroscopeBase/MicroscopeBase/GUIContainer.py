@@ -14,33 +14,41 @@ class GUIContainer(gui.Container):
     joystick_selection = None
     update_joystick_button = None
     update_joystick_button_clicked = False
-
     fmspe_dir_input = None
     fmspe_browse_button = None
-
     xml_dir_input = None
     xml_browse_button = None
-    
     image_dir_input = None
     image_browse_button = None
-
     map_name_input = None
-
     unit_selection = None
     num_pts_x_input = None
     distance_bw_pts_x_input = None
     num_pts_y_input = None
     distance_bw_pts_y_input = None
-
     take_measurement_button = None
-    # take_measurement_button_clicked = False
     start_or_pause_button = None
-    # start_or_pause_button_clicked = False
     stop_button = None
-    # stop_button_clicked = False
 
     started_map = False
 
+    widgets = [joystick_selection,
+              update_joystick_button,
+             update_joystick_button_clicked,
+            fmspe_dir_input,
+           fmspe_browse_button,
+          xml_dir_input,
+         xml_browse_button,
+        image_dir_input,
+       image_browse_button,
+      map_name_input,
+     unit_selection,
+    num_pts_x_input,
+   distance_bw_pts_x_input,
+  num_pts_y_input,
+ distance_bw_pts_y_input,
+take_measurement_button,
+start_or_pause_button, stop_button]
 
     def __init__(self, interface = None , **params):
         gui.Container.__init__(self, **params)
@@ -75,7 +83,7 @@ class GUIContainer(gui.Container):
         def handle_fmspe_file_browser_closed(dlg):
             if dlg.value : self.fmspe_dir_input.value = dlg.value
         def open_fmspe_file_browser(arg):
-            d = gui.FileDialog(path = "C:\\Users\\HMNL\\Documents\\Test\\")
+            d = gui.FileDialog(path = "C:\\Users\\HMNL-Filmmetrics\\Measurements\\")
             d.connect(gui.CHANGE, handle_fmspe_file_browser_closed, d)
             d.open()
         self.fmspe_dir_input = gui.Input(size = 25)
@@ -89,7 +97,7 @@ class GUIContainer(gui.Container):
         def handle_xml_file_browser_closed(dlg):
             if dlg.value : self.xml_dir_input.value = dlg.value
         def open_xml_file_browser(arg):
-            d = gui.FileDialog(path = "C:\\Users\\HMNL\\Documents\\Test\\")
+            d = gui.FileDialog(path = "C:\\Users\\HMNL-Filmmetrics\\Measurements\\")
             d.connect(gui.CHANGE, handle_xml_file_browser_closed, d)
             d.open()
         self.xml_dir_input = gui.Input(size = 25)
@@ -103,7 +111,7 @@ class GUIContainer(gui.Container):
         def handle_image_file_browser_closed(dlg):
             if dlg.value : self.image_dir_input.value = dlg.value
         def open_image_file_browser(arg):
-            d = gui.FileDialog(path = "C:\\Users\\HMNL\\Documents\\Test\\")
+            d = gui.FileDialog(path = "C:\\Users\\HMNL-Filmmetrics\\Measurements\\")
             d.connect(gui.CHANGE, handle_image_file_browser_closed, d)
             d.open()
         self.image_dir_input = gui.Input(size = 25)
@@ -244,11 +252,11 @@ class GUIContainer(gui.Container):
         def handle_xml_post_file_browser_closed(dlg):
             if dlg.value : xml_directory_post_processing.value = dlg.value
         def open_xml_post_file_browser(arg):
-            d = gui.FileDialog(path = "C:\\Users\\HMNL\\Documents\\Test\\")
+            d = gui.FileDialog(path = "C:\\Users\\HMNL-Filmmetrics\\Measurements\\")
             d.connect(gui.CHANGE, handle_xml_post_file_browser_closed, d)
             d.open()
         xml_directory_post_processing = gui.Input(size = 19)
-        xml_directory_post_processing.value = "C:\\Users\\HMNL\\Documents\\Test\\XML\\"
+        xml_directory_post_processing.value = "C:\\Users\\HMNL-Filmmetrics\\Measurements\\XML\\"
         self.add(gui.Label("XML Directory"),    xalign + 7, 252)
         self.add(xml_directory_post_processing, xalign + 125, 250)
         post_browse_button = gui.Button("Browse", width = 50)
@@ -259,11 +267,11 @@ class GUIContainer(gui.Container):
         def handle_text_browser_closed(dlg):
             if dlg.value : text_dir_input.value = dlg.value
         def open_text_file_browser(arg):
-            d = gui.FileDialog(path = "C:\\Users\\HMNL\\Documents\\Test\\")
+            d = gui.FileDialog(path = "C:\\Users\\HMNL-Filmmetrics\\Measurements\\")
             d.connect(gui.CHANGE, handle_text_browser_closed, d)
             d.open()
         text_dir_input = gui.Input(size = 19)
-        text_dir_input.value = "C:\\Users\\HMNL\\Documents\\Test\\AnalysisFiles\\"
+        text_dir_input.value = "C:\\Users\\HMNL-Filmmetrics\\Measurements\\AnalysisFiles\\"
         self.add(gui.Label("Out Directory"), xalign + 7, 282)
         self.add(text_dir_input,             xalign + 125, 280)
         text_dir_browse_button = gui.Button("Browse", width = 50)
@@ -514,9 +522,9 @@ class GUIContainer(gui.Container):
     def set_default_values(self):
         self.joystick_selection.value = "Shenzhen"
 
-        self.fmspe_dir_input.value = "C:\\Users\\HMNL\\Documents\\Test\\FMSPE\\"
-        self.xml_dir_input.value = "C:\\Users\\HMNL\\Documents\\Test\\XML\\"
-        self.image_dir_input.value = "C:\\Users\\HMNL\\Documents\\Test\\Images\\"
+        self.fmspe_dir_input.value = "C:\\Users\\HMNL-Filmmetrics\\Measurements\\FMSPE\\"
+        self.xml_dir_input.value = "C:\\Users\\HMNL-Filmmetrics\\Measurements\\XML\\"
+        self.image_dir_input.value = "C:\\Users\\HMNL-Filmmetrics\\Measurements\\Images\\"
 
         self.map_name_input.value = "Columbus"
         self.unit_selection.value = "um"
