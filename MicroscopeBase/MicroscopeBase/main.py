@@ -76,20 +76,21 @@ def main(dummy_version = False):
             lt_button      = Interface.lt_button   
 
         else:
-            if Interface.keys[pygame.K_h]:
-                start_button = 1
-            if Interface.keys[pygame.K_1]:
-                a_button = 1
-            if Interface.keys[pygame.K_2]:
-                x_button = 1
-            if Interface.keys[pygame.K_3]:
-                y_button = 1
-            if Interface.keys[pygame.K_4]:
-                b_button = 1
-            # if Interface.keys[pygame.K_LCTRL]:
-            #     rt_button = 1
-            if Interface.keys[pygame.K_LSHIFT] or Interface.keys[pygame.K_RSHIFT]:
-                rb_button = 1 
+            if can_move:
+                if Interface.keys[pygame.K_h]:
+                    start_button = 1
+                if Interface.keys[pygame.K_1]:
+                    a_button = 1
+                if Interface.keys[pygame.K_2]:
+                    x_button = 1
+                if Interface.keys[pygame.K_3]:
+                    y_button = 1
+                if Interface.keys[pygame.K_4]:
+                    b_button = 1
+                # if Interface.keys[pygame.K_LCTRL]:
+                #     rt_button = 1
+                if Interface.keys[pygame.K_LSHIFT] or Interface.keys[pygame.K_RSHIFT]:
+                    rb_button = 1 
 
         # Checking if each button is pressed. If so, do appropriate actions.
         if start_button == 1 and not dummy_version:                                              # Start button to home device
