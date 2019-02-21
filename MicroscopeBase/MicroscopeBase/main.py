@@ -15,7 +15,7 @@ def RepresentsInt(s):
 
 def main(dummy_version = False):
     if not dummy_version:
-        Microscope_Base = MicroscopeBase.MicroscopeBase("COM4")
+        Microscope_Base = MicroscopeBase.MicroscopeBase("COM3")
     Interface = UserInterface.UserInterface(dummy_mode = dummy_version)
     if not dummy_version:
         Interface.initialize_joystick()

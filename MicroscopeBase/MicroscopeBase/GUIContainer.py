@@ -6,6 +6,8 @@ import os
 
 from FinishedMap import FinishedMap
 
+# root_dir = "C:\\Users\\HMNL-Filmmetrics\\Measurements\\"
+root_dir = "C:\\Users\\HMNL Leica\\Documents\\Filmmetrics\\Measurements\\"
 class GUIContainer(gui.Container):
     """description of class"""
     Interface = None
@@ -83,7 +85,8 @@ start_or_pause_button, stop_button]
         def handle_fmspe_file_browser_closed(dlg):
             if dlg.value : self.fmspe_dir_input.value = dlg.value
         def open_fmspe_file_browser(arg):
-            d = gui.FileDialog(path = "C:\\Users\\HMNL-Filmmetrics\\Measurements\\")
+            d = gui.FileDialog(path = root_dir)
+            # d = gui.FileDialog(path = "C:\\Users\\HMNL Leica\\Documents\\Filmmetrics\\Measurements")
             d.connect(gui.CHANGE, handle_fmspe_file_browser_closed, d)
             d.open()
         self.fmspe_dir_input = gui.Input(size = 25)
@@ -97,7 +100,8 @@ start_or_pause_button, stop_button]
         def handle_xml_file_browser_closed(dlg):
             if dlg.value : self.xml_dir_input.value = dlg.value
         def open_xml_file_browser(arg):
-            d = gui.FileDialog(path = "C:\\Users\\HMNL-Filmmetrics\\Measurements\\")
+            d = gui.FileDialog(path = root_dir)
+            # d = gui.FileDialog(path = "C:\\Users\\HMNL Leica\\Documents\\Filmmetrics\\Measurements")
             d.connect(gui.CHANGE, handle_xml_file_browser_closed, d)
             d.open()
         self.xml_dir_input = gui.Input(size = 25)
@@ -111,7 +115,8 @@ start_or_pause_button, stop_button]
         def handle_image_file_browser_closed(dlg):
             if dlg.value : self.image_dir_input.value = dlg.value
         def open_image_file_browser(arg):
-            d = gui.FileDialog(path = "C:\\Users\\HMNL-Filmmetrics\\Measurements\\")
+            d = gui.FileDialog(path = root_dir)
+            # d = gui.FileDialog(path = "C:\\Users\\HMNL Leica\\Documents\\Filmmetrics\\Measurements")
             d.connect(gui.CHANGE, handle_image_file_browser_closed, d)
             d.open()
         self.image_dir_input = gui.Input(size = 25)
@@ -256,7 +261,7 @@ start_or_pause_button, stop_button]
             d.connect(gui.CHANGE, handle_xml_post_file_browser_closed, d)
             d.open()
         xml_directory_post_processing = gui.Input(size = 19)
-        xml_directory_post_processing.value = "C:\\Users\\HMNL-Filmmetrics\\Measurements\\XML\\"
+        xml_directory_post_processing.value = "{}XML\\".format(root_dir)
         self.add(gui.Label("XML Directory"),    xalign + 7, 252)
         self.add(xml_directory_post_processing, xalign + 125, 250)
         post_browse_button = gui.Button("Browse", width = 50)
@@ -267,11 +272,11 @@ start_or_pause_button, stop_button]
         def handle_text_browser_closed(dlg):
             if dlg.value : text_dir_input.value = dlg.value
         def open_text_file_browser(arg):
-            d = gui.FileDialog(path = "C:\\Users\\HMNL-Filmmetrics\\Measurements\\")
+            d = gui.FileDialog(path = root_dir)
             d.connect(gui.CHANGE, handle_text_browser_closed, d)
             d.open()
         text_dir_input = gui.Input(size = 19)
-        text_dir_input.value = "C:\\Users\\HMNL-Filmmetrics\\Measurements\\AnalysisFiles\\"
+        text_dir_input.value = "{}AnalysisFiles\\".format(root_dir)
         self.add(gui.Label("Out Directory"), xalign + 7, 282)
         self.add(text_dir_input,             xalign + 125, 280)
         text_dir_browse_button = gui.Button("Browse", width = 50)
@@ -522,9 +527,9 @@ start_or_pause_button, stop_button]
     def set_default_values(self):
         self.joystick_selection.value = "Shenzhen"
 
-        self.fmspe_dir_input.value = "C:\\Users\\HMNL-Filmmetrics\\Measurements\\FMSPE\\"
-        self.xml_dir_input.value = "C:\\Users\\HMNL-Filmmetrics\\Measurements\\XML\\"
-        self.image_dir_input.value = "C:\\Users\\HMNL-Filmmetrics\\Measurements\\Images\\"
+        self.fmspe_dir_input.value = "{}FMSPE\\".format(root_dir)
+        self.xml_dir_input.value = "{}XML\\".format(root_dir)
+        self.image_dir_input.value = "{}Images\\".format(root_dir)
 
         self.map_name_input.value = "Columbus"
         self.unit_selection.value = "um"
